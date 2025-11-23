@@ -13,34 +13,47 @@
   let arcs = $state([]);       
   let simulation;
 
-  // 投影设置：稍微放大一点 scale 以利用更多空间
   const projection = d3.geoAlbersUsa().scale(1300).translate([480, 300]);
   const pathGenerator = d3.geoPath().projection(projection);
+
+  // === 1. 模拟密歇根 County 数据 (请替换为真实数据 import) ===
+  // 假设有 83 个县，金额随机
+  const miCountyData = Array.from({ length: 83 }, (_, i) => ({
+    id: `MI-${i}`,
+    name: `County ${i}`,
+    amount: Math.random() * 500000 + 10000, // 随机金额
+    type: 'in-state'
+  }));
 
   onMount(async () => {
     const us = await d3.json('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json');
     usFeatures = feature(us, us.objects.states).features;
 
-    const processedNodes = [];
+    let allNodes = [];
     const processedArcs = [];
 
+    // --- 处理 Out-of-State (红色) ---
     fundingData.forEach(d => {
       const source = projection([d.lon, d.lat]);
-      const target = projection([d.dest_lon, d.dest_lat]);
+      const target = projection([d.dest_lon, d.dest_lat]); // 密歇根坐标
 
       if (source && target) {
-        processedNodes.push({
+        allNodes.push({
           ...d,
-          x: source[0], 
-          y: source[1],
+          type: 'out-state',
+          // 地图模式坐标
           homeX: source[0],
           homeY: source[1],
-          targetX: target[0],
-          targetY: target[1],
-          r: Math.sqrt(d.amount) / 40 + 2 
+          mapTargetX: target[0],
+          mapTargetY: target[1],
+          // 初始位置
+          x: source[0],
+          y: source[1],
+          // 半径 (按你之前的要求缩小)
+          r: Math.sqrt(d.amount) / 80 + 1.5
         });
 
-        // 弧线计算
+        // 连线
         const dx = target[0] - source[0];
         const dy = target[1] - source[1];
         const dr = Math.sqrt(dx * dx + dy * dy);
@@ -56,35 +69,88 @@
       }
     });
 
-    nodes = processedNodes;
+    // --- 处理 In-State (密歇根内部, 蓝色/紫色) ---
+    // 初始位置设在密歇根中心，但在 Step 0-1 隐藏
+    const miCenter = projection([-84.6, 44.3]); // 大致密歇根中心
+    
+    miCountyData.forEach(d => {
+      allNodes.push({
+        ...d,
+        type: 'in-state',
+        homeX: miCenter[0], 
+        homeY: miCenter[1],
+        mapTargetX: miCenter[0],
+        mapTargetY: miCenter[1],
+        x: miCenter[0],
+        y: miCenter[1],
+        r: Math.sqrt(d.amount) / 80 + 1.5
+      });
+    });
+
+    // === 2. 计算 Step 3 的柱状图位置 (Grid Layout) ===
+    // 我们需要把节点分成两组，计算它们在柱子里的 x, y
+    
+    const calculatePillarPositions = (nodes, centerX, bottomY, colCount) => {
+      // 按金额排序，大的在下面
+      nodes.sort((a, b) => b.amount - a.amount);
+      
+      const spacing = 14; // 圆圈间距
+      
+      nodes.forEach((node, i) => {
+        const col = i % colCount;
+        const row = Math.floor(i / colCount);
+        
+        // 计算偏移量，让柱子居中
+        const xOffset = (col - (colCount - 1) / 2) * spacing;
+        
+        node.pillarX = centerX + xOffset;
+        node.pillarY = bottomY - row * spacing;
+      });
+    };
+
+    const outStateNodes = allNodes.filter(d => d.type === 'out-state');
+    const inStateNodes = allNodes.filter(d => d.type === 'in-state');
+
+    // 左柱子 (Out-state): x=350, 底部=550, 5列宽
+    calculatePillarPositions(outStateNodes, 350, 550, 6);
+    
+    // 右柱子 (In-state): x=650, 底部=550, 5列宽
+    calculatePillarPositions(inStateNodes, 650, 550, 6);
+
+    nodes = allNodes;
     arcs = processedArcs;
 
-    // === 修改 1: 移除碰撞力，允许重叠 ===
+    // === 3. 模拟器设置 ===
     simulation = d3.forceSimulation(nodes)
-      // 移除 charge (排斥力) 和 collide (碰撞力)
-      // 这样节点就会完全服从 x 和 y 的定位
       .on("tick", () => {
         nodes = [...nodes];
       });
   });
 
+  // === 4. 核心动画逻辑 ===
   $effect(() => {
     if (!simulation) return;
     
     simulation.alpha(1).restart();
 
     if (step === 0) {
-      // === 状态 0: 严格归位 ===
-      // strength(1) 是最大值，意味着"立刻去那里，不要犹豫"
+      // Step 0: 地图 - 回到原点
       simulation
         .force("x", d3.forceX(d => d.homeX).strength(1))
         .force("y", d3.forceY(d => d.homeY).strength(1));
-    } else {
-      // === 状态 1: 流向目标 ===
-      // 稍微降低一点 strength，让运动看起来平滑一点，而不是瞬移
+        
+    } else if (step === 1) {
+      // Step 1: 地图 - 流向密歇根
       simulation
-        .force("x", d3.forceX(d => d.targetX).strength(0.1))
-        .force("y", d3.forceY(d => d.targetY).strength(0.1));
+        .force("x", d3.forceX(d => d.mapTargetX).strength(0.1))
+        .force("y", d3.forceY(d => d.mapTargetY).strength(0.1));
+
+    } else if (step === 2) {
+      // Step 2 (即文案的第3步): 柱状图对比
+      // 强制移动到 pillarX / pillarY
+      simulation
+        .force("x", d3.forceX(d => d.pillarX).strength(0.08))
+        .force("y", d3.forceY(d => d.pillarY).strength(0.08));
     }
   });
 
@@ -93,8 +159,8 @@
 <div class="map-container" bind:clientWidth={width}>
   <svg {width} {height} viewBox="0 0 960 600">
     
-    <!-- 地图底图 -->
-    <g class="map-layer">
+    <!-- 1. 地图层: Step 2 时淡出 -->
+    <g class="map-layer" style="opacity: {step === 2 ? 0 : 1}; transition: opacity 1s;">
       {#each usFeatures as feature}
         <path 
           d={pathGenerator(feature)} 
@@ -105,8 +171,8 @@
       {/each}
     </g>
 
-    <!-- 连线层 -->
-    <g class="arc-layer">
+    <!-- 2. 连线层: Step 2 时淡出 -->
+    <g class="arc-layer" style="opacity: {step === 2 ? 0 : 1}; transition: opacity 1s;">
       {#each arcs as arc}
         <path 
           d={arc.path}
@@ -122,27 +188,40 @@
       {/each}
     </g>
 
-    <!-- 粒子层 -->
+    <!-- 3. 柱状图标签: 仅在 Step 2 显示 -->
+    <g class="labels-layer" style="opacity: {step === 2 ? 1 : 0}; transition: opacity 1s 0.5s;">
+      <!-- 左侧标签 -->
+      <text x="350" y="580" text-anchor="middle" font-weight="bold" fill="#D62728">Out-of-State</text>
+      <text x="350" y="600" text-anchor="middle" font-size="12" fill="#666">External Contributions</text>
+
+      <!-- VS -->
+      <text x="500" y="400" text-anchor="middle" font-size="20" font-weight="bold" fill="#ccc">VS</text>
+
+      <!-- 右侧标签 -->
+      <text x="650" y="580" text-anchor="middle" font-weight="bold" fill="#2b8cbe">In-State (Michigan)</text>
+      <text x="650" y="600" text-anchor="middle" font-size="12" fill="#666">Local Counties</text>
+    </g>
+
+    <!-- 4. 粒子层 -->
     <g class="particle-layer">
       {#each nodes as node}
         <circle
           cx={node.x}
           cy={node.y}
           r={node.r}
-          fill={step === 0 ? "#377eb8" : "#D62728"}
-          fill-opacity="0.9" 
+          fill={node.type === 'out-state' ? "#D62728" : "#2b8cbe"}
           stroke="white"
           stroke-width="0.5"
-          style="transition: fill 0.5s;"
+          style="transition: fill 0.5s, opacity 1s;"
+          
+
+          opacity={node.type === 'in-state' && step < 2 ? 0 : 0.9}
           style:mix-blend-mode="multiply" 
         >
-          <!-- mix-blend-mode: multiply 让重叠部分变深，更有数据感 -->
-          <title>{node.contributor_state}: ${Math.round(node.amount).toLocaleString()}</title>
+          <title>{node.name || node.contributor_state}: ${Math.round(node.amount).toLocaleString()}</title>
         </circle>
       {/each}
     </g>
-
-    <!-- === 修改 3: 已移除 Michigan 黑色圆圈标记 === -->
 
   </svg>
 </div>

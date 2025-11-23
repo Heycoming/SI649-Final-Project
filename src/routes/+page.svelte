@@ -57,7 +57,7 @@
     display: grid;
     /* === 修改 2: 调整比例 === */
     /* 左侧固定 250px (更窄)，右侧占满剩余 (更宽) */
-    grid-template-columns: 250px 1fr; 
+    grid-template-columns: 1fr 2.5fr; 
     width: 100%;
     margin: 0;
   }
@@ -67,7 +67,7 @@
     z-index: 10;
     padding: 0 1rem;
     /* 给文字区加个淡淡的右边框，区分地图 */
-    border-right: 1px solid #f0f0f0; 
+    /* border-right: 1px solid #f0f0f0;  */
     background: rgba(255,255,255,0.8);
   }
 
