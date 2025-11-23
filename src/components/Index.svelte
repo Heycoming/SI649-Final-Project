@@ -8,4 +8,5 @@
 
 <svelte:boundary onerror={(e) => console.error(e)}>
 	<!-- <Footer recirc={true} /> -->
+	 <h1>helloworld</h1>
 </svelte:boundary>
