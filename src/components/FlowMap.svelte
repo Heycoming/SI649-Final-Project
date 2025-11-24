@@ -14,7 +14,10 @@
   let usFeatures = $state([]); 
   let nodes = $state([]);      
   let arcs = $state([]);       
-  let simulation;
+  
+  // === 关键修复 1: 添加状态信号 ===
+  let isReady = $state(false); // 标记数据和模拟器是否就绪
+  let simulation; // 保持为普通变量，不要用 $state 代理复杂的 D3 对象
 
   // 缩放相关
   let transformString = $state("translate(0,0) scale(1)");
@@ -24,7 +27,6 @@
   const projection = d3.geoAlbersUsa().scale(1300).translate([480, 300]);
   const pathGenerator = d3.geoPath().projection(projection);
 
-  // 定义 Step 2 的两个引力中心
   const centerLeft = { x: 300, y: 320 };
   const centerRight = { x: 700, y: 320 };
 
@@ -45,10 +47,10 @@
           type: 'out-state',
           homeX: source[0], homeY: source[1],
           mapTargetX: target[0], mapTargetY: target[1],
-          x: source[0], y: source[1], // 初始位置
+          x: source[0], y: source[1], 
           r: Math.sqrt(d.amount) / 80 + 1.5
         });
-        // 连线逻辑...
+        
         const dx = target[0] - source[0];
         const dy = target[1] - source[1];
         const dr = Math.sqrt(dx * dx + dy * dy);
@@ -80,12 +82,18 @@
     nodes = allNodes;
     arcs = processedArcs;
 
-    // 初始化模拟器，但先不设置具体的力，在 $effect 中动态设置
+    // 初始化模拟器
     simulation = d3.forceSimulation(nodes)
-      .on("tick", () => { nodes = [...nodes]; });
+      .alphaDecay(0.02) // 慢一点冷却，让动画更持久
+      .on("tick", () => { 
+        nodes = [...nodes]; // 触发 Svelte 更新
+      });
+
+    // === 关键修复 2: 告诉 Svelte 一切就绪 ===
+    isReady = true; 
   });
 
-  // 缩放计算 (保持不变)
+  // 缩放计算
   $effect(() => {
     if (usFeatures.length > 0 && !miTarget) {
       const michigan = usFeatures.find(f => f.id === "26");
@@ -111,53 +119,45 @@
     }
   });
 
-  // === 核心修改：Step 2 的物理模拟 ===
+  // === 物理引擎核心 (现在依赖 isReady) ===
   $effect(() => {
-    if (!simulation) return;
+    // 如果没有准备好，直接跳过。一旦 isReady 变成 true，这个 effect 会自动重新运行！
+    if (!isReady || !simulation) return;
     
-    // 每次状态改变，必须重启 alpha，否则模拟器是“冷”的，点不会动
+    console.log("Applying forces for step:", step);
+    
     simulation.alpha(1).restart();
 
-    // 基础碰撞力：保证点不重叠
-    const collide = d3.forceCollide().radius(d => d.r + 1).strength(0.9);
+    const collide = d3.forceCollide().radius(d => d.r + 1).strength(0.8);
+
+    // 清除旧力
+    simulation.force("x", null).force("y", null).force("collide", null).force("charge", null);
 
     if (step === 0) {
-      // Step 0: 回家
       simulation
         .force("x", d3.forceX(d => d.homeX).strength(1))
         .force("y", d3.forceY(d => d.homeY).strength(1))
-        .force("collide", collide)
-        .force("charge", null); // 移除电荷力
+        .force("collide", collide);
 
     } else if (step === 1) {
-      // Step 1: 连线
       simulation
         .force("x", d3.forceX(d => d.mapTargetX).strength(0.1))
         .force("y", d3.forceY(d => d.mapTargetY).strength(0.1))
-        .force("collide", collide)
-        .force("charge", null);
+        .force("collide", collide);
 
     } else if (step === 2) {
-      // === Step 2: 动态气泡聚类 ===
-      // 关键点：
-      // 1. strength(0.06) 很小 -> 这是一个柔和的引力，允许点在中心附近晃动，而不是死死钉住
-      // 2. charge(-3) -> 这是一个微弱的斥力，让点之间保持一点“呼吸感”，防止挤得太死
-      // 3. collide -> 强力碰撞，这是形成圆球形状的关键
-      
+      // === 气泡聚类 ===
+      // strength(0.08) + charge(-5) 确保它们聚在一起但又像气泡一样浮动
       simulation
-        .force("x", d3.forceX(d => d.type === 'out-state' ? centerLeft.x : centerRight.x).strength(0.06))
-        .force("y", d3.forceY(d => d.type === 'out-state' ? centerLeft.y : centerRight.y).strength(0.06))
+        .force("x", d3.forceX(d => d.type === 'out-state' ? centerLeft.x : centerRight.x).strength(0.08))
+        .force("y", d3.forceY(d => d.type === 'out-state' ? centerLeft.y : centerRight.y).strength(0.08))
         .force("collide", collide)
-        .force("charge", d3.forceManyBody().strength(-3)); 
+        .force("charge", d3.forceManyBody().strength(-5)); 
 
     } else if (step === 3) {
-      // Step 3: 聚焦密歇根
-      // 蓝点强力回归，红点去左边待着(反正看不见)
       simulation
         .force("x", d3.forceX(d => d.type === 'in-state' ? d.homeX : centerLeft.x).strength(1))
-        .force("y", d3.forceY(d => d.type === 'in-state' ? d.homeY : centerLeft.y).strength(1))
-        .force("collide", null) // 必须移除碰撞，否则地图上的点对不准
-        .force("charge", null);
+        .force("y", d3.forceY(d => d.type === 'in-state' ? d.homeY : centerLeft.y).strength(1));
     }
   });
 
@@ -220,7 +220,7 @@
       </g>
     </g>
 
-    <!-- 标签层 (Step 2 显示) -->
+    <!-- 标签层 -->
     <g class="labels-layer" style="opacity: {step === 2 ? 1 : 0}; transition: opacity 1s; pointer-events: none;">
       <text x={centerLeft.x} y="480" text-anchor="middle" font-weight="bold" fill="#D62728" font-size="16">Out-of-State</text>
       <text x={centerLeft.x} y="500" text-anchor="middle" font-size="12" fill="#666">External Contributions</text>
@@ -244,19 +244,16 @@
     background: white;
     overflow: hidden;
   }
-
   .zoom-group {
     transition: transform 1.5s cubic-bezier(0.25, 0.1, 0.25, 1);
     transform-origin: 0 0;
     will-change: transform;
   }
-
   .flow-line {
     stroke-dasharray: 1000;
     stroke-dashoffset: 1000;
     transition: stroke-dashoffset 1.5s ease-in-out;
   }
-
   .flow-line.animate {
     stroke-dashoffset: 0;
   }
