@@ -3,6 +3,7 @@
   import * as d3 from 'd3';
   import { feature } from 'topojson-client';
   import fundingData from '../data/state_funding.json';
+  import miCountyData from '../data/county_funding.json';
   
   let { step = 0 } = $props();
 
@@ -16,15 +17,6 @@
   const projection = d3.geoAlbersUsa().scale(1300).translate([480, 300]);
   const pathGenerator = d3.geoPath().projection(projection);
 
-  // === 1. 模拟密歇根 County 数据 (请替换为真实数据 import) ===
-  // 假设有 83 个县，金额随机
-  const miCountyData = Array.from({ length: 83 }, (_, i) => ({
-    id: `MI-${i}`,
-    name: `County ${i}`,
-    amount: Math.random() * 500000 + 10000, // 随机金额
-    type: 'in-state'
-  }));
-
   onMount(async () => {
     const us = await d3.json('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json');
     usFeatures = feature(us, us.objects.states).features;
@@ -32,10 +24,9 @@
     let allNodes = [];
     const processedArcs = [];
 
-    // --- 处理 Out-of-State (红色) ---
     fundingData.forEach(d => {
       const source = projection([d.lon, d.lat]);
-      const target = projection([d.dest_lon, d.dest_lat]); // 密歇根坐标
+      const target = projection([d.dest_lon, d.dest_lat]);
 
       if (source && target) {
         allNodes.push({
@@ -49,7 +40,6 @@
           // 初始位置
           x: source[0],
           y: source[1],
-          // 半径 (按你之前的要求缩小)
           r: Math.sqrt(d.amount) / 80 + 1.5
         });
 
@@ -73,18 +63,26 @@
     // 初始位置设在密歇根中心，但在 Step 0-1 隐藏
     const miCenter = projection([-84.6, 44.3]); // 大致密歇根中心
     
-    miCountyData.forEach(d => {
-      allNodes.push({
-        ...d,
-        type: 'in-state',
-        homeX: miCenter[0], 
-        homeY: miCenter[1],
-        mapTargetX: miCenter[0],
-        mapTargetY: miCenter[1],
-        x: miCenter[0],
-        y: miCenter[1],
-        r: Math.sqrt(d.amount) / 80 + 1.5
-      });
+miCountyData.forEach(d => {
+      // 计算该县的投影坐标
+      const coords = projection([d.lon, d.lat]);
+      
+      // 只有当坐标在投影范围内时才添加
+      if (coords) {
+        allNodes.push({
+          ...d,
+          type: 'in-state',
+          // 使用实际地理坐标
+          homeX: coords[0], 
+          homeY: coords[1],
+          mapTargetX: coords[0],
+          mapTargetY: coords[1],
+          // 初始位置也设为实际坐标
+          x: coords[0],
+          y: coords[1],
+          r: Math.sqrt(d.total_amount) / 800 + 1.5
+        });
+      }
     });
 
     // === 2. 计算 Step 3 的柱状图位置 (Grid Layout) ===
@@ -140,7 +138,7 @@
         .force("y", d3.forceY(d => d.homeY).strength(1));
         
     } else if (step === 1) {
-      // Step 1: 地图 - 流向密歇根
+
       simulation
         .force("x", d3.forceX(d => d.mapTargetX).strength(0.1))
         .force("y", d3.forceY(d => d.mapTargetY).strength(0.1));
@@ -151,6 +149,40 @@
       simulation
         .force("x", d3.forceX(d => d.pillarX).strength(0.08))
         .force("y", d3.forceY(d => d.pillarY).strength(0.08));
+    } else if (step === 3) {
+  // === 4. 核心动画逻辑 ===
+  $effect(() => {
+    if (!simulation) return;
+    
+    simulation.alpha(1).restart();
+
+    if (step === 0) {
+      // Step 0: 初始状态
+      simulation
+        .force("x", d3.forceX(d => d.homeX).strength(1))
+        .force("y", d3.forceY(d => d.homeY).strength(1));
+        
+    } else if (step === 1) {
+      // Step 1: 地图模式 (红点飞入，蓝点显现)
+      simulation
+        .force("x", d3.forceX(d => d.mapTargetX).strength(0.1))
+        .force("y", d3.forceY(d => d.mapTargetY).strength(0.1));
+
+    } else if (step === 2) {
+      // Step 2: 柱状图对比 (所有点去柱子)
+      simulation
+        .force("x", d3.forceX(d => d.pillarX).strength(0.08))
+        .force("y", d3.forceY(d => d.pillarY).strength(0.08));
+
+    } else if (step === 3) {
+      // === 新增 Step 3: 回归密歇根 ===
+      // 蓝点回到地图位置，红点位置无所谓（因为会被隐藏）
+      simulation
+        .force("x", d3.forceX(d => d.type === 'in-state' ? d.mapTargetX : d.pillarX).strength(0.1))
+        .force("y", d3.forceY(d => d.type === 'in-state' ? d.mapTargetY : d.pillarY).strength(0.1));
+    }
+  });
+
     }
   });
 
@@ -159,20 +191,27 @@
 <div class="map-container" bind:clientWidth={width}>
   <svg {width} {height} viewBox="0 0 960 600">
     
-    <!-- 1. 地图层: Step 2 时淡出 -->
+    <!-- 1. 地图层: Step 2 淡出，Step 3 回归(但只高亮密歇根) -->
     <g class="map-layer" style="opacity: {step === 2 ? 0 : 1}; transition: opacity 1s;">
       {#each usFeatures as feature}
+        <!-- 
+           Michigan 的 FIPS ID 是 "26"。
+           逻辑：在 Step 3 时，如果不是密歇根，透明度设为 0.1 (淡化)，否则为 1。
+           在其他 Step (0,1) 保持为 1。
+        -->
         <path 
           d={pathGenerator(feature)} 
           fill="none" 
           stroke="#e0e0e0" 
           stroke-width="1.5"
+          style="transition: opacity 1s;"
+          opacity={step === 3 && feature.id !== '26' ? 0.1 : 1}
         />
       {/each}
     </g>
 
-    <!-- 2. 连线层: Step 2 时淡出 -->
-    <g class="arc-layer" style="opacity: {step === 2 ? 0 : 1}; transition: opacity 1s;">
+    <!-- 2. 连线层: 仅在 Step 1 显示 -->
+    <g class="arc-layer" style="opacity: {step === 1 ? 1 : 0}; transition: opacity 1s;">
       {#each arcs as arc}
         <path 
           d={arc.path}
@@ -183,21 +222,16 @@
           opacity="0.5"
           pathLength="1"
           class="flow-line"
-          class:animate={step >= 1}
+          class:animate={step === 1}
         />
       {/each}
     </g>
 
     <!-- 3. 柱状图标签: 仅在 Step 2 显示 -->
-    <g class="labels-layer" style="opacity: {step === 2 ? 1 : 0}; transition: opacity 1s 0.5s;">
-      <!-- 左侧标签 -->
+    <g class="labels-layer" style="opacity: {step === 2 ? 1 : 0}; transition: opacity 1s;">
       <text x="350" y="580" text-anchor="middle" font-weight="bold" fill="#D62728">Out-of-State</text>
       <text x="350" y="600" text-anchor="middle" font-size="12" fill="#666">External Contributions</text>
-
-      <!-- VS -->
       <text x="500" y="400" text-anchor="middle" font-size="20" font-weight="bold" fill="#ccc">VS</text>
-
-      <!-- 右侧标签 -->
       <text x="650" y="580" text-anchor="middle" font-weight="bold" fill="#2b8cbe">In-State (Michigan)</text>
       <text x="650" y="600" text-anchor="middle" font-size="12" fill="#666">Local Counties</text>
     </g>
@@ -205,6 +239,12 @@
     <!-- 4. 粒子层 -->
     <g class="particle-layer">
       {#each nodes as node}
+        <!-- 
+           透明度逻辑更新：
+           1. 如果是 out-state (红点)：在 Step 3 隐藏 (opacity 0)。
+           2. 如果是 in-state (蓝点)：在 Step 0 隐藏 (opacity 0)。
+           3. 其他情况显示 (opacity 0.9)。
+        -->
         <circle
           cx={node.x}
           cy={node.y}
@@ -214,17 +254,21 @@
           stroke-width="0.5"
           style="transition: fill 0.5s, opacity 1s;"
           
+          opacity={
+            (node.type === 'out-state' && step === 3) ? 0 : 
+            (node.type === 'in-state' && step < 1) ? 0 : 0.9
+          }
 
-          opacity={node.type === 'in-state' && step < 2 ? 0 : 0.9}
           style:mix-blend-mode="multiply" 
         >
-          <title>{node.name || node.contributor_state}: ${Math.round(node.amount).toLocaleString()}</title>
+          <title>{node.name || node.contributor_state}: ${Math.round(node.amount || node.total_amount).toLocaleString()}</title>
         </circle>
       {/each}
     </g>
 
   </svg>
 </div>
+
 
 <style>
   .map-container {
