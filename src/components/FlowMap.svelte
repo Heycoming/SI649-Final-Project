@@ -3,14 +3,11 @@
   import * as d3 from 'd3';
   import * as topojson from 'topojson-client';
   
-  // 假设这是你的数据路径，请确保路径正确
   import fundingData from '../data/state_funding.json';
   import miCountyData from '../data/county_funding.json';
   
   let { step = 0 } = $props();
 
-  // === 1. 定义固定画布尺寸 ===
-  // 为了保证投影和缩放的绝对对齐，我们固定 SVG 内部坐标系
   const width = 1000;
   const height = 600;
 
@@ -19,54 +16,45 @@
   let arcs = $state([]);       
   let simulation;
 
-  // === 缩放相关的状态 ===
+  // 缩放相关
   let transformString = $state("translate(0,0) scale(1)");
-  let currentScale = $state(1); // 用于反向缩小圆点半径
-  let miTarget = $state(null);  // 存储密歇根的中心和缩放比例
+  let currentScale = $state(1);
+  let miTarget = $state(null);
 
-  // 投影设置
   const projection = d3.geoAlbersUsa().scale(1300).translate([480, 300]);
   const pathGenerator = d3.geoPath().projection(projection);
 
+  // 定义 Step 2 的两个引力中心
+  const centerLeft = { x: 300, y: 320 };
+  const centerRight = { x: 700, y: 320 };
+
   onMount(async () => {
-    // 1. 加载地图
     const us = await d3.json('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json');
     usFeatures = topojson.feature(us, us.objects.states).features;
 
-    // 2. 处理节点数据 (保留你的原有逻辑)
     let allNodes = [];
     const processedArcs = [];
 
-    // --- 处理 Out-State (红点) ---
+    // 1. Out-State
     fundingData.forEach(d => {
       const source = projection([d.lon, d.lat]);
       const target = projection([d.dest_lon, d.dest_lat]);
-
       if (source && target) {
         allNodes.push({
           ...d,
           type: 'out-state',
-          // 地图位置
-          homeX: source[0],
-          homeY: source[1],
-          mapTargetX: target[0],
-          mapTargetY: target[1],
-          // 初始位置
-          x: source[0],
-          y: source[1],
-          // 稍微调整一下半径计算，避免点太大
+          homeX: source[0], homeY: source[1],
+          mapTargetX: target[0], mapTargetY: target[1],
+          x: source[0], y: source[1], // 初始位置
           r: Math.sqrt(d.amount) / 80 + 1.5
         });
-
-        // 连线
+        // 连线逻辑...
         const dx = target[0] - source[0];
         const dy = target[1] - source[1];
         const dr = Math.sqrt(dx * dx + dy * dy);
         const midX = (source[0] + target[0]) / 2;
         const midY = (source[1] + target[1]) / 2 - dr * 0.15; 
-
         processedArcs.push({
-          id: d.contributor_state,
           path: `M${source[0]},${source[1]} Q${midX},${midY} ${target[0]},${target[1]}`,
           color: d.amount > 100000 ? '#D62728' : '#F4A582',
           strokeWidth: Math.max(1, Math.sqrt(d.amount) / 150)
@@ -74,81 +62,47 @@
       }
     });
 
-    // --- 处理 In-State (密歇根内部, 蓝点) ---
+    // 2. In-State
     miCountyData.forEach(d => {
       const coords = projection([d.lon, d.lat]);
-      
       if (coords) {
         allNodes.push({
           ...d,
           type: 'in-state',
-          // *** 关键：homeX 就是它在地图上的真实位置 ***
-          homeX: coords[0], 
-          homeY: coords[1],
-          mapTargetX: coords[0],
-          mapTargetY: coords[1],
-          x: coords[0],
-          y: coords[1],
+          homeX: coords[0], homeY: coords[1],
+          mapTargetX: coords[0], mapTargetY: coords[1],
+          x: coords[0], y: coords[1],
           r: Math.sqrt(d.total_amount) / 800 + 1.5
         });
       }
     });
 
-    // 3. 计算柱状图位置 (保留你的 Grid Layout)
-    const calculatePillarPositions = (nodes, centerX, bottomY, colCount) => {
-      nodes.sort((a, b) => b.amount - a.amount);
-      const spacing = 14;
-      nodes.forEach((node, i) => {
-        const col = i % colCount;
-        const row = Math.floor(i / colCount);
-        const xOffset = (col - (colCount - 1) / 2) * spacing;
-        node.pillarX = centerX + xOffset;
-        node.pillarY = bottomY - row * spacing;
-      });
-    };
-
-    const outStateNodes = allNodes.filter(d => d.type === 'out-state');
-    const inStateNodes = allNodes.filter(d => d.type === 'in-state');
-
-    calculatePillarPositions(outStateNodes, 350, 550, 6);
-    calculatePillarPositions(inStateNodes, 650, 550, 6);
-
     nodes = allNodes;
     arcs = processedArcs;
 
-    // 4. 启动模拟器
+    // 初始化模拟器，但先不设置具体的力，在 $effect 中动态设置
     simulation = d3.forceSimulation(nodes)
       .on("tick", () => { nodes = [...nodes]; });
   });
 
-  // === 5. 计算密歇根的缩放参数 (Zoom Logic) ===
+  // 缩放计算 (保持不变)
   $effect(() => {
     if (usFeatures.length > 0 && !miTarget) {
-      // 找到密歇根 (ID 26)
       const michigan = usFeatures.find(f => f.id === "26");
       if (michigan) {
         const bounds = pathGenerator.bounds(michigan);
-        const x0 = bounds[0][0], x1 = bounds[1][0];
-        const y0 = bounds[0][1], y1 = bounds[1][1];
-        
-        const cx = (x0 + x1) / 2;
-        const cy = (y0 + y1) / 2;
-        
-        // 计算缩放倍数 (0.85 是留白系数)
-        const scale = 0.85 / Math.max((x1 - x0) / width, (y1 - y0) / height);
-        
+        const cx = (bounds[0][0] + bounds[1][0]) / 2;
+        const cy = (bounds[0][1] + bounds[1][1]) / 2;
+        const scale = 0.85 / Math.max((bounds[1][0] - bounds[0][0]) / width, (bounds[1][1] - bounds[0][1]) / height);
         miTarget = { x: cx, y: cy, k: scale };
       }
     }
   });
 
-  // === 6. 应用缩放变换 (Transform Logic) ===
   $effect(() => {
     if (step === 3 && miTarget) {
-      // 公式：移到中心 -> 放大 -> 移回屏幕中心
       const tx = width / 2 - miTarget.k * miTarget.x;
       const ty = height / 2 - miTarget.k * miTarget.y;
-      
       transformString = `translate(${tx}px, ${ty}px) scale(${miTarget.k})`;
       currentScale = miTarget.k;
     } else {
@@ -157,79 +111,78 @@
     }
   });
 
-  // === 7. 力导向控制 ===
+  // === 核心修改：Step 2 的物理模拟 ===
   $effect(() => {
     if (!simulation) return;
     
+    // 每次状态改变，必须重启 alpha，否则模拟器是“冷”的，点不会动
     simulation.alpha(1).restart();
 
-    // 定义碰撞力 (防止点重叠)
-    const collideForce = d3.forceCollide().radius(d => d.r + 1).strength(0.5);
+    // 基础碰撞力：保证点不重叠
+    const collide = d3.forceCollide().radius(d => d.r + 1).strength(0.9);
 
     if (step === 0) {
-      // Step 0: 初始状态
+      // Step 0: 回家
       simulation
         .force("x", d3.forceX(d => d.homeX).strength(1))
         .force("y", d3.forceY(d => d.homeY).strength(1))
-        .force("collide", collideForce);
-        
+        .force("collide", collide)
+        .force("charge", null); // 移除电荷力
+
     } else if (step === 1) {
-      // Step 1: 连线显示
+      // Step 1: 连线
       simulation
         .force("x", d3.forceX(d => d.mapTargetX).strength(0.1))
         .force("y", d3.forceY(d => d.mapTargetY).strength(0.1))
-        .force("collide", collideForce);
+        .force("collide", collide)
+        .force("charge", null);
 
     } else if (step === 2) {
-      // Step 2: 柱状图
+      // === Step 2: 动态气泡聚类 ===
+      // 关键点：
+      // 1. strength(0.06) 很小 -> 这是一个柔和的引力，允许点在中心附近晃动，而不是死死钉住
+      // 2. charge(-3) -> 这是一个微弱的斥力，让点之间保持一点“呼吸感”，防止挤得太死
+      // 3. collide -> 强力碰撞，这是形成圆球形状的关键
+      
       simulation
-        .force("x", d3.forceX(d => d.pillarX).strength(0.1))
-        .force("y", d3.forceY(d => d.pillarY).strength(0.1))
-        .force("collide", collideForce); // 柱状图需要防重叠
+        .force("x", d3.forceX(d => d.type === 'out-state' ? centerLeft.x : centerRight.x).strength(0.06))
+        .force("y", d3.forceY(d => d.type === 'out-state' ? centerLeft.y : centerRight.y).strength(0.06))
+        .force("collide", collide)
+        .force("charge", d3.forceManyBody().strength(-3)); 
 
     } else if (step === 3) {
-      // === Step 3: 聚焦密歇根 ===
-      // 1. 蓝点(In-state) 回到 homeX (真实地理位置)
-      // 2. 红点(Out-state) 其实无所谓，因为会被隐藏，但也让它们回 homeX 好了
-      // 3. ***关键***：strength(1) 强力吸附，并且移除 collide，允许重叠以保证位置精准
+      // Step 3: 聚焦密歇根
+      // 蓝点强力回归，红点去左边待着(反正看不见)
       simulation
-        .force("x", d3.forceX(d => d.homeX).strength(1))
-        .force("y", d3.forceY(d => d.homeY).strength(1))
-        .force("collide", null); 
+        .force("x", d3.forceX(d => d.type === 'in-state' ? d.homeX : centerLeft.x).strength(1))
+        .force("y", d3.forceY(d => d.type === 'in-state' ? d.homeY : centerLeft.y).strength(1))
+        .force("collide", null) // 必须移除碰撞，否则地图上的点对不准
+        .force("charge", null);
     }
   });
 
 </script>
 
 <div class="map-container">
-  <!-- viewBox 锁定为 1000x600，确保与 projection 一致 -->
   <svg {width} {height} viewBox="0 0 {width} {height}">
     
-    <!-- 
-      === Zoom Group === 
-      包含所有需要一起缩放的元素：地图、连线、点。
-      Labels 不需要缩放，所以放在外面。
-    -->
     <g class="zoom-group" style="transform: {transformString};">
-
-      <!-- 1. 地图层 -->
+      <!-- 地图层 -->
       <g class="map-layer">
         {#each usFeatures as feature}
           <path 
             d={pathGenerator(feature)} 
             fill="none" 
             stroke="#e0e0e0" 
-            
             stroke-width="1.5"
             vector-effect="non-scaling-stroke"
-
             style="transition: opacity 1s;"
             opacity={step === 2 ? 0 : (step === 3 && feature.id !== '26' ? 0.05 : 1)}
           />
         {/each}
       </g>
 
-      <!-- 2. 连线层 -->
+      <!-- 连线层 -->
       <g class="arc-layer" style="opacity: {step === 1 ? 1 : 0}; transition: opacity 1s;">
         {#each arcs as arc}
           <path 
@@ -246,43 +199,36 @@
         {/each}
       </g>
 
-      <!-- 4. 粒子层 -->
+      <!-- 粒子层 -->
       <g class="particle-layer">
         {#each nodes as node}
           <circle
             cx={node.x}
             cy={node.y}
-
             r={node.r / (step === 3 ? currentScale * 0.6 : 1)}
-
             fill={node.type === 'out-state' ? "#D62728" : "#2b8cbe"}
             stroke="white"
-            
             stroke-width={0.5 / (step === 3 ? currentScale : 1)}
-
             style="transition: fill 0.5s, opacity 1s, r 1s;"
-            
             opacity={
-              (node.type === 'out-state' && step === 3) ? 0 : // Step 3 隐藏红点
-              (node.type === 'in-state' && step < 1) ? 0 :   // Step 0 隐藏蓝点
-              0.9
+              (node.type === 'out-state' && step === 3) ? 0 : 
+              (node.type === 'in-state' && step < 1) ? 0 : 0.9
             }
             style:mix-blend-mode="multiply" 
-          >
-            <title>{node.contributor_state || 'Michigan'}: ${Math.round(node.amount || node.total_amount).toLocaleString()}</title>
-          </circle>
+          />
         {/each}
       </g>
+    </g>
 
-    </g> <!-- End Zoom Group -->
-
-    <!-- 3. 柱状图标签 (放在 Zoom Group 外面，保持静止) -->
+    <!-- 标签层 (Step 2 显示) -->
     <g class="labels-layer" style="opacity: {step === 2 ? 1 : 0}; transition: opacity 1s; pointer-events: none;">
-      <text x="350" y="580" text-anchor="middle" font-weight="bold" fill="#D62728">Out-of-State</text>
-      <text x="350" y="600" text-anchor="middle" font-size="12" fill="#666">External Contributions</text>
-      <text x="500" y="400" text-anchor="middle" font-size="20" font-weight="bold" fill="#ccc">VS</text>
-      <text x="650" y="580" text-anchor="middle" font-weight="bold" fill="#2b8cbe">In-State (Michigan)</text>
-      <text x="650" y="600" text-anchor="middle" font-size="12" fill="#666">Local Counties</text>
+      <text x={centerLeft.x} y="480" text-anchor="middle" font-weight="bold" fill="#D62728" font-size="16">Out-of-State</text>
+      <text x={centerLeft.x} y="500" text-anchor="middle" font-size="12" fill="#666">External Contributions</text>
+      
+      <text x="500" y="320" text-anchor="middle" font-size="24" font-weight="bold" fill="#ddd" dy=".3em">VS</text>
+      
+      <text x={centerRight.x} y="480" text-anchor="middle" font-weight="bold" fill="#2b8cbe" font-size="16">In-State (Michigan)</text>
+      <text x={centerRight.x} y="500" text-anchor="middle" font-size="12" fill="#666">Local Counties</text>
     </g>
 
   </svg>
@@ -296,18 +242,17 @@
     justify-content: center;
     align-items: center;
     background: white;
-    overflow: hidden; /* 防止放大时溢出 */
+    overflow: hidden;
   }
 
   .zoom-group {
-    /* 核心动画：平滑缩放 */
     transition: transform 1.5s cubic-bezier(0.25, 0.1, 0.25, 1);
-    transform-origin: 0 0; /* 配合我们的 translate 计算 */
+    transform-origin: 0 0;
     will-change: transform;
   }
 
   .flow-line {
-    stroke-dasharray: 1000; /* 稍微加大一点确保覆盖全长 */
+    stroke-dasharray: 1000;
     stroke-dashoffset: 1000;
     transition: stroke-dashoffset 1.5s ease-in-out;
   }
