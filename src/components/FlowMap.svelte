@@ -8,19 +8,43 @@
   
   let { step = 0 } = $props();
 
-  const width = 1000;
-  const height = 600;
+  // === 1. 响应式设置 ===
+  const baseWidth = 960;
+  const baseHeight = 600;
+  
+  let containerWidth = $state(960);
+  let containerHeight = $state(600);
 
+  // === 2. D3 Scales 定义 ===
+  
+  // A. 气泡半径
+  let rScale = d3.scaleSqrt().range([4, 50]); 
+  
+  // B. 线条宽度
+  let wScale = d3.scaleSqrt().range([5, 30]); 
+
+  // C. 红色比例尺 (Out-State: Amount 越高，颜色越深)
+  // 从 "浅粉色" 到 "深红色"
+  let cScaleRed = d3.scaleSqrt().range(["#ED9C9C", "#D62728"]);
+
+  // D. 蓝色比例尺 (In-State: Amount 越高，颜色越深)
+  // 从 "浅蓝色" 到 "深蓝色"
+  // 之前的固定色是 #2b8cbe，我们把它作为中间或较深的值
+  let cScaleBlue = d3.scaleSqrt().range(["#C6DBEF", "#08519C"]);
+
+  // 状态变量
   let usFeatures = $state([]); 
   let nodes = $state([]);      
   let arcs = $state([]);       
-  
   let isReady = $state(false);
   let simulation;
 
   let transformString = $state("translate(0,0) scale(1)");
   let currentScale = $state(1);
   let miTarget = $state(null);
+
+  let hoveredNode = $state(null);
+  let tooltipPos = $state({ x: 0, y: 0 });
 
   const projection = d3.geoAlbersUsa().scale(1300).translate([480, 300]);
   const pathGenerator = d3.geoPath().projection(projection);
@@ -32,48 +56,74 @@
     const us = await d3.json('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json');
     usFeatures = topojson.feature(us, us.objects.states).features;
 
+    const maxFunding = d3.max(fundingData, d => d.amount) || 0;
+    const maxCounty = d3.max(miCountyData, d => d.total_amount) || 0;
+    const globalMax = Math.max(maxFunding, maxCounty);
+
+    // === 更新所有比例尺的 Domain ===
+    rScale.domain([0, globalMax]);
+    wScale.domain([0, maxFunding]); 
+    
+    // 分别设置颜色 Domain，确保各自内部对比度最大化
+    cScaleRed.domain([0, maxFunding]); 
+    cScaleBlue.domain([0, maxCounty]); 
+
     let allNodes = [];
     const processedArcs = [];
 
-    // 1. Out-State (红点)
+    // 1. Out-State (红点 - 动态颜色)
     fundingData.forEach(d => {
       const source = projection([d.lon, d.lat]);
       const target = projection([d.dest_lon, d.dest_lat]);
+      
       if (source && target) {
+        const radius = rScale(d.amount); 
+        // 计算红色动态颜色
+        const dynamicColor = cScaleRed(d.amount);
+
         allNodes.push({
           ...d,
           type: 'out-state',
           homeX: source[0], homeY: source[1],
-          mapTargetX: target[0], mapTargetY: target[1],
           x: source[0], y: source[1], 
-          r: Math.sqrt(d.amount) / 80 + 1.5 
+          r: Math.max(3, radius * 0.7), 
+          r_compare: radius,            
+          formattedAmount: d3.format("$,.0f")(d.amount),
+          color: dynamicColor // <--- 红色
         });
         
+        // 曲线路径
         const dx = target[0] - source[0];
         const dy = target[1] - source[1];
         const dr = Math.sqrt(dx * dx + dy * dy);
         const midX = (source[0] + target[0]) / 2;
-        const midY = (source[1] + target[1]) / 2 - dr * 0.15; 
+        const midY = (source[1] + target[1]) / 2 - dr * 0.2; 
+        
         processedArcs.push({
           path: `M${source[0]},${source[1]} Q${midX},${midY} ${target[0]},${target[1]}`,
-          color: d.amount > 100000 ? '#D62728' : '#F4A582',
-          strokeWidth: Math.max(1, Math.sqrt(d.amount) / 150)
+          color: dynamicColor, 
+          strokeWidth: wScale(d.amount)
         });
       }
     });
 
-    // 2. In-State (蓝点)
+    // 2. In-State (蓝点 - 动态颜色)
     miCountyData.forEach(d => {
       const coords = projection([d.lon, d.lat]);
       if (coords) {
+        const radius = rScale(d.total_amount);
+        // 计算蓝色动态颜色
+        const dynamicColor = cScaleBlue(d.total_amount);
+
         allNodes.push({
           ...d,
           type: 'in-state',
           homeX: coords[0], homeY: coords[1],
-          mapTargetX: coords[0], mapTargetY: coords[1],
           x: coords[0], y: coords[1],
-          r_map: Math.sqrt(d.total_amount) / 800 + 1.5,
-          r_compare: Math.sqrt(d.total_amount) / 60 + 1.5
+          r_map: Math.max(2, radius * 0.15), 
+          r_compare: radius,                 
+          formattedAmount: d3.format("$,.0f")(d.total_amount),
+          color: dynamicColor // <--- 蓝色 (现在也是动态的了)
         });
       }
     });
@@ -88,24 +138,26 @@
     isReady = true; 
   });
 
-  // 缩放计算
+  // === 缩放计算 ===
   $effect(() => {
     if (usFeatures.length > 0 && !miTarget) {
       const michigan = usFeatures.find(f => f.id === "26");
       if (michigan) {
         const bounds = pathGenerator.bounds(michigan);
-        const cx = (bounds[0][0] + bounds[1][0]) / 2;
-        const cy = (bounds[0][1] + bounds[1][1]) / 2;
-        const scale = 0.85 / Math.max((bounds[1][0] - bounds[0][0]) / width, (bounds[1][1] - bounds[0][1]) / height);
-        miTarget = { x: cx, y: cy, k: scale };
+        const dx = bounds[1][0] - bounds[0][0];
+        const dy = bounds[1][1] - bounds[0][1];
+        const x = (bounds[0][0] + bounds[1][0]) / 2;
+        const y = (bounds[0][1] + bounds[1][1]) / 2;
+        const scale = 0.85 / Math.max(dx / baseWidth, dy / baseHeight);
+        miTarget = { x, y, k: scale };
       }
     }
   });
 
   $effect(() => {
     if (step === 3 && miTarget) {
-      const tx = width / 2 - miTarget.k * miTarget.x;
-      const ty = height / 2 - miTarget.k * miTarget.y;
+      const tx = baseWidth / 2 - miTarget.k * miTarget.x;
+      const ty = baseHeight / 2 - miTarget.k * miTarget.y;
       transformString = `translate(${tx}px, ${ty}px) scale(${miTarget.k})`;
       currentScale = miTarget.k;
     } else {
@@ -120,82 +172,80 @@
     
     simulation.alpha(1).restart();
 
-    // 【修改】动态计算碰撞半径
-    // 在 Step 2 时，蓝点变大了，所以碰撞半径也要变大，否则会重叠
     const collide = d3.forceCollide()
       .radius(d => {
-        if (d.type === 'in-state' && step === 2) return d.r_compare + 1; // Step 2 用大尺寸
-        if (d.type === 'in-state') return d.r_map + 1; // 其他时候用小尺寸
-        return d.r + 1; // 红点尺寸不变
+        const r = getCurrentRadius(d, step);
+        return r + 1.5; 
       })
       .strength(0.8);
 
-    // 清除旧力
-    simulation.force("x", null).force("y", null).force("collide", null).force("charge", null);
+    simulation.force("x", null).force("y", null).force("collide", null);
 
-    if (step === 0) {
-      // Step 0: 红点在老家
-      // 【修改】移除 collide，让红点自然重叠在经纬度中心
-      simulation
-        .force("x", d3.forceX(d => d.homeX).strength(1))
-        .force("y", d3.forceY(d => d.homeY).strength(1));
-
-    } else if (step === 1) {
-      // Step 1: 连线展示，点不动
-      // 【修改】同样移除 collide
+    if (step === 0 || step === 1) {
       simulation
         .force("x", d3.forceX(d => d.homeX).strength(1))
         .force("y", d3.forceY(d => d.homeY).strength(1));
 
     } else if (step === 2) {
-      // Step 2: 气泡聚类 (红蓝对比)
-      // 【保留】这里需要 collide，否则球会缩成一个点
       simulation
         .force("x", d3.forceX(d => d.type === 'out-state' ? centerLeft.x : centerRight.x).strength(0.08))
         .force("y", d3.forceY(d => d.type === 'out-state' ? centerLeft.y : centerRight.y).strength(0.08))
         .force("collide", collide);
 
     } else if (step === 3) {
-      // Step 3: 聚焦密歇根
-      
-      // 红点：原地淡出 (保持 Step 2 的力)
-      // 蓝点：弹射回 homeX
-      
-      // 【修改】这里也移除 collide，让蓝点回到县中心时也能自然重叠，不互相挤
       simulation
         .force("x", d3.forceX(d => d.type === 'out-state' ? centerLeft.x : d.homeX).strength(d => d.type === 'out-state' ? 0.08 : 0.8))
         .force("y", d3.forceY(d => d.type === 'out-state' ? centerLeft.y : d.homeY).strength(d => d.type === 'out-state' ? 0.08 : 0.8));
     }
   });
 
-  // === 辅助函数：获取当前应该显示的半径 ===
   function getCurrentRadius(node, currentStep) {
-    if (node.type === 'out-state') {
-      return node.r; // 红点始终如一
-    }
-    // 蓝点逻辑
-    if (currentStep === 2) {
-      return node.r_compare; // Step 2 变大
-    }
-    return node.r_map; // 其他时候 (Step 0, 1, 3) 变小
+    if (node.type === 'out-state') return node.r_compare; 
+    if (currentStep === 2) return node.r_compare;         
+    return node.r_map;                                    
   }
 
-  // === 透明度控制 ===
   function getNodeOpacity(node, currentStep) {
-    if (currentStep === 0) return node.type === 'out-state' ? 0.9 : 0;
-    if (currentStep === 1) return node.type === 'out-state' ? 0.9 : 0;
-    if (currentStep === 2) return 0.9;
-    if (currentStep === 3) return node.type === 'in-state' ? 0.9 : 0;
+    if (currentStep === 0 || currentStep === 1) return node.type === 'out-state' ? 0.95 : 0;
+    if (currentStep === 2) return 0.95;
+    if (currentStep === 3) return node.type === 'in-state' ? 0.95 : 0;
     return 0;
+  }
+
+  function handleMouseEnter(event, node) {
+    if (step === 1) return; 
+    hoveredNode = node;
+    updateTooltipPos(event);
+  }
+
+  function handleMouseMove(event) {
+    if (hoveredNode) updateTooltipPos(event);
+  }
+
+  function handleMouseLeave() {
+    hoveredNode = null;
+  }
+
+  function updateTooltipPos(event) {
+    tooltipPos = { x: event.clientX + 15, y: event.clientY + 15 };
   }
 
 </script>
 
-<div class="map-container">
-  <svg {width} {height} viewBox="0 0 {width} {height}">
-    
+<div 
+  class="map-container" 
+  bind:clientWidth={containerWidth} 
+  bind:clientHeight={containerHeight}
+>
+  <svg 
+    width="100%" 
+    height="100%" 
+    viewBox="0 0 {baseWidth} {baseHeight}"
+    preserveAspectRatio="xMidYMid meet"
+  >
     <g class="zoom-group" style="transform: {transformString};">
-      <!-- 地图层 -->
+      
+      <!-- 1. 地图层 -->
       <g class="map-layer">
         {#each usFeatures as feature}
           <path 
@@ -210,7 +260,7 @@
         {/each}
       </g>
 
-      <!-- 连线层 -->
+      <!-- 2. 连线层 -->
       <g class="arc-layer" style="opacity: {step === 1 ? 1 : 0}; transition: opacity 1s;">
         {#each arcs as arc}
           <path 
@@ -219,7 +269,7 @@
             stroke={arc.color}
             stroke-width={arc.strokeWidth}
             stroke-linecap="round"
-            opacity="0.5"
+            opacity="0.9" 
             class="flow-line"
             class:animate={step === 1}
             vector-effect="non-scaling-stroke"
@@ -227,24 +277,28 @@
         {/each}
       </g>
 
-      <!-- 粒子层 -->
+      <!-- 3. 粒子层 -->
       <g class="particle-layer">
         {#each nodes as node}
+          <!-- svelte-ignore a11y_no_static_element_interactions -->
           <circle
             cx={node.x}
             cy={node.y}
             
-            r={getCurrentRadius(node, step) / (step === 3 ? currentScale * 0.6 : 1)}
+            r={getCurrentRadius(node, step) / (step === 3 ? currentScale * 0.8 : 1)}
             
-            fill={node.type === 'out-state' ? "#D62728" : "#2b8cbe"}
+            fill={node.color} 
+            
             stroke="white"
-            stroke-width={0.5 / (step === 3 ? currentScale : 1)}
+            stroke-width={1.5 / (step === 3 ? currentScale : 1)} 
             
-            style="transition: fill 0.5s, opacity 1s, r 1s;"
+            style="transition: fill 0.5s, opacity 1s, r 1s; cursor: pointer;"
             
             opacity={getNodeOpacity(node, step)}
             
-            style:mix-blend-mode="multiply" 
+            onmouseenter={(e) => handleMouseEnter(e, node)}
+            onmousemove={handleMouseMove}
+            onmouseleave={handleMouseLeave}
           />
         {/each}
       </g>
@@ -254,23 +308,29 @@
     <g class="labels-layer" style="opacity: {step === 2 ? 1 : 0}; transition: opacity 1s; pointer-events: none;">
       <text x={centerLeft.x} y="520" text-anchor="middle" font-weight="bold" fill="#D62728" font-size="16">Out-of-State</text>
       <text x={centerLeft.x} y="540" text-anchor="middle" font-size="14" fill="#666">External Contributions</text>
-      
       <text x="480" y="320" text-anchor="middle" font-size="24" font-weight="bold" fill="#000" dy=".3em">VS</text>
-      
-      <text x={centerRight.x} y="520" text-anchor="middle" font-weight="bold" fill="#2b8cbe" font-size="16">In-State (Michigan)</text>
+      <text x={centerRight.x} y="520" text-anchor="middle" font-weight="bold" fill="#08519C" font-size="16">In-State (Michigan)</text>
       <text x={centerRight.x} y="540" text-anchor="middle" font-size="14" fill="#666">Local Counties</text>
     </g>
-
   </svg>
+
+  {#if hoveredNode}
+    <div 
+      class="tooltip" 
+      style="top: {tooltipPos.y}px; left: {tooltipPos.x}px;"
+    >
+      <strong>{hoveredNode.type === 'out-state' ? hoveredNode.contributor_state : hoveredNode.county}</strong>
+      <br/>
+      Amount: {hoveredNode.formattedAmount}
+    </div>
+  {/if}
 </div>
 
 <style>
   .map-container {
     width: 100%;
     height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    position: relative;
     background: white;
     overflow: hidden;
   }
@@ -286,5 +346,18 @@
   }
   .flow-line.animate {
     stroke-dashoffset: 0;
+  }
+  .tooltip {
+    position: fixed;
+    background: rgba(255, 255, 255, 0.98);
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    pointer-events: none;
+    font-size: 13px;
+    color: #333;
+    z-index: 100;
+    transform: translate(0, -100%);
   }
 </style>
