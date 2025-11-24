@@ -1,292 +1,263 @@
 <script>
-  import { onMount } from 'svelte';
-  import * as d3 from 'd3';
-  import { feature } from 'topojson-client';
-  import fundingData from '../data/state_funding.json';
-  import miCountyData from '../data/county_funding.json';
-  
-  let { step = 0 } = $props();
+  import { onMount } from "svelte";
+  import * as d3 from "d3";
+  import * as topojson from "topojson-client";
 
-  let width = $state(1000);
-  let height = $state(600);
-  let usFeatures = $state([]); 
-  let nodes = $state([]);      
-  let arcs = $state([]);       
+  let { step } = $props();
+
+  const width = 960;
+  const height = 600;
+  
+  let usFeatures = $state([]); // 州数据
+  let miCounties = $state([]); // 密歇根县数据
+  let nodes = $state([]);
+  let arcs = $state([]);
   let simulation;
 
-  const projection = d3.geoAlbersUsa().scale(1300).translate([480, 300]);
+  // 缩放相关状态
+  let transformString = $state("translate(0,0) scale(1)");
+  let currentScale = $state(1);
+  let miTarget = $state(null);
+
+  const projection = d3.geoAlbersUsa().scale(1200).translate([width / 2, height / 2]);
   const pathGenerator = d3.geoPath().projection(projection);
 
   onMount(async () => {
-    const us = await d3.json('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json');
-    usFeatures = feature(us, us.objects.states).features;
-
-    let allNodes = [];
-    const processedArcs = [];
-
-    fundingData.forEach(d => {
-      const source = projection([d.lon, d.lat]);
-      const target = projection([d.dest_lon, d.dest_lat]);
-
-      if (source && target) {
-        allNodes.push({
-          ...d,
-          type: 'out-state',
-          // 地图模式坐标
-          homeX: source[0],
-          homeY: source[1],
-          mapTargetX: target[0],
-          mapTargetY: target[1],
-          // 初始位置
-          x: source[0],
-          y: source[1],
-          r: Math.sqrt(d.amount) / 80 + 1.5
-        });
-
-        // 连线
-        const dx = target[0] - source[0];
-        const dy = target[1] - source[1];
-        const dr = Math.sqrt(dx * dx + dy * dy);
-        const midX = (source[0] + target[0]) / 2;
-        const midY = (source[1] + target[1]) / 2 - dr * 0.15; 
-
-        processedArcs.push({
-          id: d.contributor_state,
-          path: `M${source[0]},${source[1]} Q${midX},${midY} ${target[0]},${target[1]}`,
-          color: d.amount > 100000 ? '#D62728' : '#F4A582',
-          strokeWidth: Math.max(1, Math.sqrt(d.amount) / 150)
-        });
-      }
-    });
-
-    // --- 处理 In-State (密歇根内部, 蓝色/紫色) ---
-    // 初始位置设在密歇根中心，但在 Step 0-1 隐藏
-    const miCenter = projection([-84.6, 44.3]); // 大致密歇根中心
+    // 1. 加载地图数据 (包含 Counties)
+    const us = await d3.json("https://cdn.jsdelivr.net/npm/us-atlas@3/counties-10m.json");
     
-miCountyData.forEach(d => {
-      // 计算该县的投影坐标
-      const coords = projection([d.lon, d.lat]);
+    // 提取州用于背景
+    usFeatures = topojson.feature(us, us.objects.states).features;
+    
+    // 提取所有县，并筛选出密歇根的县 (FIPS code 以 '26' 开头)
+    const allCounties = topojson.feature(us, us.objects.counties).features;
+    miCounties = allCounties.filter(d => d.id.startsWith("26"));
+
+    // 2. 生成节点数据
+    const rawNodes = [];
+
+    // A. Out-of-state (红点) - 依旧随机分布在全美
+    for(let i=0; i<150; i++) {
+      rawNodes.push({
+        id: `out-${i}`, type: 'out-state', amount: Math.random() * 5000 + 1000,
+        lon: -120 + Math.random() * 40, lat: 30 + Math.random() * 15
+      });
+    }
+
+    // B. In-state (蓝点) - ***关键修改：绑定到具体的县***
+    // 我们遍历密歇根的 83 个县，每个县生成 1-3 个点
+    miCounties.forEach((county, index) => {
+      // 计算该县的几何中心像素坐标 [x, y]
+      const centroid = pathGenerator.centroid(county);
       
-      // 只有当坐标在投影范围内时才添加
-      if (coords) {
-        allNodes.push({
-          ...d,
+      // 如果地图数据有问题导致算不出中心，跳过
+      if (!centroid || isNaN(centroid[0])) return;
+
+      // 每个县生成 1 到 3 个点
+      const count = 1 + Math.floor(Math.random() * 2); 
+      
+      for (let k = 0; k < count; k++) {
+        rawNodes.push({
+          id: `in-${county.id}-${k}`,
           type: 'in-state',
-          // 使用实际地理坐标
-          homeX: coords[0], 
-          homeY: coords[1],
-          mapTargetX: coords[0],
-          mapTargetY: coords[1],
-          // 初始位置也设为实际坐标
-          x: coords[0],
-          y: coords[1],
-          r: Math.sqrt(d.total_amount) / 800 + 1.5
+          amount: Math.random() * 3000 + 500,
+          // 直接存储像素坐标，不再需要经纬度转换
+          fixedX: centroid[0], 
+          fixedY: centroid[1],
+          // 添加一点点微小的随机抖动(Jitter)，否则所有点会完全重叠成一个点
+          jitterX: (Math.random() - 0.5) * 5, 
+          jitterY: (Math.random() - 0.5) * 5
         });
       }
     });
 
-    // === 2. 计算 Step 3 的柱状图位置 (Grid Layout) ===
-    // 我们需要把节点分成两组，计算它们在柱子里的 x, y
-    
-    const calculatePillarPositions = (nodes, centerX, bottomY, colCount) => {
-      // 按金额排序，大的在下面
-      nodes.sort((a, b) => b.amount - a.amount);
+    // 3. 初始化节点对象
+    nodes = rawNodes.map(d => {
+      // 如果是红点，还需要算一下投影；如果是蓝点，已经有 fixedX 了
+      let startX, startY;
       
-      const spacing = 14; // 圆圈间距
-      
-      nodes.forEach((node, i) => {
-        const col = i % colCount;
-        const row = Math.floor(i / colCount);
+      if (d.type === 'out-state') {
+        const coords = projection([d.lon, d.lat]) || [width/2, height/2];
+        startX = coords[0];
+        startY = coords[1];
+      } else {
+        startX = d.fixedX + d.jitterX;
+        startY = d.fixedY + d.jitterY;
+      }
+
+      return {
+        ...d,
+        // 地图上的归宿位置
+        homeX: startX,
+        homeY: startY,
         
-        // 计算偏移量，让柱子居中
-        const xOffset = (col - (colCount - 1) / 2) * spacing;
-        
-        node.pillarX = centerX + xOffset;
-        node.pillarY = bottomY - row * spacing;
-      });
-    };
+        // 柱状图位置
+        pillarX: d.type === 'out-state' ? 300 : 660,
+        pillarY: 550 - Math.random() * 200,
 
-    const outStateNodes = allNodes.filter(d => d.type === 'out-state');
-    const inStateNodes = allNodes.filter(d => d.type === 'in-state');
+        // 初始位置
+        x: startX, y: startY,
+        r: Math.sqrt(d.amount) / 10
+      };
+    });
 
-    // 左柱子 (Out-state): x=350, 底部=550, 5列宽
-    calculatePillarPositions(outStateNodes, 350, 550, 6);
-    
-    // 右柱子 (In-state): x=650, 底部=550, 5列宽
-    calculatePillarPositions(inStateNodes, 650, 550, 6);
+    // 4. 生成连线
+    const miCenter = projection([-84.5, 44.3]); 
+    arcs = nodes.filter(d => d.type === 'out-state').map(d => {
+      const source = [d.homeX, d.homeY];
+      const dx = miCenter[0] - source[0], dy = miCenter[1] - source[1];
+      const dr = Math.sqrt(dx * dx + dy * dy);
+      return { path: `M${source[0]},${source[1]}A${dr},${dr} 0 0,1 ${miCenter[0]},${miCenter[1]}`, color: "#D62728", strokeWidth: d.r / 2 };
+    });
 
-    nodes = allNodes;
-    arcs = processedArcs;
-
-    // === 3. 模拟器设置 ===
+    // 5. 启动模拟
     simulation = d3.forceSimulation(nodes)
-      .on("tick", () => {
-        nodes = [...nodes];
-      });
+      .on("tick", () => { nodes = [...nodes]; });
   });
 
-  // === 4. 核心动画逻辑 ===
+  // 计算密歇根缩放参数 (保持不变，因为逻辑是对的)
   $effect(() => {
-    if (!simulation) return;
-    
-    simulation.alpha(1).restart();
-
-    if (step === 0) {
-      // Step 0: 地图 - 回到原点
-      simulation
-        .force("x", d3.forceX(d => d.homeX).strength(1))
-        .force("y", d3.forceY(d => d.homeY).strength(1));
-        
-    } else if (step === 1) {
-
-      simulation
-        .force("x", d3.forceX(d => d.mapTargetX).strength(0.1))
-        .force("y", d3.forceY(d => d.mapTargetY).strength(0.1));
-
-    } else if (step === 2) {
-      // Step 2 (即文案的第3步): 柱状图对比
-      // 强制移动到 pillarX / pillarY
-      simulation
-        .force("x", d3.forceX(d => d.pillarX).strength(0.08))
-        .force("y", d3.forceY(d => d.pillarY).strength(0.08));
-    } else if (step === 3) {
-  // === 4. 核心动画逻辑 ===
-  $effect(() => {
-    if (!simulation) return;
-    
-    simulation.alpha(1).restart();
-
-    if (step === 0) {
-      // Step 0: 初始状态
-      simulation
-        .force("x", d3.forceX(d => d.homeX).strength(1))
-        .force("y", d3.forceY(d => d.homeY).strength(1));
-        
-    } else if (step === 1) {
-      // Step 1: 地图模式 (红点飞入，蓝点显现)
-      simulation
-        .force("x", d3.forceX(d => d.mapTargetX).strength(0.1))
-        .force("y", d3.forceY(d => d.mapTargetY).strength(0.1));
-
-    } else if (step === 2) {
-      // Step 2: 柱状图对比 (所有点去柱子)
-      simulation
-        .force("x", d3.forceX(d => d.pillarX).strength(0.08))
-        .force("y", d3.forceY(d => d.pillarY).strength(0.08));
-
-    } else if (step === 3) {
-      // === 新增 Step 3: 回归密歇根 ===
-      // 蓝点回到地图位置，红点位置无所谓（因为会被隐藏）
-      simulation
-        .force("x", d3.forceX(d => d.type === 'in-state' ? d.mapTargetX : d.pillarX).strength(0.1))
-        .force("y", d3.forceY(d => d.type === 'in-state' ? d.mapTargetY : d.pillarY).strength(0.1));
+    if (usFeatures.length > 0 && !miTarget) {
+      const michigan = usFeatures.find(f => f.id === "26");
+      if (michigan) {
+        const bounds = pathGenerator.bounds(michigan);
+        const cx = (bounds[0][0] + bounds[1][0]) / 2;
+        const cy = (bounds[0][1] + bounds[1][1]) / 2;
+        const scale = 0.85 / Math.max((bounds[1][0] - bounds[0][0]) / width, (bounds[1][1] - bounds[0][1]) / height);
+        miTarget = { x: cx, y: cy, k: scale };
+      }
     }
   });
 
+  // 更新 Transform (保持不变)
+  $effect(() => {
+    if (step === 3 && miTarget) {
+      const tx = width / 2 - miTarget.k * miTarget.x;
+      const ty = height / 2 - miTarget.k * miTarget.y;
+      transformString = `translate(${tx}px, ${ty}px) scale(${miTarget.k})`;
+      currentScale = miTarget.k;
+    } else {
+      transformString = "translate(0,0) scale(1)";
+      currentScale = 1;
     }
   });
 
+  // === 关键修改：力导向逻辑 ===
+  $effect(() => {
+    if (!simulation) return;
+    
+    // 每次状态改变都“加热”模拟器
+    simulation.alpha(1).restart();
+
+    // 定义碰撞力 (只在 Step 0,1,2 启用，Step 3 禁用)
+    const collideForce = d3.forceCollide().radius(d => d.r + 1).strength(0.5);
+
+    if (step === 2) {
+      // 柱状图
+      simulation
+        .force("x", d3.forceX(d => d.pillarX).strength(0.15))
+        .force("y", d3.forceY(d => d.pillarY).strength(0.15))
+        .force("collide", collideForce); // 柱状图需要防重叠
+    } 
+    else if (step === 3) {
+      // *** Step 3: 聚焦密歇根 ***
+      simulation
+        // 1. 强力吸附：strength(1) 意味着“立刻去那里，不要犹豫”
+        .force("x", d3.forceX(d => d.homeX).strength(1))
+        .force("y", d3.forceY(d => d.homeY).strength(1))
+        
+        // 2. ***移除碰撞力***：允许点重叠。
+        // 如果不移除，Wayne County (底特律) 的点会因为太挤而被弹到旁边的县去。
+        .force("collide", null); 
+    } 
+    else {
+      // Step 0 & 1: 普通地图模式
+      simulation
+        .force("x", d3.forceX(d => d.homeX).strength(0.3)) // 稍微弱一点，允许一点漂浮感
+        .force("y", d3.forceY(d => d.homeY).strength(0.3))
+        .force("collide", collideForce); // 避免太挤
+    }
+  });
 </script>
 
-<div class="map-container" bind:clientWidth={width}>
-  <svg {width} {height} viewBox="0 0 960 600">
+<div class="map-container">
+  <svg {width} {height} viewBox="0 0 {width} {height}">
+    <g class="zoom-group" style="transform: {transformString};">
+      
+      <g class="layer-map">
+        {#each usFeatures as feature}
+          <path 
+            d={pathGenerator(feature)} 
+            fill="#f9f9f9" 
+            stroke="#ccc" 
+            stroke-width="1"
+            vector-effect="non-scaling-stroke"
+            style="transition: opacity 1s; opacity: {step === 3 && feature.id !== '26' ? 0.1 : 1}"
+          />
+        {/each}
+        
+        <!-- 
+           可选：在 Step 3 显示密歇根的县界线，增加细节感
+           只有放大时才显示
+        -->
+        <g class="mi-counties" style="opacity: {step === 3 ? 1 : 0}; transition: opacity 1s;">
+           {#each miCounties as county}
+             <path 
+               d={pathGenerator(county)}
+               fill="none"
+               stroke="#ddd"
+               stroke-width="0.5"
+               vector-effect="non-scaling-stroke"
+             />
+           {/each}
+        </g>
+      </g>
+
+      <g class="layer-arcs" style="opacity: {step === 1 ? 1 : 0}; transition: opacity 0.5s;">
+        {#each arcs as arc}
+          <path d={arc.path} fill="none" stroke={arc.color} stroke-width={arc.strokeWidth} opacity="0.3" vector-effect="non-scaling-stroke" />
+        {/each}
+      </g>
+
+      <g class="layer-nodes">
+        {#each nodes as node}
+          <circle
+            cx={node.x}
+            cy={node.y}
+            r={node.r / (step === 3 ? currentScale * 0.5 : 1)}
+            fill={node.type === 'out-state' ? "#D62728" : "#2b8cbe"}
+            stroke="white"
+            stroke-width={1 / (step === 3 ? currentScale : 1)}
+            style="transition: opacity 0.5s, r 1s;"
+            opacity={
+              (step === 3 && node.type === 'out-state') ? 0 : 
+              (step === 0 && node.type === 'in-state') ? 0 : 0.8
+            }
+          />
+        {/each}
+      </g>
+    </g>
     
-    <!-- 1. 地图层: Step 2 淡出，Step 3 回归(但只高亮密歇根) -->
-    <g class="map-layer" style="opacity: {step === 2 ? 0 : 1}; transition: opacity 1s;">
-      {#each usFeatures as feature}
-        <!-- 
-           Michigan 的 FIPS ID 是 "26"。
-           逻辑：在 Step 3 时，如果不是密歇根，透明度设为 0.1 (淡化)，否则为 1。
-           在其他 Step (0,1) 保持为 1。
-        -->
-        <path 
-          d={pathGenerator(feature)} 
-          fill="none" 
-          stroke="#e0e0e0" 
-          stroke-width="1.5"
-          style="transition: opacity 1s;"
-          opacity={step === 3 && feature.id !== '26' ? 0.1 : 1}
-        />
-      {/each}
+    <g class="layer-labels" style="opacity: {step === 2 ? 1 : 0}; transition: opacity 0.5s; pointer-events: none;">
+      <text x="300" y="580" text-anchor="middle" fill="#D62728" font-weight="bold">Out-of-State</text>
+      <text x="660" y="580" text-anchor="middle" fill="#2b8cbe" font-weight="bold">In-State</text>
     </g>
-
-    <!-- 2. 连线层: 仅在 Step 1 显示 -->
-    <g class="arc-layer" style="opacity: {step === 1 ? 1 : 0}; transition: opacity 1s;">
-      {#each arcs as arc}
-        <path 
-          d={arc.path}
-          fill="none"
-          stroke={arc.color}
-          stroke-width={arc.strokeWidth}
-          stroke-linecap="round"
-          opacity="0.5"
-          pathLength="1"
-          class="flow-line"
-          class:animate={step === 1}
-        />
-      {/each}
-    </g>
-
-    <!-- 3. 柱状图标签: 仅在 Step 2 显示 -->
-    <g class="labels-layer" style="opacity: {step === 2 ? 1 : 0}; transition: opacity 1s;">
-      <text x="350" y="580" text-anchor="middle" font-weight="bold" fill="#D62728">Out-of-State</text>
-      <text x="350" y="600" text-anchor="middle" font-size="12" fill="#666">External Contributions</text>
-      <text x="500" y="400" text-anchor="middle" font-size="20" font-weight="bold" fill="#ccc">VS</text>
-      <text x="650" y="580" text-anchor="middle" font-weight="bold" fill="#2b8cbe">In-State (Michigan)</text>
-      <text x="650" y="600" text-anchor="middle" font-size="12" fill="#666">Local Counties</text>
-    </g>
-
-    <!-- 4. 粒子层 -->
-    <g class="particle-layer">
-      {#each nodes as node}
-        <!-- 
-           透明度逻辑更新：
-           1. 如果是 out-state (红点)：在 Step 3 隐藏 (opacity 0)。
-           2. 如果是 in-state (蓝点)：在 Step 0 隐藏 (opacity 0)。
-           3. 其他情况显示 (opacity 0.9)。
-        -->
-        <circle
-          cx={node.x}
-          cy={node.y}
-          r={node.r}
-          fill={node.type === 'out-state' ? "#D62728" : "#2b8cbe"}
-          stroke="white"
-          stroke-width="0.5"
-          style="transition: fill 0.5s, opacity 1s;"
-          
-          opacity={
-            (node.type === 'out-state' && step === 3) ? 0 : 
-            (node.type === 'in-state' && step < 1) ? 0 : 0.9
-          }
-
-          style:mix-blend-mode="multiply" 
-        >
-          <title>{node.name || node.contributor_state}: ${Math.round(node.amount || node.total_amount).toLocaleString()}</title>
-        </circle>
-      {/each}
-    </g>
-
   </svg>
 </div>
-
 
 <style>
   .map-container {
     width: 100%;
     height: 100vh;
+    background: #fff;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: white;
+    overflow: hidden;
   }
-
-  .flow-line {
-    stroke-dasharray: 1;
-    stroke-dashoffset: 1;
-    transition: stroke-dashoffset 1.5s ease-in-out;
-  }
-
-  .flow-line.animate {
-    stroke-dashoffset: 0;
+  .zoom-group {
+    transition: transform 1.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+    transform-origin: 0 0;
+    will-change: transform;
   }
 </style>
