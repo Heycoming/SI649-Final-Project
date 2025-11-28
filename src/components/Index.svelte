@@ -37,18 +37,15 @@
           <p>Zooming into the county level distribution of funding.</p>
         </div>
       </div>
-      <!-- NEW STEP 4 (Index 4): Side-by-Side -->
+      
+      <!-- 🔴 DELETED the old Step 5 (Bubble Side-by-Side) -->
+
+      <!-- 🟢 UPDATED Step 5 (Now Index 4): Choropleth Comparison -->
       <div class="step">
         <div class="card">
-          <h2>5. Funding vs. Expenditure</h2>
-          <p>Left: Funding received.<br>Right: Expenditures made.<br>Comparing the inflow and outflow dynamics side-by-side.</p>
-        </div>
-      </div>
-      <!-- NEW STEP 5 (Index 5): Choropleth -->
-      <div class="step">
-        <div class="card">
-          <h2>6. County Density</h2>
-          <p>Transforming individual data points into a density map to show overall concentration per county.</p>
+          <h2>5. Impact Analysis</h2>
+          <p><strong>Left:</strong> Funding Inflow (Blue)<br><strong>Right:</strong> Expenditures (Purple)</p>
+          <p>Comparing the density of capital received versus capital spent across counties.</p>
         </div>
       </div>
     </Scrolly>
