@@ -66,6 +66,13 @@
 		return fund >= exp ? "#9C27B0" : "#FFC107";
 	}
 
+    function getNetStatusLabel(countyName) {
+		const fund = countyFundingMap.get(countyName) || 0;
+		const exp = countyExpMap.get(countyName) || 0;
+		const diff = fund - exp;
+		return diff >= 0 ? "Net Contributor" : "Net Beneficiary";
+	}
+
 	function getRibbonPath(x1, y1, h1, x2, y2, h2) {
 		const mx = (x1 + x2) / 2;
 		return `M ${x1} ${y1} 
@@ -75,10 +82,10 @@
                 Z`;
 	}
 
-    function getAlluvialOpacity(countyName) {
-        if (!hoveredNode) return 0.8;
-        return hoveredNode.county === countyName ? 1 : 0.1;
-    }
+    function getOpacity(countyName) {
+		if (!hoveredNode) return 0.8;
+		return hoveredNode.county === countyName ? 1 : 0.1;
+	}
 
 	let alluvialData = $derived.by(() => {
 		if (step !== 6 || !miCountyData || !expenditureData) return null;
@@ -274,9 +281,11 @@
 		return n.type === "out-state" || s === 3 ? n.r_compare : n.r_map;
 	}
 
+    // === 🔴 修复核心：getNodeOpacity ===
 	function getNodeOpacity(n, s) {
         if (s === 0) return 0;
-        if (s === 5) return 0; 
+        if (s === 5) return 0; // 🔴 强制在 Step 5 隐藏所有粒子，防止 Ghosting
+        if (s === 6) return 0; 
         
         if (s <= 2) {
              if (n.type === "in-state") return 0; 
@@ -334,18 +343,21 @@
     }
 
 	function handleAlluvialHover(e, data, type) {
-		hoveredNode = { county: data.county, formattedAmount: d3.format("$,.0f")(data.val), type: type, extra: getNetColor(data.county) === "#9C27B0" ? "Net Contributor" : "Net Beneficiary" };
+		hoveredNode = { 
+            county: data.county, 
+            formattedAmount: d3.format("$,.0f")(data.val), 
+            type: type, 
+            extra: getNetStatusLabel(data.county) 
+        };
 		tooltipPos = { x: e.clientX + 15, y: e.clientY + 15 };
 	}
 </script>
 
 <div class="map-container" bind:clientWidth={containerWidth} bind:clientHeight={containerHeight}>
     {#if step === 6}
-        <div class="controls">
-            <button onclick={() => showAll = !showAll}>
-                {showAll ? "Show Top 10" : "Show All"}
-            </button>
-        </div>
+        <button class="toggle-btn" onclick={() => showAll = !showAll}>
+			{showAll ? "Show Top 10" : "Show All Counties"}
+		</button>
     {/if}
 
 	<svg width="100%" height="100%" viewBox="0 0 {baseWidth} {baseHeight}" preserveAspectRatio="xMidYMid meet">
@@ -393,7 +405,6 @@
 
 			<g class="arc-layer" style="opacity: {step === 2 ? 1 : 0}; transition: opacity 1s;">
 				{#each arcs as arc}
-                    <!-- 恢复 Step 2 原始的线条绘制动画，去掉虚线流动 -->
 					<path d={arc.path} fill="none" stroke={arc.color} stroke-width={arc.strokeWidth} stroke-linecap="round" opacity="0.9" 
                           class="flow-line" class:animate={step === 2} vector-effect="non-scaling-stroke" />
 				{/each}
@@ -426,54 +437,168 @@
             {/if}
 		</g>
 
-        {#if step === 6 && alluvialData}
-            <g class="alluvial-layer" style="opacity: 1; transition: opacity 1s;">
-                <g class="col-left">
-                    {#each alluvialData.leftLinks as link}
-                        <path d={link.path} fill={link.color} fill-opacity={getAlluvialOpacity(link.data.county)} stroke="none"
-                              style="transition: fill-opacity 0.2s; cursor: pointer;" 
-                              onmouseenter={(e) => handleAlluvialHover(e, link.data, "Contribution")} 
-                              onmouseleave={() => hoveredNode = null} />
-                    {/each}
-                    {#each alluvialData.leftItems as item}
-                         <rect x={item.x - 10 - item.barLen} y={item.y} width={item.barLen} height={item.h} fill={item.color} opacity="0.8" />
-                         <rect x={item.x} y={item.y} width={alluvialData.colWidth} height={item.h} fill="#7E57C2" />
-                         
-                         <!-- 修复：只有当高度 > 12px 时才显示文字，防止重叠 -->
-                         {#if item.h > 12}
-                             <text x={item.x - 15 - item.barLen} y={item.y + item.h/2} dy="0.35em" text-anchor="end" fill="#ccc" font-size="10">{item.county}</text>
-                         {/if}
-                    {/each}
-                    <text x={alluvialData.xLeftCol} y="40" text-anchor="end" font-weight="bold" fill="#E0E0E0" font-size="16">Contributions</text>
-                </g>
-                
-                <g class="col-right">
-                    {#each alluvialData.rightLinks as link}
-                        <path d={link.path} fill={link.color} fill-opacity={getAlluvialOpacity(link.data.county)} stroke="none"
-                              style="transition: fill-opacity 0.2s; cursor: pointer;" 
-                              onmouseenter={(e) => handleAlluvialHover(e, link.data, "Expenditure")} 
-                              onmouseleave={() => hoveredNode = null} />
-                    {/each}
-                    {#each alluvialData.rightItems as item}
-                        <rect x={item.x} y={item.y} width={alluvialData.colWidth} height={item.h} fill="#FDD835" />
-                        <rect x={item.x + alluvialData.colWidth + 5} y={item.y} width={item.barLen} height={item.h} fill={item.color} opacity="0.8" />
-                        
-                        <!-- 修复：只有当高度 > 12px 时才显示文字，防止重叠 -->
-                        {#if item.h > 12}
-                            <text x={item.x + alluvialData.colWidth + 10 + item.barLen} y={item.y + item.h/2} dy="0.35em" text-anchor="start" fill="#ccc" font-size="10">{item.county}</text>
-                        {/if}
-                   {/each}
-                   <text x={alluvialData.xRightCol} y="40" text-anchor="start" font-weight="bold" fill="#E0E0E0" font-size="16">Expenditures</text>
-                </g>
-            </g>
-        {/if}
+		{#if step === 6 && alluvialData}
+			<g class="alluvial-layer" style="opacity: 1; transition: opacity 1s;">
+				<!-- 1. Funding (Left) -->
+				<g class="col-left">
+					{#each alluvialData.leftLinks as link}
+						<!-- svelte-ignore a11y_no_static_element_interactions -->
+						<path
+							d={link.path}
+							fill={link.color}
+							stroke="none"
+							opacity={getOpacity(link.data.county)}
+							style="transition: opacity 0.2s; cursor: pointer;"
+							onmouseenter={(e) =>
+								handleAlluvialHover(e, link.data, "Contribution")}
+							onmouseleave={() => (hoveredNode = null)}
+						/>
+					{/each}
+
+					{#each alluvialData.leftItems as item}
+						<rect
+							x={item.x - 10 - item.barLen}
+							y={item.y}
+							width={item.barLen}
+							height={item.h}
+							fill={item.color}
+							opacity={getOpacity(item.county)}
+						/>
+						<rect
+							x={item.x}
+							y={item.y}
+							width={alluvialData.colWidth}
+							height={item.h}
+							fill={item.color}
+							stroke="#121212"
+							stroke-width="0.5"
+							opacity={getOpacity(item.county)}
+						/>
+
+						{#if item.h > 10}
+							<text
+								x={item.x - 15 - item.barLen}
+								y={item.y + item.h / 2}
+								text-anchor="end"
+								dominant-baseline="middle"
+								fill="#ccc"
+								font-size="11px"
+								font-weight="bold"
+								opacity={getOpacity(item.county)}
+							>
+								{item.county}
+							</text>
+						{/if}
+					{/each}
+					<text
+						x={alluvialData.xLeftCol}
+						y="40"
+						text-anchor="end"
+						font-weight="bold"
+						fill="#9C27B0"
+						font-size="16">Contributions</text
+					>
+				</g>
+
+				<!-- 2. Pool (Center Knot) -->
+				<g class="col-center">
+					<rect
+						x={alluvialData.xPool - 2}
+						y={alluvialData.knotTop}
+						width={4}
+						height={alluvialData.knotHeight}
+						fill="#fff"
+						opacity="0.5"
+						rx="2"
+					/>
+					<text
+						x={alluvialData.xPool}
+						y={alluvialData.knotTop - 20}
+						text-anchor="middle"
+						font-weight="bold"
+						fill="#eee"
+						font-size="14">Funding Pool</text
+					>
+				</g>
+
+				<!-- 3. Expenditure (Right) -->
+				<g class="col-right">
+					{#each alluvialData.rightLinks as link}
+						<!-- svelte-ignore a11y_no_static_element_interactions -->
+						<path
+							d={link.path}
+							fill={link.color}
+							stroke="none"
+							opacity={getOpacity(link.data.county)}
+							style="transition: opacity 0.2s; cursor: pointer;"
+							onmouseenter={(e) =>
+								handleAlluvialHover(e, link.data, "Expenditure")}
+							onmouseleave={() => (hoveredNode = null)}
+						/>
+					{/each}
+
+					{#each alluvialData.rightItems as item}
+						<rect
+							x={item.x}
+							y={item.y}
+							width={alluvialData.colWidth}
+							height={item.h}
+							fill={item.color}
+							stroke="#121212"
+							stroke-width="0.5"
+							opacity={getOpacity(item.county)}
+						/>
+						<rect
+							x={item.x + alluvialData.colWidth + 5}
+							y={item.y}
+							width={item.barLen}
+							height={item.h}
+							fill={item.color}
+							opacity={getOpacity(item.county)}
+						/>
+
+						{#if item.h > 10}
+							<text
+								x={item.x + alluvialData.colWidth + 10 + item.barLen}
+								y={item.y + item.h / 2}
+								text-anchor="start"
+								dominant-baseline="middle"
+								fill="#ccc"
+								font-size="11px"
+								font-weight="bold"
+								opacity={getOpacity(item.county)}
+							>
+								{item.county}
+							</text>
+						{/if}
+					{/each}
+					<text
+						x={alluvialData.xRightCol}
+						y="40"
+						text-anchor="start"
+						font-weight="bold"
+						fill="#FFC107"
+						font-size="16">Expenditures</text
+					>
+				</g>
+			</g>
+		{/if}
 	</svg>
 
 	{#if hoveredNode}
 		<div class="tooltip" style="top: {tooltipPos.y}px; left: {tooltipPos.x}px;">
 			<strong>{hoveredNode.type === "out-state" ? hoveredNode.contributor_state : hoveredNode.county}</strong><br />
+            {#if hoveredNode.extra}
+				<span
+					style="color: {hoveredNode.extra.includes('Contributor')
+						? '#9C27B0'
+						: '#FFC107'}; font-weight: bold; font-size: 0.9em;"
+				>
+					{hoveredNode.extra}
+				</span><br />
+			{/if}
 			{hoveredNode.formattedAmount}<br />
-			<span style="font-size:0.85em; color:#aaa; text-transform:capitalize;">{hoveredNode.extra || hoveredNode.type.replace("-", " ")}</span>
+			<span style="font-size:0.85em; color:#aaa; text-transform:capitalize;">{hoveredNode.type.replace("-", " ")}</span>
 		</div>
 	{/if}
 </div>
@@ -482,13 +607,24 @@
 	.map-container { width: 85%; height: 100vh; position: relative; background: #121212; overflow: hidden; }
 	.zoom-group { transition: transform 1.5s cubic-bezier(0.25, 0.1, 0.25, 1); transform-origin: 0 0; will-change: transform; }
 	
-    /* 恢复原始的线条绘制动画，去掉虚线流动 */
     .flow-line { stroke-dasharray: 1000; stroke-dashoffset: 1000; transition: stroke-dashoffset 1.5s ease-in-out; }
     .flow-line.animate { stroke-dashoffset: 0; }
 
 	.tooltip { position: fixed; background: rgba(30, 30, 30, 0.95); padding: 8px 12px; border: 1px solid #444; border-radius: 6px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); pointer-events: none; font-size: 13px; color: #eee; z-index: 100; transform: translate(0, -100%); }
 
-    .controls { position: absolute; top: 20px; right: 20px; z-index: 20; }
-    button { background: #333; color: #fff; border: 1px solid #555; padding: 8px 16px; cursor: pointer; border-radius: 4px; }
-    button:hover { background: #444; }
+    .toggle-btn {
+		position: absolute;
+    top: 20px; 
+		left: 90%;
+		background: #333;
+		color: #eee;
+		border: 1px solid #555;
+		padding: 8px 16px;
+		border-radius: 4px;
+		cursor: pointer;
+		font-size: 14px;
+		transition: background 0.2s;
+		z-index: 50;
+	}
+    .toggle-btn:hover { background: #444; }
 </style>
