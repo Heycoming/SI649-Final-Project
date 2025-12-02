@@ -158,7 +158,7 @@
 					<div
 						class="legend-bar"
 						style="width: {(item.value / legendData[0].value) *
-							100}%; background: {item.color}; opacity: 0.2;"
+							100}%; background: {item.color}; opacity: 0.6;"
 					></div>
 				</div>
 			{/each}
@@ -192,7 +192,7 @@
 		box-sizing: border-box;
 		align-items: center;
 		padding-top: 40px;
-		padding-bottom: 60px;
+		padding-bottom: 80px;
 		margin: 0 40px;
 		margin-left: 100px;
 	}

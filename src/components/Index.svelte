@@ -1,4 +1,3 @@
-<!-- src/routes/+page.svelte -->
 <script>
 	import Scrolly from "$components/helpers/Scrolly.svelte";
 	import FlowMap from "$components/FlowMap.svelte";
@@ -17,27 +16,27 @@
 	let scrollY = $state(0);
 	let innerHeight = $state(0);
 
+	// === Logic: Adjusted Step for Spacers ===
+	// Content steps are EVEN (0, 2, 4...), Spacers are ODD (1, 3, 5...)
+	let adjustedStep = $derived(
+		currentStep === undefined ? 0 : Math.round(currentStep / 2)
+	);
+
 	// === Logic: Sync Scrolly Steps to Map Steps ===
-	// 0-3 -> Map 1-4
-	// 4 (Income/Exp) -> Map 5
-	// 5 (Net Flow)   -> Map 5 (VISUAL PAUSE: Keep showing Income/Exp)
-	// 6 (Alluvial)   -> Map 6
-	// 7 (Sector Intro)-> Map 7 (Transition)
-	// 8+ (Treemap)   -> Map 8+
 	let mapStep = $derived.by(() => {
-		if (currentStep === undefined) return 1;
-		if (currentStep <= 4) return currentStep + 1;
-		if (currentStep === 5) return 5; // Hold visual state at 5
-		return currentStep;
+		const s = adjustedStep;
+		if (s <= 4) return s + 1;
+		if (s === 5) return 5; // Hold visual state at 5
+		return s;
 	});
 
 	// === Logic: Treemap Year ===
-	// Adjusted for the new step count (Treemap now starts at Step 8)
 	let treemapYear = $derived.by(() => {
+		const s = adjustedStep;
 		if (mapStep < 8) return 2020;
-		if (currentStep < 8) return 2020;
-		if (currentStep > 12) return 2024;
-		return 2020 + (currentStep - 8);
+		if (s < 8) return 2020;
+		if (s > 12) return 2024;
+		return 2020 + (s - 8);
 	});
 
 	const years = [2020, 2021, 2022, 2023, 2024];
@@ -65,7 +64,6 @@
 
 <svelte:window bind:scrollY bind:innerHeight onmousemove={handleMouseMove} />
 
-<!-- Lock Body Scroll when in Spotlight Mode -->
 <svelte:body style:overflow={isLocked ? "hidden" : "auto"} />
 
 <svelte:head>
@@ -84,25 +82,20 @@
 </svelte:head>
 
 <main class="story-container">
-	<!-- ========================================= -->
-	<!-- PART 1: INTRO SEQUENCE                    -->
-	<!-- ========================================= -->
+	<!-- ... (Intro Sequence remains unchanged) ... -->
 	<section class="intro-sequence">
 		<div
 			class="spotlight-overlay"
 			class:hidden={!isSpotlightVisible}
 			style="--x: {mouseX}%; --y: {mouseY}%;"
 		></div>
-
 		<div class="bg-grid"></div>
-
 		<div class="cover-section">
 			<div class="title-card">
 				<h1>The Michigan Money Trail</h1>
 				<p class="subtitle">
 					An analysis of campaign finance flows in the 2024 State Election.
 				</p>
-
 				<button
 					class="start-btn"
 					onclick={unlockExperience}
@@ -110,13 +103,11 @@
 				>
 					Click to Reveal Analysis
 				</button>
-
 				<div class="scroll-hint" style:opacity={isLocked ? 0 : 1}>
 					Scroll to Begin ↓
 				</div>
 			</div>
 		</div>
-
 		<div class="article-section">
 			<div class="article-block">
 				<span class="chapter-tag">Introduction</span>
@@ -150,19 +141,20 @@
 	<section class="viz-sequence">
 		<!-- A. The Sticky Stage -->
 		<div class="sticky-stage">
-			<!-- FlowMap Wrapper -->
-			<!-- mapStep 4 is "Urban Concentration", shifts right for text on left -->
+			<!-- FlowMap Wrapper (The Previous Chart) -->
+			<!-- CHANGE: Added inline style:transition to make opacity fade 0.4s (faster) -->
 			<div
 				class="viz-wrapper"
 				style:opacity={mapStep <= 6 ? 1 : 0}
 				style:pointer-events={mapStep <= 6 ? "auto" : "none"}
 				style:z-index={mapStep <= 6 ? 10 : 0}
 				style:transform={mapStep === 4 ? "translateX(15%)" : "translateX(0)"}
+				style:transition="opacity 0.4s ease-in-out, transform 1s ease-in-out"
 			>
 				<FlowMap {data} step={mapStep > 6 ? 6 : mapStep} {activeHighlight} />
 			</div>
 
-			<!-- Treemap Wrapper -->
+			<!-- Treemap Wrapper (The Funding Pool) -->
 			<div
 				class="viz-wrapper"
 				style:opacity={mapStep >= 8 ? 1 : 0}
@@ -186,10 +178,10 @@
 		<!-- B. The Scrolling Steps -->
 		<div class="scrolly-steps">
 			<Scrolly bind:value={currentStep}>
-				<!-- Step 0 -->
+				<!-- Step 0: Content -->
 				<div class="step center-focus">
 					<div class="card glass" class:active={currentStep === 0}>
-						<span class="chapter-tag">Part I: The Source</span>
+						<span class="chapter-tag">Chapter I: The National Source</span>
 						<h2>External Power Centers</h2>
 						<p>
 							Two specific regions outside of Michigan account for a
@@ -222,9 +214,12 @@
 					</div>
 				</div>
 
-				<!-- Step 1 -->
+				<!-- Step 1: Spacer -->
+				<div class="step spacer"></div>
+
+				<!-- Step 2: Content -->
 				<div class="step left-align">
-					<div class="card glass" class:active={currentStep === 1}>
+					<div class="card glass" class:active={currentStep === 2}>
 						<h2>Strategic Targeting</h2>
 						<p>
 							The inflow of capital is not evenly distributed. The data shows a
@@ -239,10 +234,12 @@
 					</div>
 				</div>
 
-				<!-- Step 2 -->
+				<!-- Step 3: Spacer -->
+				<div class="step spacer"></div>
+
+				<!-- Step 4: Content -->
 				<div class="step right-align">
-					<div class="card glass" class:active={currentStep === 2}>
-						<span class="chapter-tag">Part II: Volume vs. Value</span>
+					<div class="card glass" class:active={currentStep === 4}>
 						<h2>The Local Majority</h2>
 						<p>
 							Comparing the source of funds reveals a distinct dichotomy between
@@ -267,10 +264,13 @@
 					</div>
 				</div>
 
-				<!-- Step 3 -->
+				<!-- Step 5: Spacer -->
+				<div class="step spacer"></div>
+
+				<!-- Step 6: Content -->
 				<div class="step left-align">
-					<div class="card glass" class:active={currentStep === 3}>
-						<span class="chapter-tag">Part III: Geographic Distribution</span>
+					<div class="card glass" class:active={currentStep === 6}>
+            <span class="chapter-tag">Chapter II: Michigan's Capital Flow</span>
 						<h2>Urban Concentration</h2>
 						<p>
 							Aggregating data by county reveals significant disparities in
@@ -290,9 +290,12 @@
 					</div>
 				</div>
 
-				<!-- Step 4: Income vs Expenditure -->
+				<!-- Step 7: Spacer -->
+				<div class="step spacer"></div>
+
+				<!-- Step 8: Content -->
 				<div class="step top-left-align">
-					<div class="card glass" class:active={currentStep === 4}>
+					<div class="card glass" class:active={currentStep === 8}>
 						<h2>Income vs. Expenditure</h2>
 						<p>
 							To analyze the flow of capital, we separate the data into two
@@ -356,9 +359,12 @@
 					</div>
 				</div>
 
-				<!-- Step 5: Net Flow Analysis (Visual stays on Step 4/5 map) -->
+				<!-- Step 9: Spacer -->
+				<div class="step spacer"></div>
+
+				<!-- Step 10: Content -->
 				<div class="step left-align">
-					<div class="card glass" class:active={currentStep === 5}>
+					<div class="card glass" class:active={currentStep === 10}>
 						<h2>Net Flow Analysis</h2>
 						<p>
 							Raw fundraising totals do not tell the whole story. The critical
@@ -373,10 +379,12 @@
 					</div>
 				</div>
 
-				<!-- Step 6: Capital Migration (Alluvial) -->
+				<!-- Step 11: Spacer -->
+				<div class="step spacer"></div>
+
+				<!-- Step 12: Content -->
 				<div class="step center-focus">
-					<div class="card glass" class:active={currentStep === 6}>
-						<span class="chapter-tag">Part IV: The Ledger</span>
+					<div class="card glass" class:active={currentStep === 12}>
 						<h2>Capital Migration</h2>
 						<p>
 							This alluvial diagram tracks the lifecycle of campaign dollars,
@@ -413,79 +421,122 @@
 					</div>
 				</div>
 
-				<!-- Step 7: Sector Analysis Intro -->
+				<!-- Step 13: Spacer -->
+				<div class="step spacer"></div>
+
+				<!-- Step 14: Content -->
 				<div class="step center-focus">
-					<div class="card glass" class:active={currentStep === 7}>
-						<span class="chapter-tag">Part V: Sector Analysis</span>
-						<h2>The Donor Profile</h2>
+					<div class="card glass" class:active={currentStep === 14}>
+						<span class="chapter-tag">Chapter III: Industry & Influence</span>
+						<h2>The Industry Breakdown</h2>
 						<p>
-							A demographic breakdown of donors reveals clear sectoral
-							alignments.
-						</p>
+							We have mapped the money across every county in Michigan. We know
+							exactly where the cash is raised and where it is spent.
+						</p >
 						<p>
-							The <strong style="color: #4FC3F7;">Technology & Finance</strong> sectors
-							are the primary drivers of large-dollar contributions, with a significant
-							portion originating from out-of-state sources.
-						</p>
+							But a map cannot tell us everything. We also need to know who is
+							writing the checks.
+						</p >
 						<p>
-							Conversely, the <strong style="color: #FFB74D;"
-								>Education & Manufacturing</strong
-							>
-							sectors comprise the base of small-dollar, in-state donations, reflecting
-							Michigan's traditional economic structure.
-						</p>
+							The next step is to look at the industries behind the donations.
+							We will see exactly which business sectors are leading the
+							spending in this election.
+						</p >
 					</div>
 				</div>
 
-				<!-- Step 8: 2020 -->
+				<!-- Step 15: Spacer -->
+				<div class="step spacer"></div>
+
+				<!-- Step 16: Content -->
 				<div class="step left-align">
-					<div class="card glass" class:active={currentStep === 8}>
-						<h2>2020: The Baseline</h2>
+					<div class="card glass" class:active={currentStep === 16}>
+						<span class="chapter-tag">Time & Trends</span>
+						<h2>2020: The Starting Point</h2>
 						<p>
-							A high-spending election year. Business and Legal sectors
-							dominate.
-						</p>
+							We begin with the 2020 election. This gives us a clear picture of a standard election year.
+						</p >
+						<p>
+							<strong>Business</strong> ($15M) and <strong>Legal</strong> groups are the biggest donors. Look at the large blue circles. Corporate executives are already the main source of cash.
+						</p >
 					</div>
 				</div>
 
-				<!-- Step 9: 2021 -->
+				<!-- Step 17: Spacer -->
+				<div class="step spacer"></div>
+
+				<!-- Step 18: Content -->
 				<div class="step left-align">
-					<div class="card glass" class:active={currentStep === 9}>
-						<h2>2021: Post-Election Shift</h2>
-						<p>Total volume decreases in the off-year.</p>
+					<div class="card glass" class:active={currentStep === 18}>
+						<span class="chapter-tag">Time & Trends</span>
+						<h2>2021: The Quiet Growth</h2>
+						<p>
+							Usually, donations drop after an election ends. But 2021 was different.
+						</p >
+						<p>
+							While other groups spent less, <strong>Business</strong> donations actually went up to <strong>$17M</strong>. Even in a quiet year, corporate leaders kept writing checks to prepare for the future.
+						</p >
 					</div>
 				</div>
 
-				<!-- Step 10: 2022 -->
+				<!-- Step 19: Spacer -->
+				<div class="step spacer"></div>
+
+				<!-- Step 20: Content -->
 				<div class="step left-align">
-					<div class="card glass" class:active={currentStep === 10}>
-						<h2>2022: Midterm Surge</h2>
-						<p>A massive influx of capital returns for the midterms.</p>
+					<div class="card glass" class:active={currentStep === 20}>
+						<span class="chapter-tag">Time & Trends</span>
+						<h2>2022: The Explosion</h2>
+						<p>
+							Then came the 2022 midterms. The chart explodes.
+						</p >
+						<p>
+							Money flooded the system. Business spending tripled to nearly <strong>$62M</strong>. The blue bubbles take over most of the chart. This was a massive financial fight for control of the state government.
+						</p >
 					</div>
 				</div>
 
-				<!-- Step 11: 2023 -->
+				<!-- Step 21: Spacer -->
+				<div class="step spacer"></div>
+
+				<!-- Step 22: Content -->
 				<div class="step left-align">
-					<div class="card glass" class:active={currentStep === 11}>
-						<h2>2023: The Lull</h2>
-						<p>The cycle resets. Contributions contract significantly.</p>
+					<div class="card glass" class:active={currentStep === 22}>
+						<span class="chapter-tag">Time & Trends</span>
+						<h2>2023: The Reset</h2>
+						<p>
+							After the record-breaking spending of 2022, the system finally took a break.
+						</p >
+						<p>
+							Total donations dropped sharply. We returned to normal levels as donors started saving their money for the next big cycle.
+						</p >
 					</div>
 				</div>
 
-				<!-- Step 12: 2024 -->
+				<!-- Step 23: Spacer -->
+				<div class="step spacer"></div>
+
+				<!-- Step 24: Content -->
 				<div class="step left-align">
-					<div class="card glass" class:active={currentStep === 12}>
-						<h2>2024: Current Cycle</h2>
-						<p>Leading into the current election, new patterns emerge.</p>
+					<div class="card glass" class:active={currentStep === 24}>
+						<span class="chapter-tag">Time & Trends</span>
+						<h2>2024: Heating Up Again</h2>
+						<p>
+							We are now in the current election cycle. The money is flowing back in.
+						</p >
+						<p>
+							Early numbers show <strong>Business</strong> ($20M) is already spending more than it did back in 2020. The pattern is repeating, but the price of the election is getting higher.
+						</p >
 					</div>
 				</div>
+
+				<!-- Step 25: Spacer -->
+				<div class="step spacer"></div>
 			</Scrolly>
 		</div>
 	</section>
 
-	<!-- ========================================= -->
-	<!-- PART 3: SECTOR STREAM                     -->
-	<!-- ========================================= -->
+	<!-- ... (Sector Stream remains unchanged) ... -->
 	<section class="stream-section">
 		<div class="stream-wrapper">
 			<SectorStream rawData={data.sectorData} />
@@ -494,14 +545,13 @@
 </main>
 
 <style>
-	/* === 1. INTRO SEQUENCE === */
+	/* ... (Styles remain the same as previous, ensuring .step.spacer exists) ... */
 	.intro-sequence {
 		position: relative;
 		z-index: 20;
 		background-color: #0a0b0c;
 		padding-bottom: 10vh;
 	}
-
 	.bg-grid {
 		position: absolute;
 		top: 0;
@@ -510,43 +560,40 @@
 		height: 100%;
 		z-index: 1;
 		pointer-events: none;
-		background-image:
-			linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+		background-image: linear-gradient(
+				rgba(255, 255, 255, 0.1) 1px,
+				transparent 1px
+			),
 			linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
 		background-size: 40px 40px;
-		mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
 		-webkit-mask-image: radial-gradient(
 			circle at center,
 			black 40%,
 			transparent 80%
 		);
+    mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
 	}
-
+  
 	.cover-section,
 	.article-section {
 		position: relative;
 		z-index: 2;
 	}
-
 	.cover-section {
 		height: 100vh;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 	}
-
 	.article-section {
 		padding: 6rem 2rem;
 		display: flex;
 		justify-content: center;
 	}
-
-	/* === 2. VIZ SEQUENCE === */
 	.viz-sequence {
 		position: relative;
 		z-index: 10;
 	}
-
 	.sticky-stage {
 		position: -webkit-sticky;
 		position: sticky;
@@ -559,13 +606,13 @@
 		box-shadow: 0 -10px 50px rgba(0, 0, 0, 0.5);
 		pointer-events: auto;
 	}
-
 	.viz-wrapper {
 		position: absolute;
 		top: 0;
 		left: 0;
 		width: 100%;
 		height: 100%;
+		/* Default transition for other wrappers (like Treemap) */
 		transition:
 			opacity 1s ease-in-out,
 			transform 1s ease-in-out;
@@ -573,7 +620,6 @@
 		justify-content: center;
 		align-items: center;
 	}
-
 	.scrolly-steps {
 		position: relative;
 		z-index: 10;
@@ -581,8 +627,6 @@
 		padding-bottom: 20vh;
 		pointer-events: none;
 	}
-
-	/* === SPOTLIGHT OVERLAY === */
 	.spotlight-overlay {
 		position: fixed;
 		top: 0;
@@ -604,8 +648,6 @@
 		opacity: 0;
 		pointer-events: none;
 	}
-
-	/* === BUTTON & TEXT STYLES === */
 	.start-btn {
 		background: transparent;
 		border: 1px solid #ffd700;
@@ -627,7 +669,6 @@
 		color: #000;
 		box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
 	}
-
 	.article-block {
 		max-width: 680px;
 		font-size: 1.2rem;
@@ -652,13 +693,15 @@
 	.highlight-box strong {
 		color: #ffd700;
 	}
-
 	.step {
 		height: 100vh;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		pointer-events: none;
+	}
+	.step.spacer {
+		height: 70vh;
 	}
 	.center-focus {
 		justify-content: center;
@@ -677,7 +720,6 @@
 		padding-top: 20vh;
 		padding-left: 5%;
 	}
-
 	.card {
 		background: rgba(18, 18, 18, 0.55);
 		backdrop-filter: blur(12px);
@@ -701,12 +743,10 @@
 		opacity: 1;
 		transform: translateY(0);
 	}
-
 	.title-card {
 		text-align: center;
 		pointer-events: auto;
 	}
-
 	h1 {
 		font-family: "Playfair Display", serif;
 		font-size: 4.5rem;
@@ -743,7 +783,6 @@
 		transition: opacity 0.5s;
 		margin-top: 2rem;
 	}
-
 	.interactive {
 		font-family: "JetBrains Mono", monospace;
 		font-size: 0.9em;
@@ -762,8 +801,6 @@
 		border-radius: 3px;
 		text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
 	}
-
-	/* === YEAR SIDEBAR === */
 	.year-sidebar {
 		position: fixed;
 		right: 20px;
@@ -814,8 +851,6 @@
 		box-shadow: 0 0 8px #ffd700;
 		transform: scale(1.5);
 	}
-
-	/* === NEW TEXT STYLES === */
 	.chapter-tag {
 		font-family: "JetBrains Mono", monospace;
 		font-size: 1rem;
@@ -870,8 +905,6 @@
 	.yellow {
 		background: #ffc107;
 	}
-
-	/* === NEW CHART SECTION === */
 	.stream-section {
 		position: relative;
 		z-index: 20;
