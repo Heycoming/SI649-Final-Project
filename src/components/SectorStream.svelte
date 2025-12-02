@@ -561,7 +561,7 @@
 		border-top: 1px solid rgba(255, 255, 255, 0.05);
 		font-family: "JetBrains Mono", monospace;
 		font-size: 0.75rem;
-		color: #666;
+		color: #aaa; /* Modified: Changed from #666 to #aaa for better contrast */
 	}
 
 	/* Added styles for the GitHub link */
