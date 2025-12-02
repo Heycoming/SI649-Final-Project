@@ -437,6 +437,11 @@
 			return n.type === "out-state" ? 0.95 : 0;
 		}
 
+		if (hoveredNode) {
+			if (n === hoveredNode) return 1;
+			if (n.type === hoveredNode?.type) return 1;
+		}
+
 		if (annotationTarget && s < 6) return n === annotationTarget ? 1 : 0.1;
 		if (s === 3)
 			return n.type === "out-state" || n.type === "in-state" ? 0.95 : 0;
@@ -471,6 +476,7 @@
 	}
 
 	function handleHover(e, n) {
+		if (!n) return;
 		if (getNodeOpacity(n, step) < 0.1) return;
 		if (step !== 2 && step !== 5) {
 			hoveredNode = n;

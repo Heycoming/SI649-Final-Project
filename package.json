@@ -44,9 +44,12 @@
 	"browserslist": "> 0.5%, last 4 versions, not ie <= 11, not ie_mob <= 11",
 	"dependencies": {
 		"d3-force": "^3.0.0",
+		"d3-format": "^3.1.0",
 		"d3-geo": "^3.1.1",
+		"d3-hierarchy": "^3.1.2",
 		"d3-scale": "^4.0.2",
 		"d3-selection": "^3.0.0",
+		"layercake": "^10.0.2",
 		"topojson-client": "^3.1.0"
 	}
 }

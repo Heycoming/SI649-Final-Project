@@ -1,0 +1,592 @@
+[
+    {
+        "Small Category":"C Suite Executive",
+        "Big Category":"Business",
+        "2020":6842499.3300000001,
+        "2021":8751460.9800000004,
+        "2022":30391653.629999999,
+        "2023":5667804.2300000004,
+        "2024":7649301.4500000002,
+        "Grand Total":59302719.6199999973
+    },
+    {
+        "Small Category":"Senior Management",
+        "Big Category":"Business",
+        "2020":3644022.9700000002,
+        "2021":3621012.5699999998,
+        "2022":18282892.8399999999,
+        "2023":3476879.1899999999,
+        "2024":6274515.21,
+        "Grand Total":35299322.7800000012
+    },
+    {
+        "Small Category":"Retired",
+        "Big Category":"Non Workforce",
+        "2020":4599641.9500000002,
+        "2021":4515959.2800000003,
+        "2022":13055175.1799999997,
+        "2023":2827448.3999999999,
+        "2024":7399979.4299999997,
+        "Grand Total":32398204.2399999984
+    },
+    {
+        "Small Category":"Business Owner",
+        "Big Category":"Business",
+        "2020":3433867.5299999998,
+        "2021":3645403.3300000001,
+        "2022":10889361.9900000002,
+        "2023":3037720.73,
+        "2024":3862814.4399999999,
+        "Grand Total":24869168.0199999996
+    },
+    {
+        "Small Category":"Attorney",
+        "Big Category":"Legal",
+        "2020":5454673.0099999998,
+        "2021":3143023.48,
+        "2022":7415123.5700000003,
+        "2023":1565313.3400000001,
+        "2024":5715409.8799999999,
+        "Grand Total":23293543.2800000012
+    },
+    {
+        "Small Category":"Unemployed",
+        "Big Category":"Non Workforce",
+        "2020":1906372.3100000001,
+        "2021":3228529.5699999998,
+        "2022":12287931.2300000004,
+        "2023":1758908.74,
+        "2024":3910047.02,
+        "Grand Total":23091788.870000001
+    },
+    {
+        "Small Category":"General Management",
+        "Big Category":"Business",
+        "2020":1181008.28,
+        "2021":1235549.3400000001,
+        "2022":2199032.4700000002,
+        "2023":1445958.21,
+        "2024":1774641.22,
+        "Grand Total":7836189.5199999996
+    },
+    {
+        "Small Category":"Physician",
+        "Big Category":"Healthcare",
+        "2020":616875.55,
+        "2021":625980.61,
+        "2022":3337507.2999999998,
+        "2023":493019.87,
+        "2024":1109320.4199999999,
+        "Grand Total":6182703.75
+    },
+    {
+        "Small Category":"Homemaker",
+        "Big Category":"Non Workforce",
+        "2020":974175.05,
+        "2021":1000419.25,
+        "2022":2834842.5800000001,
+        "2023":645807.41,
+        "2024":694791.87,
+        "Grand Total":6150036.1600000001
+    },
+    {
+        "Small Category":"Engineer",
+        "Big Category":"Tech and Engineering",
+        "2020":300373.56,
+        "2021":258435.31,
+        "2022":4792034.71,
+        "2023":173239.61,
+        "2024":386796.46,
+        "Grand Total":5910879.6500000004
+    },
+    {
+        "Small Category":"Real Estate",
+        "Big Category":"Sales and Consulting",
+        "2020":859603.58,
+        "2021":1068294.73,
+        "2022":1733817.99,
+        "2023":949902.26,
+        "2024":1103210.28,
+        "Grand Total":5714828.8399999999
+    },
+    {
+        "Small Category":"Elected Official",
+        "Big Category":"Government",
+        "2020":553487.64,
+        "2021":491708.2,
+        "2022":1540892.5,
+        "2023":684061.4,
+        "2024":1715875.5900000001,
+        "Grand Total":4986025.3300000001
+    },
+    {
+        "Small Category":"Nurse",
+        "Big Category":"Healthcare",
+        "2020":551498.58,
+        "2021":867595.53,
+        "2022":940224.42,
+        "2023":574068.22,
+        "2024":1559305.0600000001,
+        "Grand Total":4492691.8100000015
+    },
+    {
+        "Small Category":"Investor",
+        "Big Category":"Finance",
+        "2020":303891.24,
+        "2021":385131.05,
+        "2022":2809193.9300000002,
+        "2023":239590.1,
+        "2024":415405.25,
+        "Grand Total":4153211.5699999998
+    },
+    {
+        "Small Category":"Consultant",
+        "Big Category":"Sales and Consulting",
+        "2020":700787.6800000001,
+        "2021":702099.72,
+        "2022":1141853.4399999999,
+        "2023":342299.1,
+        "2024":506313.78,
+        "Grand Total":3393353.7200000002
+    },
+    {
+        "Small Category":"Police",
+        "Big Category":"Government",
+        "2020":504345.31,
+        "2021":685516.86,
+        "2022":807429.54,
+        "2023":498171.95,
+        "2024":525800.51,
+        "Grand Total":3021264.1699999999
+    },
+    {
+        "Small Category":"Sales",
+        "Big Category":"Sales and Consulting",
+        "2020":364104.34,
+        "2021":517047.7,
+        "2022":779216.03,
+        "2023":488557.34,
+        "2024":428721.11,
+        "Grand Total":2577646.52
+    },
+    {
+        "Small Category":"Agriculture",
+        "Big Category":"Trades and Services",
+        "2020":423515.92,
+        "2021":416007.49,
+        "2022":542705.4399999999,
+        "2023":378343.58,
+        "2024":405326.05,
+        "Grand Total":2165898.48
+    },
+    {
+        "Small Category":"Software and Dev",
+        "Big Category":"Tech and Engineering",
+        "2020":204088.71,
+        "2021":192249.51,
+        "2022":534647.72,
+        "2023":456612.45,
+        "2024":569484.6,
+        "Grand Total":1957082.99
+    },
+    {
+        "Small Category":"Judge",
+        "Big Category":"Legal",
+        "2020":637667.0699999999,
+        "2021":313529.48,
+        "2022":433372.85,
+        "2023":109379.02,
+        "2024":388687.43,
+        "Grand Total":1882635.8500000001
+    },
+    {
+        "Small Category":"Media and Journalism",
+        "Big Category":"Trades and Services",
+        "2020":276864.1,
+        "2021":180428.4,
+        "2022":756334.12,
+        "2023":44316.43,
+        "2024":398940.0,
+        "Grand Total":1656883.05
+    },
+    {
+        "Small Category":"Professor",
+        "Big Category":"Education",
+        "2020":222166.58,
+        "2021":350037.05,
+        "2022":579855.3199999999,
+        "2023":170355.44,
+        "2024":281737.53,
+        "Grand Total":1604151.9199999999
+    },
+    {
+        "Small Category":"Accounting",
+        "Big Category":"Finance",
+        "2020":304577.54,
+        "2021":200397.82,
+        "2022":536761.6800000001,
+        "2023":166415.2,
+        "2024":268095.22,
+        "Grand Total":1476247.46
+    },
+    {
+        "Small Category":"Skilled Trades",
+        "Big Category":"Trades and Services",
+        "2020":215492.2,
+        "2021":138602.57,
+        "2022":326063.96,
+        "2023":421869.18,
+        "2024":325066.1,
+        "Grand Total":1427094.01
+    },
+    {
+        "Small Category":"Education Admin",
+        "Big Category":"Education",
+        "2020":172082.99,
+        "2021":275963.07,
+        "2022":436197.8,
+        "2023":225730.15,
+        "2024":296158.55,
+        "Grand Total":1406132.5600000001
+    },
+    {
+        "Small Category":"IT and Security",
+        "Big Category":"Tech and Engineering",
+        "2020":152519.64,
+        "2021":153563.05,
+        "2022":680214.53,
+        "2023":133533.65,
+        "2024":152848.5,
+        "Grand Total":1272679.3700000001
+    },
+    {
+        "Small Category":"Teacher",
+        "Big Category":"Education",
+        "2020":197997.57,
+        "2021":144591.79,
+        "2022":404463.27,
+        "2023":125376.83,
+        "2024":235439.07,
+        "Grand Total":1107868.53
+    },
+    {
+        "Small Category":"Data and Science",
+        "Big Category":"Tech and Engineering",
+        "2020":149506.06,
+        "2021":176922.16,
+        "2022":379310.28,
+        "2023":103927.83,
+        "2024":236298.14,
+        "Grand Total":1045964.47
+    },
+    {
+        "Small Category":"Arts and Creative",
+        "Big Category":"Trades and Services",
+        "2020":125596.46,
+        "2021":93170.99,
+        "2022":593094.1,
+        "2023":27337.32,
+        "2024":164353.61,
+        "Grand Total":1003552.48
+    },
+    {
+        "Small Category":"Marketing and PR",
+        "Big Category":"Sales and Consulting",
+        "2020":148081.6,
+        "2021":177015.22,
+        "2022":361648.25,
+        "2023":129896.97,
+        "2024":165887.61,
+        "Grand Total":982529.65
+    },
+    {
+        "Small Category":"Civil Servant",
+        "Big Category":"Government",
+        "2020":116232.37,
+        "2021":204905.39,
+        "2022":365769.5,
+        "2023":111259.93,
+        "2024":140873.8,
+        "Grand Total":939040.99
+    },
+    {
+        "Small Category":"Construction",
+        "Big Category":"Trades and Services",
+        "2020":109716.56,
+        "2021":154749.55,
+        "2022":279697.05,
+        "2023":135560.38,
+        "2024":185614.28,
+        "Grand Total":865337.8199999999
+    },
+    {
+        "Small Category":"Mental Health",
+        "Big Category":"Healthcare",
+        "2020":105746.19,
+        "2021":139767.85,
+        "2022":353907.17,
+        "2023":68727.03,
+        "2024":141496.13,
+        "Grand Total":809644.37
+    },
+    {
+        "Small Category":"Banking",
+        "Big Category":"Finance",
+        "2020":115502.89,
+        "2021":183249.97,
+        "2022":224220.78,
+        "2023":120542.18,
+        "2024":129146.31,
+        "Grand Total":772662.1300000001
+    },
+    {
+        "Small Category":"Physical Therapy and Rehab",
+        "Big Category":"Healthcare",
+        "2020":86019.62,
+        "2021":142954.21,
+        "2022":222789.05,
+        "2023":113249.84,
+        "2024":128959.96,
+        "Grand Total":693972.6799999999
+    },
+    {
+        "Small Category":"Healthcare Admin",
+        "Big Category":"Healthcare",
+        "2020":34245.73,
+        "2021":45170.39,
+        "2022":187285.38,
+        "2023":50546.09,
+        "2024":376043.17,
+        "Grand Total":693290.76
+    },
+    {
+        "Small Category":"Lobbyist",
+        "Big Category":"Sales and Consulting",
+        "2020":75867.41,
+        "2021":143873.96,
+        "2022":197950.7,
+        "2023":105362.91,
+        "2024":124459.65,
+        "Grand Total":647514.63
+    },
+    {
+        "Small Category":"Fire and Rescue",
+        "Big Category":"Government",
+        "2020":39641.27,
+        "2021":38168.07,
+        "2022":475719.13,
+        "2023":37044.71,
+        "2024":37207.6,
+        "Grand Total":627780.7799999999
+    },
+    {
+        "Small Category":"Insurance",
+        "Big Category":"Finance",
+        "2020":90700.77,
+        "2021":145776.81,
+        "2022":182690.91,
+        "2023":67839.71,
+        "2024":81604.81,
+        "Grand Total":568613.01
+    },
+    {
+        "Small Category":"Dentist",
+        "Big Category":"Healthcare",
+        "2020":66605.97,
+        "2021":95190.49,
+        "2022":180696.2,
+        "2023":79493.53,
+        "2024":74592.07,
+        "Grand Total":496578.2600000001
+    },
+    {
+        "Small Category":"Architect",
+        "Big Category":"Tech and Engineering",
+        "2020":64974.89,
+        "2021":34366.83,
+        "2022":170463.86,
+        "2023":26113.08,
+        "2024":191311.12,
+        "Grand Total":487229.78
+    },
+    {
+        "Small Category":"Human Resources",
+        "Big Category":"Business",
+        "2020":63901.84,
+        "2021":70526.46,
+        "2022":175708.31,
+        "2023":71992.71,
+        "2024":85372.0,
+        "Grand Total":467501.32
+    },
+    {
+        "Small Category":"Wealth Management",
+        "Big Category":"Finance",
+        "2020":55997.31,
+        "2021":82252.89,
+        "2022":159282.78,
+        "2023":32571.12,
+        "2024":103191.46,
+        "Grand Total":433295.56
+    },
+    {
+        "Small Category":"Pharmacist",
+        "Big Category":"Healthcare",
+        "2020":63369.43,
+        "2021":106454.54,
+        "2022":117264.76,
+        "2023":31655.44,
+        "2024":105555.24,
+        "Grand Total":424299.41
+    },
+    {
+        "Small Category":"Government Legal",
+        "Big Category":"Legal",
+        "2020":13499.0,
+        "2021":8703.95,
+        "2022":202691.66,
+        "2023":8129.7,
+        "2024":144323.04,
+        "Grand Total":377347.35
+    },
+    {
+        "Small Category":"Student",
+        "Big Category":"Non Workforce",
+        "2020":65446.1,
+        "2021":23154.77,
+        "2022":129100.56,
+        "2023":12548.15,
+        "2024":132200.69,
+        "Grand Total":362450.27
+    },
+    {
+        "Small Category":"Project Management",
+        "Big Category":"Business",
+        "2020":46252.21,
+        "2021":41923.31,
+        "2022":114380.35,
+        "2023":54997.43,
+        "2024":80902.51,
+        "Grand Total":338455.81
+    },
+    {
+        "Small Category":"Volunteer",
+        "Big Category":"Non Workforce",
+        "2020":49568.97,
+        "2021":32635.0,
+        "2022":105011.0,
+        "2023":3775.0,
+        "2024":74185.0,
+        "Grand Total":265174.97
+    },
+    {
+        "Small Category":"Logistics and Transport",
+        "Big Category":"Trades and Services",
+        "2020":28683.26,
+        "2021":38372.94,
+        "2022":101046.44,
+        "2023":28791.7,
+        "2024":56365.34,
+        "Grand Total":253259.68
+    },
+    {
+        "Small Category":"Surgeon",
+        "Big Category":"Healthcare",
+        "2020":9961.13,
+        "2021":93518.38,
+        "2022":104307.43,
+        "2023":13430.0,
+        "2024":26032.77,
+        "Grand Total":247249.71
+    },
+    {
+        "Small Category":"Religious",
+        "Big Category":"Trades and Services",
+        "2020":24227.67,
+        "2021":73106.62,
+        "2022":89449.18,
+        "2023":12036.14,
+        "2024":46145.44,
+        "Grand Total":244965.05
+    },
+    {
+        "Small Category":"Retail",
+        "Big Category":"Trades and Services",
+        "2020":34428.95,
+        "2021":50824.37,
+        "2022":77751.01,
+        "2023":39898.24,
+        "2024":31195.03,
+        "Grand Total":234097.6
+    },
+    {
+        "Small Category":"Coach and Athletics",
+        "Big Category":"Education",
+        "2020":12203.14,
+        "2021":24065.43,
+        "2022":94523.51,
+        "2023":3020.0,
+        "2024":22324.74,
+        "Grand Total":156136.82
+    },
+    {
+        "Small Category":"Legal Support",
+        "Big Category":"Legal",
+        "2020":30793.25,
+        "2021":21634.49,
+        "2022":61711.08,
+        "2023":3255.0,
+        "2024":13566.19,
+        "Grand Total":130960.01
+    },
+    {
+        "Small Category":"Food Service",
+        "Big Category":"Trades and Services",
+        "2020":14071.36,
+        "2021":20281.25,
+        "2022":47271.59,
+        "2023":13403.44,
+        "2024":26906.26,
+        "Grand Total":121933.9
+    },
+    {
+        "Small Category":"Veterinarian",
+        "Big Category":"Healthcare",
+        "2020":10642.36,
+        "2021":5511.52,
+        "2022":25782.76,
+        "2023":7379.89,
+        "2024":11163.26,
+        "Grand Total":60479.79
+    },
+    {
+        "Small Category":"Military",
+        "Big Category":"Government",
+        "2020":1582.61,
+        "2021":4467.47,
+        "2022":12056.76,
+        "2023":5457.5,
+        "2024":30883.68,
+        "Grand Total":54448.02
+    },
+    {
+        "Small Category":"Librarian",
+        "Big Category":"Education",
+        "2020":10244.84,
+        "2021":9486.53,
+        "2022":20717.52,
+        "2023":3125.5,
+        "2024":6751.65,
+        "Grand Total":50326.04
+    },
+    {
+        "Small Category":"Postal Service",
+        "Big Category":"Government",
+        "2020":1603.03,
+        "2021":1176.0,
+        "2022":4542.83,
+        "2023":1296.86,
+        "2024":690.0,
+        "Grand Total":9308.72
+    }
+]

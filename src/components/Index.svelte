@@ -1,6 +1,8 @@
+<!-- src/routes/+page.svelte -->
 <script>
   import Scrolly from "$components/helpers/Scrolly.svelte";
   import FlowMap from "$components/FlowMap.svelte";
+  import TreeMap from "$components/TreeMap.svelte";
 
   let { data } = $props();
   
@@ -26,6 +28,15 @@
   function setHighlight(id) {
     activeHighlight = id;
   }
+
+  // === Treemap 年份逻辑 ===
+  let treemapYear = $derived.by(() => {
+      if (currentStep < 8) return 2020;
+      if (currentStep > 12) return 2024;
+      return 2020 + (currentStep - 8);
+  });
+
+  const years = [2020, 2021, 2022, 2023, 2024];
 </script>
 
 <svelte:head>
@@ -35,7 +46,6 @@
             margin: 0; 
             padding: 0; 
             overflow-x: hidden; 
-            /* 深邃的蓝黑色底色，中心稍微亮一点 */
             background: radial-gradient(circle at 50% 50%, #1a1f25 0%, #0a0b0c 100%);
             color: #e0e0e0;
         }
@@ -52,35 +62,57 @@
     style:opacity={currentStep === 1 || currentStep === 2 || currentStep === 4 ? 0 : 1}
   ></div>
 
-  <!-- 2. 数据层：地图 -->
-  <!-- 关键修改：添加 class:locked，在封面模式下禁止地图交互，防止误触 -->
+  <!-- 2. 数据层：可视化图表 -->
   <div class="viz-layer" class:locked={isCoverActive}>
-    <div class="map-wrapper">
+    
+    <!-- FlowMap: Step 0 到 6 显示 -->
+    <div 
+        class="viz-wrapper" 
+        style:opacity={currentStep <= 6 ? 1 : 0} 
+        style:pointer-events={currentStep <= 6 ? 'auto' : 'none'}
+    >
         <FlowMap {data} step={currentStep} {activeHighlight} />
     </div>
+
+    <!-- Treemap: Step 8 开始显示 -->
+    <div 
+        class="viz-wrapper" 
+        style:opacity={currentStep >= 8 ? 1 : 0} 
+        style:pointer-events={currentStep >= 8 ? 'auto' : 'none'}
+    >
+        <TreeMap data={data.treemapData} year={treemapYear} />
+    </div>
+
+  </div>
+
+  <!-- 年份侧边栏 -->
+  <div class="year-sidebar" class:visible={currentStep >= 8 && currentStep <= 12}>
+      {#each years as y}
+          <div class="year-item" class:active={treemapYear === y}>
+              <span class="year-text">{y}</span>
+              <div class="year-dot"></div>
+          </div>
+      {/each}
   </div>
 
   <!-- 3. 叙事层：文字与按钮 -->
-  <!-- Z-Index: 100 (位于遮罩层之下，所以会被遮住) -->
   <div class="scrolly-overlay" class:cover-mode={isCoverActive}>
     <Scrolly bind:value={currentStep}>
       
-      <!-- STEP 0: 封面标题 -->
+      <!-- STEP 0: 封面 -->
       <div class="step title-page">
         <div class="card title-card" class:active={currentStep === 0}>
           <h1>The Invisible Current</h1>
           <p class="subtitle">Tracing the hidden flow of political capital into Michigan's 2024 Election.</p>
-          
-          <!-- 核心按钮 -->
-          <!-- pointer-events: auto 确保它是这一层唯一能被点击的东西 -->
-          <!-- svelte-ignore a11y_click_events_have_key_events -->
-          <!-- svelte-ignore a11y_no_static_element_interactions -->
           <div 
             class="scroll-hint interactive-hint" 
             onclick={enterStory}
+            role="button"
+            tabindex="0"
+            onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') enterStory(); }}
           >
             {#if isCoverActive}
-                <span class="blink">●</span> Click to Begin Investigation
+                <span class="blink">●</span> Click to Begin
             {:else}
                 Scroll to begin ↓
             {/if}
@@ -88,58 +120,48 @@
         </div>
       </div>
 
-      <!-- STEP 1: National Source -->
+      <!-- STEP 1 -->
       <div class="step center-focus">
         <div class="card glass" class:active={currentStep === 1}>
           <h2>1. The National Source</h2>
-          <p>
-            Money in politics rarely stays local. Before a single vote is cast in Michigan, millions of dollars traverse the country.
-          </p>
+          <p>Money in politics rarely stays local. Before a single vote is cast in Michigan, millions of dollars traverse the country.</p>
           <p>
             While local support is vital, a significant portion originates from coastal powerhouses. 
             <span class="interactive" onmouseenter={() => setHighlight('DC')} onmouseleave={() => setHighlight(null)} role="button" tabindex="0">DC</span> 
             and 
-            <span class="interactive" onmouseenter={() => setHighlight('CA')} onmouseleave={() => setHighlight(null)} role="button" tabindex="0">California</span>
-            act as massive reservoirs.
+            <span class="interactive" onmouseenter={() => setHighlight('CA')} onmouseleave={() => setHighlight(null)} role="button" tabindex="0">California</span>.
           </p>
         </div>
       </div>
 
-      <!-- STEP 2: Inflow -->
+      <!-- STEP 2 -->
       <div class="step left-align">
         <div class="card glass" class:active={currentStep === 2}>
           <h2>2. The Funnel Effect</h2>
-          <p>
-            As we track the trajectory, we see a "funneling" effect. Capital isn't distributed evenly; it seeks specific targets.
-          </p>
+          <p>As we track the trajectory, we see a "funneling" effect. Capital isn't distributed evenly; it seeks specific targets.</p>
         </div>
       </div>
 
-      <!-- STEP 3: State Convergence -->
+      <!-- STEP 3 -->
       <div class="step right-align">
         <div class="card glass" class:active={currentStep === 3}>
           <h2>3. Domestic vs. Imported</h2>
           <p>
-            Here, we separate the signal from the noise.
-            <br><br>
             <strong style="color: #EF5350;">Red Nodes</strong>: Out-of-State contributions.<br>
             <strong style="color: #B39DDB;">Purple Nodes</strong>: In-State capital.
           </p>
         </div>
       </div>
 
-      <!-- STEP 4: Michigan Focus -->
+      <!-- STEP 4 -->
       <div class="step center-focus">
         <div class="card glass" class:active={currentStep === 4}>
           <h2>4. Michigan Focus</h2>
-          <p>
-            Zooming into the state level. The distribution is heavily skewed towards population centers.
-          </p>
-          <p class="small-hint">(Hover over the map to explore counties)</p>
+          <p>Zooming into the state level. The distribution is heavily skewed towards population centers.</p>
         </div>
       </div>
 
-      <!-- STEP 5: Impact Analysis -->
+      <!-- STEP 5 -->
       <div class="step top-left-align">
         <div class="card glass" class:active={currentStep === 5}>
           <h2>5. Power Centers</h2>
@@ -149,32 +171,70 @@
             <span class="interactive" onmouseenter={() => setHighlight('Oakland')} onmouseleave={() => setHighlight(null)} role="button" tabindex="0">Oakland County</span> 
             absorb the vast majority of resources.
           </p>
-          <div class="legend-row">
-            <div><span class="dot purple"></span> Inflow</div>
-            <div><span class="dot yellow"></span> Expenditure</div>
-          </div>
         </div>
       </div>
 
-      <!-- STEP 6: Alluvial -->
+      <!-- STEP 6 -->
       <div class="step center-focus">
         <div class="card glass" class:active={currentStep === 6}>
           <h2>6. The Flow of Influence</h2>
-          <p>
-            Does funding translate directly to expenditure?
-            <br><br>
-            <strong style="color: #9C27B0;">Purple Ribbons</strong>: Net Contributors.<br>
-            <strong style="color: #FFC107;">Yellow Ribbons</strong>: Net Beneficiaries.
-          </p>
+          <p>Does funding translate directly to expenditure?</p>
+        </div>
+      </div>
+
+      <!-- STEP 7: Transition -->
+      <div class="step center-focus">
+        <div class="card glass" class:active={currentStep === 7} style="border-color: #FFD700;">
+          <h2 style="color: #FFD700;">Part II: The Source of Wealth</h2>
+          <p>Let's uncover <em>who</em> is sending the money by analyzing industry sectors.</p>
+          <p class="small-hint">Scroll down to analyze the yearly breakdown ↓</p>
+        </div>
+      </div>
+
+      <!-- STEP 8: 2020 -->
+      <div class="step left-align">
+        <div class="card glass" class:active={currentStep === 8}>
+          <h2>2020: The Baseline</h2>
+          <p>A high-spending election year. Business and Legal sectors dominate.</p>
+        </div>
+      </div>
+
+      <!-- STEP 9: 2021 -->
+      <div class="step left-align">
+        <div class="card glass" class:active={currentStep === 9}>
+          <h2>2021: Post-Election Shift</h2>
+          <p>Total volume decreases in the off-year.</p>
+        </div>
+      </div>
+
+      <!-- STEP 10: 2022 -->
+      <div class="step left-align">
+        <div class="card glass" class:active={currentStep === 10}>
+          <h2>2022: Midterm Surge</h2>
+          <p>A massive influx of capital returns for the midterms.</p>
+        </div>
+      </div>
+
+      <!-- STEP 11: 2023 -->
+      <div class="step left-align">
+        <div class="card glass" class:active={currentStep === 11}>
+          <h2>2023: The Lull</h2>
+          <p>The cycle resets. Contributions contract significantly.</p>
+        </div>
+      </div>
+
+      <!-- STEP 12: 2024 -->
+      <div class="step left-align">
+        <div class="card glass" class:active={currentStep === 12}>
+          <h2>2024: Current Cycle</h2>
+          <p>Leading into the current election, new patterns emerge.</p>
         </div>
       </div>
 
     </Scrolly>
   </div>
 
-  <!-- 4. 遮罩层：聚光灯 -->
-  <!-- Z-Index: 999 (最高层) -->
-  <!-- 关键修改：pointer-events: none 让鼠标穿透它去点击下面的按钮 -->
+  <!-- 4. 遮罩层 -->
   <div 
     class="spotlight-overlay" 
     class:hidden={!isCoverActive}
@@ -185,9 +245,6 @@
 </section>
 
 <style>
-  /* =========================================
-     1. Global & Layout
-     ========================================= */
   :global(body) {
       margin: 0; padding: 0; overflow-x: hidden;
       background: radial-gradient(circle at 50% 50%, #1a202c 0%, #0d1117 100%);
@@ -195,24 +252,18 @@
       font-family: 'Inter', sans-serif;
   }
 
-  /* =========================================
-     2. Background Layers (Z-Index: 0-1)
-     ========================================= */
   .bg-grid {
       position: fixed;
       top: 0; left: 0;
       width: 100vw; height: 100vh;
       z-index: 0;
       pointer-events: none;
-      
       background-image: 
           linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
           linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
       background-size: 40px 40px;
-      
       mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
       -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
-      
       transition: opacity 0.8s ease-in-out;
   }
 
@@ -224,62 +275,44 @@
       pointer-events: none; 
   }
   
-  /* 当处于封面模式时，彻底禁用地图层的交互 */
-  .viz-layer.locked {
-      pointer-events: none !important;
-  }
-  /* 正常模式下，地图可以交互 */
-  .viz-layer:not(.locked) .map-wrapper {
-      pointer-events: auto;
-  }
+  .viz-layer.locked { pointer-events: none !important; }
 
-  .map-wrapper {
+  .viz-wrapper {
+      position: absolute;
+      top: 0; left: 0;
       width: 100%; height: 100%;
-      display: flex; justify-content: center;
+      transition: opacity 0.8s ease-in-out;
+      display: flex;
+      justify-content: center;
+      align-items: center;
   }
 
-  /* =========================================
-     3. Spotlight Overlay (Z-Index: 999)
-     ========================================= */
   .spotlight-overlay {
       position: fixed;
       top: 0; left: 0;
       width: 100vw; height: 100vh;
-      z-index: 999; /* 最高层级，盖住文字 */
-      
-      /* 关键：允许鼠标穿透！这样才能点到下面的按钮 */
+      z-index: 999;
       pointer-events: none; 
-      
       background: radial-gradient(
           circle 650px at var(--x) var(--y), 
           transparent 10%, 
           rgba(0, 0, 0, 0.8) 20%,
           rgba(0, 0, 0, 1) 40%
       );
-      
       transition: opacity 1.5s ease-in-out, visibility 1.5s;
       opacity: 1;
       visibility: visible;
   }
 
-  .spotlight-overlay.hidden {
-      opacity: 0;
-      visibility: hidden;
-  }
+  .spotlight-overlay.hidden { opacity: 0; visibility: hidden; }
 
-  /* =========================================
-     4. UI & Scrolly Layer (Z-Index: 100)
-     ========================================= */
   .scrolly-overlay {
       position: relative;
-      z-index: 100; /* 位于 Spotlight 之下，所以会被黑影遮住 */
-      pointer-events: none; /* 默认穿透，不挡地图 */
+      z-index: 100;
+      pointer-events: none;
   }
   
-  .scrolly-overlay.cover-mode {
-      height: 100vh;
-      overflow: hidden;
-  }
+  .scrolly-overlay.cover-mode { height: 100vh; overflow: hidden; }
 
   .step {
       height: 100vh;
@@ -288,10 +321,12 @@
       justify-content: center;
       pointer-events: none;
   }
+  
+  .center-focus { justify-content: center; }
+  .left-align { justify-content: flex-start; padding-left: 5%; }
+  .right-align { justify-content: flex-end; padding-right: 5%; }
+  .top-left-align { justify-content: flex-start; align-items: flex-start; padding-top: 20vh; padding-left: 5%; }
 
-  /* =========================================
-     5. Cards & Typography
-     ========================================= */
   .card {
       background: rgba(18, 18, 18, 0.65);
       backdrop-filter: blur(12px);
@@ -299,7 +334,8 @@
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-top: 1px solid rgba(255, 255, 255, 0.15);
       border-bottom: 1px solid rgba(0, 0, 0, 0.4);
-      padding: 2.5rem;
+      padding: 1.8rem;
+      padding-top: 1rem;
       border-radius: 4px;
       box-shadow: 0 20px 40px rgba(0,0,0,0.4);
       max-width: 500px;
@@ -307,15 +343,11 @@
       opacity: 0;
       transform: translateY(20px);
       transition: opacity 0.5s, transform 0.5s;
-      
       pointer-events: auto; 
       position: relative;
   }
 
-  .card.active {
-      opacity: 1;
-      transform: translateY(0);
-  }
+  .card.active { opacity: 1; transform: translateY(0); }
 
   .title-card {
       text-align: center;
@@ -323,7 +355,6 @@
       border: none;
       box-shadow: none;
       backdrop-filter: none;
-      /* 封面卡片本身不接收点击，防止误触 */
       pointer-events: none; 
   }
 
@@ -341,38 +372,28 @@
       letter-spacing: -0.03em;
   }
 
-  .subtitle {
-      font-size: 1.2rem;
-      color: #aaa;
-      margin-bottom: 2rem;
-      font-weight: 300;
+  .subtitle { font-size: 1.2rem; color: #aaa; margin-bottom: 2rem; font-weight: 300; }
+
+  .interactive {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9em;
+      color: #FFD700;
+      border-bottom: 1px dashed #FFD700;
+      cursor: help;
+      transition: all 0.2s ease-in-out;
+      pointer-events: auto;
+      position: relative;
+      padding: 0 2px;
   }
 
-  /* =========================================
-     6. Interactive Elements (Buttons & Links)
-     ========================================= */
+  .interactive:hover {
+      background: rgba(255, 215, 0, 0.2);
+      color: #fff;
+      border-bottom: 1px dashed #FFD700;
+      border-radius: 3px;
+      text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+  }
 
-.interactive {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.9em;
-    
-    color: #FFD700;
-    border-bottom: 1px dashed #FFD700;
-    cursor: help;
-    transition: all 0.2s ease-in-out;
-    
-    pointer-events: auto;
-    position: relative;
-    padding: 0 2px;
-}
-
-.interactive:hover {
-    background: rgba(255, 215, 0, 0.2);
-    color: #fff;
-    border-bottom: 1px dashed #FFD700;
-    border-radius: 3px;
-    text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
-}
   .interactive-hint {
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.9rem;
@@ -384,7 +405,6 @@
       display: inline-block;
       border-radius: 50px;
       transition: all 0.3s;
-      
       cursor: pointer;
       pointer-events: auto; 
   }
@@ -395,32 +415,37 @@
       transform: scale(1.05);
   }
 
-  .interactive {
-      color: #FFD700;
-      border-bottom: 1px solid rgba(255, 215, 0, 0.3);
-      cursor: pointer;
-      transition: all 0.2s;
-      pointer-events: auto;
-  }
-  .interactive:hover {
-      background: rgba(255, 215, 0, 0.2);
-      color: #fff;
-  }
-
-  /* =========================================
-     7. Utilities
-     ========================================= */
-  .blink { animation: blinker 1.5s linear infinite; color: red; margin-right: 5px; }
+  .blink { animation: blinker 1.5s linear infinite; }
   @keyframes blinker { 50% { opacity: 0; } }
 
-  .center-focus { justify-content: center; }
-  .left-align { justify-content: flex-start; padding-left: 10%; }
-  .right-align { justify-content: flex-end; padding-right: 10%; }
-  .top-left-align { justify-content: flex-start; align-items: flex-start; padding-top: 15vh; padding-left: 5%; }
-
-  .legend-row { display: flex; gap: 1rem; margin-top: 1rem; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; }
-  .dot { width: 10px; height: 10px; display: inline-block; border-radius: 50%; margin-right: 5px; }
-  .purple { background: #9C27B0; }
-  .yellow { background: #FFC107; }
-  .small-hint { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; opacity: 0.7; margin-top: 1rem; }
+  .year-sidebar {
+      position: fixed;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      z-index: 100;
+      opacity: 0;
+      transition: opacity 0.5s;
+      pointer-events: none;
+  }
+  .year-sidebar.visible { opacity: 1; pointer-events: auto; }
+  
+  .year-item {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 12px;
+      cursor: pointer;
+      opacity: 0.4;
+      transition: all 0.3s;
+  }
+  .year-item:hover { opacity: 0.8; }
+  .year-item.active { opacity: 1; transform: scale(1.1); }
+  
+  .year-text { font-family: "JetBrains Mono", monospace; font-size: 12px; color: #fff; }
+  .year-dot { width: 6px; height: 6px; background: #fff; border-radius: 50%; transition: all 0.3s; }
+  .year-item.active .year-dot { background: #ffd700; box-shadow: 0 0 8px #ffd700; transform: scale(1.5); }
 </style>
