@@ -16,6 +16,33 @@
 	let scrollY = $state(0);
 	let innerHeight = $state(0);
 
+	// === Logic: Scroll Locking ===
+	// Use $effect instead of <svelte:body> for stronger locking
+	// Locks both html and body, and forces scroll to top
+	$effect(() => {
+		if (isLocked) {
+			document.body.style.overflow = "hidden";
+			document.documentElement.style.overflow = "hidden";
+			window.scrollTo(0, 0);
+		} else {
+			document.body.style.overflow = "";
+			document.documentElement.style.overflow = "";
+		}
+	});
+
+	function unlockExperience() {
+		if (!isLocked) return;
+		isSpotlightVisible = false;
+		setTimeout(() => {
+			isLocked = false;
+		}, 300);
+	}
+
+	// Handle Double Click to Unlock
+	function handleDoubleClick() {
+		unlockExperience();
+	}
+
 	// === Logic: Adjusted Step for Spacers ===
 	// Content steps are EVEN (0, 2, 4...), Spacers are ODD (1, 3, 5...)
 	let adjustedStep = $derived(
@@ -50,21 +77,17 @@
 		mouseY = (e.clientY / window.innerHeight) * 100;
 	}
 
-	function unlockExperience() {
-		isSpotlightVisible = false;
-		setTimeout(() => {
-			isLocked = false;
-		}, 300);
-	}
-
 	function setHighlight(id) {
 		activeHighlight = id;
 	}
 </script>
 
-<svelte:window bind:scrollY bind:innerHeight onmousemove={handleMouseMove} />
-
-<svelte:body style:overflow={isLocked ? "hidden" : "auto"} />
+<svelte:window 
+	bind:scrollY 
+	bind:innerHeight 
+	onmousemove={handleMouseMove} 
+	ondblclick={handleDoubleClick}
+/>
 
 <svelte:head>
 	<link
