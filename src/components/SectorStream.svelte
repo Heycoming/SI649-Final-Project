@@ -314,10 +314,24 @@
 			</p>
 		</div>
 
+		<!-- Updated Footer -->
 		<div class="footer-note">
 			<p>
-				© 2024 Michigan Money Trail Investigation. Data provided by the Bureau
-				of Elections.
+				&copy; {new Date().getFullYear()} Michigan Money Trail Investigation.
+				<br />
+				Created by <strong>Lubing Han</strong> & <strong>Rui Wang</strong>. All
+				rights reserved.
+			</p>
+			<p>Data provided by the A2 Dive Activity.</p>
+			<p>
+				<a
+					href="https://github.com/Heycoming/SI649-Final-Project"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="github-link"
+				>
+					View Project on GitHub ↗
+				</a>
 			</p>
 		</div>
 	</section>
@@ -548,6 +562,21 @@
 		font-family: "JetBrains Mono", monospace;
 		font-size: 0.75rem;
 		color: #666;
+	}
+
+	/* Added styles for the GitHub link */
+	.github-link {
+		color: #58a6ff; /* GitHub Dark Mode Blue */
+		text-decoration: none;
+		font-weight: bold;
+		display: inline-block;
+		margin-top: 0.5rem;
+		transition: color 0.2s ease;
+	}
+
+	.github-link:hover {
+		color: #fff;
+		text-decoration: underline;
 	}
 
 	@keyframes fadeIn {
