@@ -1,0 +1,3566 @@
+[
+    {
+        "Year":2020,
+        "Month":1,
+        "Big Category":"Business",
+        "amount":415041.67
+    },
+    {
+        "Year":2020,
+        "Month":1,
+        "Big Category":"Legal",
+        "amount":223961.56
+    },
+    {
+        "Year":2020,
+        "Month":1,
+        "Big Category":"Non Workforce",
+        "amount":186555.62
+    },
+    {
+        "Year":2020,
+        "Month":1,
+        "Big Category":"Sales and Consulting",
+        "amount":68823.25
+    },
+    {
+        "Year":2020,
+        "Month":1,
+        "Big Category":"Finance",
+        "amount":31970.73
+    },
+    {
+        "Year":2020,
+        "Month":1,
+        "Big Category":"Trades and Services",
+        "amount":31487.29
+    },
+    {
+        "Year":2020,
+        "Month":1,
+        "Big Category":"Healthcare",
+        "amount":28527.05
+    },
+    {
+        "Year":2020,
+        "Month":1,
+        "Big Category":"Government",
+        "amount":28073.43
+    },
+    {
+        "Year":2020,
+        "Month":1,
+        "Big Category":"Tech and Engineering",
+        "amount":20841.78
+    },
+    {
+        "Year":2020,
+        "Month":1,
+        "Big Category":"Education",
+        "amount":13736.95
+    },
+    {
+        "Year":2020,
+        "Month":2,
+        "Big Category":"Business",
+        "amount":815639.24
+    },
+    {
+        "Year":2020,
+        "Month":2,
+        "Big Category":"Legal",
+        "amount":308178.97
+    },
+    {
+        "Year":2020,
+        "Month":2,
+        "Big Category":"Non Workforce",
+        "amount":237462.48
+    },
+    {
+        "Year":2020,
+        "Month":2,
+        "Big Category":"Sales and Consulting",
+        "amount":127392.12
+    },
+    {
+        "Year":2020,
+        "Month":2,
+        "Big Category":"Healthcare",
+        "amount":102905.66
+    },
+    {
+        "Year":2020,
+        "Month":2,
+        "Big Category":"Tech and Engineering",
+        "amount":64094.89
+    },
+    {
+        "Year":2020,
+        "Month":2,
+        "Big Category":"Finance",
+        "amount":39135.71
+    },
+    {
+        "Year":2020,
+        "Month":2,
+        "Big Category":"Government",
+        "amount":36838.61
+    },
+    {
+        "Year":2020,
+        "Month":2,
+        "Big Category":"Trades and Services",
+        "amount":35122.58
+    },
+    {
+        "Year":2020,
+        "Month":2,
+        "Big Category":"Education",
+        "amount":29167.49
+    },
+    {
+        "Year":2020,
+        "Month":3,
+        "Big Category":"Business",
+        "amount":1192701.79
+    },
+    {
+        "Year":2020,
+        "Month":3,
+        "Big Category":"Non Workforce",
+        "amount":402287.51
+    },
+    {
+        "Year":2020,
+        "Month":3,
+        "Big Category":"Trades and Services",
+        "amount":346838.76
+    },
+    {
+        "Year":2020,
+        "Month":3,
+        "Big Category":"Legal",
+        "amount":340474.78
+    },
+    {
+        "Year":2020,
+        "Month":3,
+        "Big Category":"Sales and Consulting",
+        "amount":79268.66
+    },
+    {
+        "Year":2020,
+        "Month":3,
+        "Big Category":"Healthcare",
+        "amount":78156.21
+    },
+    {
+        "Year":2020,
+        "Month":3,
+        "Big Category":"Government",
+        "amount":44072.93
+    },
+    {
+        "Year":2020,
+        "Month":3,
+        "Big Category":"Finance",
+        "amount":39398.99
+    },
+    {
+        "Year":2020,
+        "Month":3,
+        "Big Category":"Tech and Engineering",
+        "amount":33397.24
+    },
+    {
+        "Year":2020,
+        "Month":3,
+        "Big Category":"Education",
+        "amount":22718.16
+    },
+    {
+        "Year":2020,
+        "Month":4,
+        "Big Category":"Business",
+        "amount":553987.13
+    },
+    {
+        "Year":2020,
+        "Month":4,
+        "Big Category":"Non Workforce",
+        "amount":362728.53
+    },
+    {
+        "Year":2020,
+        "Month":4,
+        "Big Category":"Sales and Consulting",
+        "amount":204762.88
+    },
+    {
+        "Year":2020,
+        "Month":4,
+        "Big Category":"Legal",
+        "amount":151686.28
+    },
+    {
+        "Year":2020,
+        "Month":4,
+        "Big Category":"Healthcare",
+        "amount":52594.52
+    },
+    {
+        "Year":2020,
+        "Month":4,
+        "Big Category":"Government",
+        "amount":51339.07
+    },
+    {
+        "Year":2020,
+        "Month":4,
+        "Big Category":"Trades and Services",
+        "amount":24909.13
+    },
+    {
+        "Year":2020,
+        "Month":4,
+        "Big Category":"Tech and Engineering",
+        "amount":24094.7
+    },
+    {
+        "Year":2020,
+        "Month":4,
+        "Big Category":"Education",
+        "amount":20970.46
+    },
+    {
+        "Year":2020,
+        "Month":4,
+        "Big Category":"Finance",
+        "amount":17272.68
+    },
+    {
+        "Year":2020,
+        "Month":5,
+        "Big Category":"Business",
+        "amount":556192.64
+    },
+    {
+        "Year":2020,
+        "Month":5,
+        "Big Category":"Legal",
+        "amount":325640.91
+    },
+    {
+        "Year":2020,
+        "Month":5,
+        "Big Category":"Non Workforce",
+        "amount":322193.28
+    },
+    {
+        "Year":2020,
+        "Month":5,
+        "Big Category":"Sales and Consulting",
+        "amount":105523.63
+    },
+    {
+        "Year":2020,
+        "Month":5,
+        "Big Category":"Healthcare",
+        "amount":72310.33
+    },
+    {
+        "Year":2020,
+        "Month":5,
+        "Big Category":"Government",
+        "amount":48017.19
+    },
+    {
+        "Year":2020,
+        "Month":5,
+        "Big Category":"Trades and Services",
+        "amount":41089.19
+    },
+    {
+        "Year":2020,
+        "Month":5,
+        "Big Category":"Finance",
+        "amount":39290.81
+    },
+    {
+        "Year":2020,
+        "Month":5,
+        "Big Category":"Tech and Engineering",
+        "amount":37798.29
+    },
+    {
+        "Year":2020,
+        "Month":5,
+        "Big Category":"Education",
+        "amount":33984.63
+    },
+    {
+        "Year":2020,
+        "Month":6,
+        "Big Category":"Business",
+        "amount":1342069.6899999999
+    },
+    {
+        "Year":2020,
+        "Month":6,
+        "Big Category":"Non Workforce",
+        "amount":789911.1800000001
+    },
+    {
+        "Year":2020,
+        "Month":6,
+        "Big Category":"Legal",
+        "amount":617471.61
+    },
+    {
+        "Year":2020,
+        "Month":6,
+        "Big Category":"Healthcare",
+        "amount":134809.34
+    },
+    {
+        "Year":2020,
+        "Month":6,
+        "Big Category":"Sales and Consulting",
+        "amount":124250.22
+    },
+    {
+        "Year":2020,
+        "Month":6,
+        "Big Category":"Government",
+        "amount":100694.72
+    },
+    {
+        "Year":2020,
+        "Month":6,
+        "Big Category":"Trades and Services",
+        "amount":98220.44
+    },
+    {
+        "Year":2020,
+        "Month":6,
+        "Big Category":"Finance",
+        "amount":91614.74
+    },
+    {
+        "Year":2020,
+        "Month":6,
+        "Big Category":"Tech and Engineering",
+        "amount":70712.4
+    },
+    {
+        "Year":2020,
+        "Month":6,
+        "Big Category":"Education",
+        "amount":36768.68
+    },
+    {
+        "Year":2020,
+        "Month":7,
+        "Big Category":"Business",
+        "amount":1843670.5700000001
+    },
+    {
+        "Year":2020,
+        "Month":7,
+        "Big Category":"Non Workforce",
+        "amount":877396.34
+    },
+    {
+        "Year":2020,
+        "Month":7,
+        "Big Category":"Legal",
+        "amount":853266.78
+    },
+    {
+        "Year":2020,
+        "Month":7,
+        "Big Category":"Government",
+        "amount":273051.45
+    },
+    {
+        "Year":2020,
+        "Month":7,
+        "Big Category":"Sales and Consulting",
+        "amount":244105.31
+    },
+    {
+        "Year":2020,
+        "Month":7,
+        "Big Category":"Healthcare",
+        "amount":183142.86
+    },
+    {
+        "Year":2020,
+        "Month":7,
+        "Big Category":"Finance",
+        "amount":136141.53
+    },
+    {
+        "Year":2020,
+        "Month":7,
+        "Big Category":"Tech and Engineering",
+        "amount":117720.83
+    },
+    {
+        "Year":2020,
+        "Month":7,
+        "Big Category":"Education",
+        "amount":91779.16
+    },
+    {
+        "Year":2020,
+        "Month":7,
+        "Big Category":"Trades and Services",
+        "amount":68307.18
+    },
+    {
+        "Year":2020,
+        "Month":8,
+        "Big Category":"Business",
+        "amount":1399291.1299999999
+    },
+    {
+        "Year":2020,
+        "Month":8,
+        "Big Category":"Non Workforce",
+        "amount":750935.99
+    },
+    {
+        "Year":2020,
+        "Month":8,
+        "Big Category":"Legal",
+        "amount":731407.05
+    },
+    {
+        "Year":2020,
+        "Month":8,
+        "Big Category":"Sales and Consulting",
+        "amount":402224.78
+    },
+    {
+        "Year":2020,
+        "Month":8,
+        "Big Category":"Healthcare",
+        "amount":166030.61
+    },
+    {
+        "Year":2020,
+        "Month":8,
+        "Big Category":"Government",
+        "amount":157183.83
+    },
+    {
+        "Year":2020,
+        "Month":8,
+        "Big Category":"Trades and Services",
+        "amount":134902.33
+    },
+    {
+        "Year":2020,
+        "Month":8,
+        "Big Category":"Tech and Engineering",
+        "amount":80075.08
+    },
+    {
+        "Year":2020,
+        "Month":8,
+        "Big Category":"Finance",
+        "amount":71807.63
+    },
+    {
+        "Year":2020,
+        "Month":8,
+        "Big Category":"Education",
+        "amount":67129.93
+    },
+    {
+        "Year":2020,
+        "Month":9,
+        "Big Category":"Business",
+        "amount":2428882.4100000001
+    },
+    {
+        "Year":2020,
+        "Month":9,
+        "Big Category":"Non Workforce",
+        "amount":1409667.3799999999
+    },
+    {
+        "Year":2020,
+        "Month":9,
+        "Big Category":"Legal",
+        "amount":1294337.6499999999
+    },
+    {
+        "Year":2020,
+        "Month":9,
+        "Big Category":"Sales and Consulting",
+        "amount":302389.8
+    },
+    {
+        "Year":2020,
+        "Month":9,
+        "Big Category":"Healthcare",
+        "amount":165786.5
+    },
+    {
+        "Year":2020,
+        "Month":9,
+        "Big Category":"Finance",
+        "amount":151245.41
+    },
+    {
+        "Year":2020,
+        "Month":9,
+        "Big Category":"Tech and Engineering",
+        "amount":142340.91
+    },
+    {
+        "Year":2020,
+        "Month":9,
+        "Big Category":"Government",
+        "amount":129932.32
+    },
+    {
+        "Year":2020,
+        "Month":9,
+        "Big Category":"Trades and Services",
+        "amount":117178.13
+    },
+    {
+        "Year":2020,
+        "Month":9,
+        "Big Category":"Education",
+        "amount":101732.4
+    },
+    {
+        "Year":2020,
+        "Month":10,
+        "Big Category":"Business",
+        "amount":3804971.7000000002
+    },
+    {
+        "Year":2020,
+        "Month":10,
+        "Big Category":"Non Workforce",
+        "amount":1976762.51
+    },
+    {
+        "Year":2020,
+        "Month":10,
+        "Big Category":"Legal",
+        "amount":1005907.96
+    },
+    {
+        "Year":2020,
+        "Month":10,
+        "Big Category":"Healthcare",
+        "amount":424881.46
+    },
+    {
+        "Year":2020,
+        "Month":10,
+        "Big Category":"Government",
+        "amount":274459.19
+    },
+    {
+        "Year":2020,
+        "Month":10,
+        "Big Category":"Sales and Consulting",
+        "amount":269787.25
+    },
+    {
+        "Year":2020,
+        "Month":10,
+        "Big Category":"Tech and Engineering",
+        "amount":204603.3
+    },
+    {
+        "Year":2020,
+        "Month":10,
+        "Big Category":"Finance",
+        "amount":168560.06
+    },
+    {
+        "Year":2020,
+        "Month":10,
+        "Big Category":"Education",
+        "amount":166650.15
+    },
+    {
+        "Year":2020,
+        "Month":10,
+        "Big Category":"Trades and Services",
+        "amount":161542.89
+    },
+    {
+        "Year":2020,
+        "Month":11,
+        "Big Category":"Business",
+        "amount":518077.75
+    },
+    {
+        "Year":2020,
+        "Month":11,
+        "Big Category":"Non Workforce",
+        "amount":183196.81
+    },
+    {
+        "Year":2020,
+        "Month":11,
+        "Big Category":"Legal",
+        "amount":176067.27
+    },
+    {
+        "Year":2020,
+        "Month":11,
+        "Big Category":"Sales and Consulting",
+        "amount":112878.85
+    },
+    {
+        "Year":2020,
+        "Month":11,
+        "Big Category":"Healthcare",
+        "amount":76884.5
+    },
+    {
+        "Year":2020,
+        "Month":11,
+        "Big Category":"Tech and Engineering",
+        "amount":43992.77
+    },
+    {
+        "Year":2020,
+        "Month":11,
+        "Big Category":"Finance",
+        "amount":43028.99
+    },
+    {
+        "Year":2020,
+        "Month":11,
+        "Big Category":"Trades and Services",
+        "amount":34059.05
+    },
+    {
+        "Year":2020,
+        "Month":11,
+        "Big Category":"Government",
+        "amount":26383.2
+    },
+    {
+        "Year":2020,
+        "Month":11,
+        "Big Category":"Education",
+        "amount":17971.29
+    },
+    {
+        "Year":2020,
+        "Month":12,
+        "Big Category":"Business",
+        "amount":341026.44
+    },
+    {
+        "Year":2020,
+        "Month":12,
+        "Big Category":"Trades and Services",
+        "amount":158939.51
+    },
+    {
+        "Year":2020,
+        "Month":12,
+        "Big Category":"Legal",
+        "amount":108231.51
+    },
+    {
+        "Year":2020,
+        "Month":12,
+        "Big Category":"Sales and Consulting",
+        "amount":107037.86
+    },
+    {
+        "Year":2020,
+        "Month":12,
+        "Big Category":"Non Workforce",
+        "amount":96106.75
+    },
+    {
+        "Year":2020,
+        "Month":12,
+        "Big Category":"Healthcare",
+        "amount":58935.52
+    },
+    {
+        "Year":2020,
+        "Month":12,
+        "Big Category":"Government",
+        "amount":46846.29
+    },
+    {
+        "Year":2020,
+        "Month":12,
+        "Big Category":"Finance",
+        "amount":41202.47
+    },
+    {
+        "Year":2020,
+        "Month":12,
+        "Big Category":"Tech and Engineering",
+        "amount":31790.67
+    },
+    {
+        "Year":2020,
+        "Month":12,
+        "Big Category":"Education",
+        "amount":12085.82
+    },
+    {
+        "Year":2021,
+        "Month":1,
+        "Big Category":"Business",
+        "amount":292072.86
+    },
+    {
+        "Year":2021,
+        "Month":1,
+        "Big Category":"Legal",
+        "amount":179565.21
+    },
+    {
+        "Year":2021,
+        "Month":1,
+        "Big Category":"Non Workforce",
+        "amount":175329.05
+    },
+    {
+        "Year":2021,
+        "Month":1,
+        "Big Category":"Sales and Consulting",
+        "amount":69012.69
+    },
+    {
+        "Year":2021,
+        "Month":1,
+        "Big Category":"Healthcare",
+        "amount":33471.51
+    },
+    {
+        "Year":2021,
+        "Month":1,
+        "Big Category":"Trades and Services",
+        "amount":30191.6
+    },
+    {
+        "Year":2021,
+        "Month":1,
+        "Big Category":"Finance",
+        "amount":23808.14
+    },
+    {
+        "Year":2021,
+        "Month":1,
+        "Big Category":"Tech and Engineering",
+        "amount":22293.79
+    },
+    {
+        "Year":2021,
+        "Month":1,
+        "Big Category":"Government",
+        "amount":19926.82
+    },
+    {
+        "Year":2021,
+        "Month":1,
+        "Big Category":"Education",
+        "amount":9406.61
+    },
+    {
+        "Year":2021,
+        "Month":2,
+        "Big Category":"Business",
+        "amount":809610.15
+    },
+    {
+        "Year":2021,
+        "Month":2,
+        "Big Category":"Trades and Services",
+        "amount":372896.61
+    },
+    {
+        "Year":2021,
+        "Month":2,
+        "Big Category":"Non Workforce",
+        "amount":330130.53
+    },
+    {
+        "Year":2021,
+        "Month":2,
+        "Big Category":"Legal",
+        "amount":198980.88
+    },
+    {
+        "Year":2021,
+        "Month":2,
+        "Big Category":"Sales and Consulting",
+        "amount":136872.4
+    },
+    {
+        "Year":2021,
+        "Month":2,
+        "Big Category":"Healthcare",
+        "amount":106828.35
+    },
+    {
+        "Year":2021,
+        "Month":2,
+        "Big Category":"Education",
+        "amount":51394.4
+    },
+    {
+        "Year":2021,
+        "Month":2,
+        "Big Category":"Government",
+        "amount":43381.03
+    },
+    {
+        "Year":2021,
+        "Month":2,
+        "Big Category":"Finance",
+        "amount":35716.83
+    },
+    {
+        "Year":2021,
+        "Month":2,
+        "Big Category":"Tech and Engineering",
+        "amount":24978.86
+    },
+    {
+        "Year":2021,
+        "Month":3,
+        "Big Category":"Business",
+        "amount":933007.67
+    },
+    {
+        "Year":2021,
+        "Month":3,
+        "Big Category":"Non Workforce",
+        "amount":530374.08
+    },
+    {
+        "Year":2021,
+        "Month":3,
+        "Big Category":"Sales and Consulting",
+        "amount":245566.91
+    },
+    {
+        "Year":2021,
+        "Month":3,
+        "Big Category":"Legal",
+        "amount":170419.68
+    },
+    {
+        "Year":2021,
+        "Month":3,
+        "Big Category":"Healthcare",
+        "amount":125690.56
+    },
+    {
+        "Year":2021,
+        "Month":3,
+        "Big Category":"Education",
+        "amount":80311.4
+    },
+    {
+        "Year":2021,
+        "Month":3,
+        "Big Category":"Trades and Services",
+        "amount":72234.52
+    },
+    {
+        "Year":2021,
+        "Month":3,
+        "Big Category":"Tech and Engineering",
+        "amount":59350.71
+    },
+    {
+        "Year":2021,
+        "Month":3,
+        "Big Category":"Finance",
+        "amount":57658.43
+    },
+    {
+        "Year":2021,
+        "Month":3,
+        "Big Category":"Government",
+        "amount":52862.45
+    },
+    {
+        "Year":2021,
+        "Month":4,
+        "Big Category":"Business",
+        "amount":1715359.7
+    },
+    {
+        "Year":2021,
+        "Month":4,
+        "Big Category":"Non Workforce",
+        "amount":719874.55
+    },
+    {
+        "Year":2021,
+        "Month":4,
+        "Big Category":"Healthcare",
+        "amount":209489.58
+    },
+    {
+        "Year":2021,
+        "Month":4,
+        "Big Category":"Sales and Consulting",
+        "amount":183173.42
+    },
+    {
+        "Year":2021,
+        "Month":4,
+        "Big Category":"Legal",
+        "amount":154770.66
+    },
+    {
+        "Year":2021,
+        "Month":4,
+        "Big Category":"Government",
+        "amount":76025.67
+    },
+    {
+        "Year":2021,
+        "Month":4,
+        "Big Category":"Tech and Engineering",
+        "amount":73490.25
+    },
+    {
+        "Year":2021,
+        "Month":4,
+        "Big Category":"Finance",
+        "amount":65170.98
+    },
+    {
+        "Year":2021,
+        "Month":4,
+        "Big Category":"Education",
+        "amount":48556.1
+    },
+    {
+        "Year":2021,
+        "Month":4,
+        "Big Category":"Trades and Services",
+        "amount":35466.53
+    },
+    {
+        "Year":2021,
+        "Month":5,
+        "Big Category":"Business",
+        "amount":1630649.97
+    },
+    {
+        "Year":2021,
+        "Month":5,
+        "Big Category":"Non Workforce",
+        "amount":676068.9
+    },
+    {
+        "Year":2021,
+        "Month":5,
+        "Big Category":"Legal",
+        "amount":257671.23
+    },
+    {
+        "Year":2021,
+        "Month":5,
+        "Big Category":"Sales and Consulting",
+        "amount":132823.54
+    },
+    {
+        "Year":2021,
+        "Month":5,
+        "Big Category":"Healthcare",
+        "amount":117122.92
+    },
+    {
+        "Year":2021,
+        "Month":5,
+        "Big Category":"Finance",
+        "amount":87367.39
+    },
+    {
+        "Year":2021,
+        "Month":5,
+        "Big Category":"Government",
+        "amount":60188.39
+    },
+    {
+        "Year":2021,
+        "Month":5,
+        "Big Category":"Education",
+        "amount":55130.78
+    },
+    {
+        "Year":2021,
+        "Month":5,
+        "Big Category":"Tech and Engineering",
+        "amount":48886.76
+    },
+    {
+        "Year":2021,
+        "Month":5,
+        "Big Category":"Trades and Services",
+        "amount":46786.89
+    },
+    {
+        "Year":2021,
+        "Month":6,
+        "Big Category":"Business",
+        "amount":2141979.6499999999
+    },
+    {
+        "Year":2021,
+        "Month":6,
+        "Big Category":"Non Workforce",
+        "amount":879430.52
+    },
+    {
+        "Year":2021,
+        "Month":6,
+        "Big Category":"Legal",
+        "amount":422651.65
+    },
+    {
+        "Year":2021,
+        "Month":6,
+        "Big Category":"Government",
+        "amount":228014.7
+    },
+    {
+        "Year":2021,
+        "Month":6,
+        "Big Category":"Sales and Consulting",
+        "amount":195919.26
+    },
+    {
+        "Year":2021,
+        "Month":6,
+        "Big Category":"Healthcare",
+        "amount":161122.55
+    },
+    {
+        "Year":2021,
+        "Month":6,
+        "Big Category":"Finance",
+        "amount":131720.33
+    },
+    {
+        "Year":2021,
+        "Month":6,
+        "Big Category":"Trades and Services",
+        "amount":74380.69
+    },
+    {
+        "Year":2021,
+        "Month":6,
+        "Big Category":"Education",
+        "amount":73843.93
+    },
+    {
+        "Year":2021,
+        "Month":6,
+        "Big Category":"Tech and Engineering",
+        "amount":54138.54
+    },
+    {
+        "Year":2021,
+        "Month":7,
+        "Big Category":"Business",
+        "amount":2204117.1600000001
+    },
+    {
+        "Year":2021,
+        "Month":7,
+        "Big Category":"Non Workforce",
+        "amount":905202.4
+    },
+    {
+        "Year":2021,
+        "Month":7,
+        "Big Category":"Legal",
+        "amount":610516.6900000001
+    },
+    {
+        "Year":2021,
+        "Month":7,
+        "Big Category":"Healthcare",
+        "amount":497291.01
+    },
+    {
+        "Year":2021,
+        "Month":7,
+        "Big Category":"Sales and Consulting",
+        "amount":260712.75
+    },
+    {
+        "Year":2021,
+        "Month":7,
+        "Big Category":"Government",
+        "amount":199215.12
+    },
+    {
+        "Year":2021,
+        "Month":7,
+        "Big Category":"Tech and Engineering",
+        "amount":139977.54
+    },
+    {
+        "Year":2021,
+        "Month":7,
+        "Big Category":"Trades and Services",
+        "amount":135568.07
+    },
+    {
+        "Year":2021,
+        "Month":7,
+        "Big Category":"Finance",
+        "amount":104561.65
+    },
+    {
+        "Year":2021,
+        "Month":7,
+        "Big Category":"Education",
+        "amount":59501.81
+    },
+    {
+        "Year":2021,
+        "Month":8,
+        "Big Category":"Business",
+        "amount":744225.0
+    },
+    {
+        "Year":2021,
+        "Month":8,
+        "Big Category":"Non Workforce",
+        "amount":534008.9
+    },
+    {
+        "Year":2021,
+        "Month":8,
+        "Big Category":"Sales and Consulting",
+        "amount":174429.67
+    },
+    {
+        "Year":2021,
+        "Month":8,
+        "Big Category":"Legal",
+        "amount":135824.48
+    },
+    {
+        "Year":2021,
+        "Month":8,
+        "Big Category":"Healthcare",
+        "amount":110957.76
+    },
+    {
+        "Year":2021,
+        "Month":8,
+        "Big Category":"Government",
+        "amount":93839.88
+    },
+    {
+        "Year":2021,
+        "Month":8,
+        "Big Category":"Finance",
+        "amount":63414.58
+    },
+    {
+        "Year":2021,
+        "Month":8,
+        "Big Category":"Trades and Services",
+        "amount":48535.48
+    },
+    {
+        "Year":2021,
+        "Month":8,
+        "Big Category":"Tech and Engineering",
+        "amount":45194.48
+    },
+    {
+        "Year":2021,
+        "Month":8,
+        "Big Category":"Education",
+        "amount":30053.33
+    },
+    {
+        "Year":2021,
+        "Month":9,
+        "Big Category":"Business",
+        "amount":1440279.6799999999
+    },
+    {
+        "Year":2021,
+        "Month":9,
+        "Big Category":"Non Workforce",
+        "amount":812931.9300000001
+    },
+    {
+        "Year":2021,
+        "Month":9,
+        "Big Category":"Legal",
+        "amount":331479.79
+    },
+    {
+        "Year":2021,
+        "Month":9,
+        "Big Category":"Sales and Consulting",
+        "amount":291327.47
+    },
+    {
+        "Year":2021,
+        "Month":9,
+        "Big Category":"Healthcare",
+        "amount":131063.15
+    },
+    {
+        "Year":2021,
+        "Month":9,
+        "Big Category":"Tech and Engineering",
+        "amount":111777.11
+    },
+    {
+        "Year":2021,
+        "Month":9,
+        "Big Category":"Finance",
+        "amount":100765.46
+    },
+    {
+        "Year":2021,
+        "Month":9,
+        "Big Category":"Government",
+        "amount":72105.31
+    },
+    {
+        "Year":2021,
+        "Month":9,
+        "Big Category":"Education",
+        "amount":71959.04
+    },
+    {
+        "Year":2021,
+        "Month":9,
+        "Big Category":"Trades and Services",
+        "amount":70667.17
+    },
+    {
+        "Year":2021,
+        "Month":10,
+        "Big Category":"Business",
+        "amount":2206021.4900000002
+    },
+    {
+        "Year":2021,
+        "Month":10,
+        "Big Category":"Non Workforce",
+        "amount":1282425.02
+    },
+    {
+        "Year":2021,
+        "Month":10,
+        "Big Category":"Sales and Consulting",
+        "amount":337920.37
+    },
+    {
+        "Year":2021,
+        "Month":10,
+        "Big Category":"Legal",
+        "amount":321956.9
+    },
+    {
+        "Year":2021,
+        "Month":10,
+        "Big Category":"Healthcare",
+        "amount":240657.94
+    },
+    {
+        "Year":2021,
+        "Month":10,
+        "Big Category":"Government",
+        "amount":154084.71
+    },
+    {
+        "Year":2021,
+        "Month":10,
+        "Big Category":"Education",
+        "amount":145206.71
+    },
+    {
+        "Year":2021,
+        "Month":10,
+        "Big Category":"Finance",
+        "amount":135763.73
+    },
+    {
+        "Year":2021,
+        "Month":10,
+        "Big Category":"Trades and Services",
+        "amount":124939.86
+    },
+    {
+        "Year":2021,
+        "Month":10,
+        "Big Category":"Tech and Engineering",
+        "amount":88895.77
+    },
+    {
+        "Year":2021,
+        "Month":11,
+        "Big Category":"Business",
+        "amount":1189483.8899999999
+    },
+    {
+        "Year":2021,
+        "Month":11,
+        "Big Category":"Non Workforce",
+        "amount":741297.98
+    },
+    {
+        "Year":2021,
+        "Month":11,
+        "Big Category":"Legal",
+        "amount":283991.04
+    },
+    {
+        "Year":2021,
+        "Month":11,
+        "Big Category":"Sales and Consulting",
+        "amount":260369.15
+    },
+    {
+        "Year":2021,
+        "Month":11,
+        "Big Category":"Healthcare",
+        "amount":164743.81
+    },
+    {
+        "Year":2021,
+        "Month":11,
+        "Big Category":"Government",
+        "amount":66741.77
+    },
+    {
+        "Year":2021,
+        "Month":11,
+        "Big Category":"Trades and Services",
+        "amount":66047.96
+    },
+    {
+        "Year":2021,
+        "Month":11,
+        "Big Category":"Finance",
+        "amount":65761.0
+    },
+    {
+        "Year":2021,
+        "Month":11,
+        "Big Category":"Tech and Engineering",
+        "amount":61878.07
+    },
+    {
+        "Year":2021,
+        "Month":11,
+        "Big Category":"Education",
+        "amount":38983.79
+    },
+    {
+        "Year":2021,
+        "Month":12,
+        "Big Category":"Business",
+        "amount":2059068.77
+    },
+    {
+        "Year":2021,
+        "Month":12,
+        "Big Category":"Non Workforce",
+        "amount":1213624.01
+    },
+    {
+        "Year":2021,
+        "Month":12,
+        "Big Category":"Legal",
+        "amount":419063.19
+    },
+    {
+        "Year":2021,
+        "Month":12,
+        "Big Category":"Government",
+        "amount":359556.14
+    },
+    {
+        "Year":2021,
+        "Month":12,
+        "Big Category":"Sales and Consulting",
+        "amount":320203.7
+    },
+    {
+        "Year":2021,
+        "Month":12,
+        "Big Category":"Healthcare",
+        "amount":223704.38
+    },
+    {
+        "Year":2021,
+        "Month":12,
+        "Big Category":"Education",
+        "amount":139795.97
+    },
+    {
+        "Year":2021,
+        "Month":12,
+        "Big Category":"Finance",
+        "amount":125100.02
+    },
+    {
+        "Year":2021,
+        "Month":12,
+        "Big Category":"Trades and Services",
+        "amount":87828.8
+    },
+    {
+        "Year":2021,
+        "Month":12,
+        "Big Category":"Tech and Engineering",
+        "amount":84674.98
+    },
+    {
+        "Year":2022,
+        "Month":1,
+        "Big Category":"Business",
+        "amount":903870.97
+    },
+    {
+        "Year":2022,
+        "Month":1,
+        "Big Category":"Non Workforce",
+        "amount":809726.86
+    },
+    {
+        "Year":2022,
+        "Month":1,
+        "Big Category":"Healthcare",
+        "amount":228125.45
+    },
+    {
+        "Year":2022,
+        "Month":1,
+        "Big Category":"Legal",
+        "amount":202488.1
+    },
+    {
+        "Year":2022,
+        "Month":1,
+        "Big Category":"Sales and Consulting",
+        "amount":138867.78
+    },
+    {
+        "Year":2022,
+        "Month":1,
+        "Big Category":"Tech and Engineering",
+        "amount":115690.66
+    },
+    {
+        "Year":2022,
+        "Month":1,
+        "Big Category":"Trades and Services",
+        "amount":110512.63
+    },
+    {
+        "Year":2022,
+        "Month":1,
+        "Big Category":"Government",
+        "amount":109841.79
+    },
+    {
+        "Year":2022,
+        "Month":1,
+        "Big Category":"Finance",
+        "amount":100831.61
+    },
+    {
+        "Year":2022,
+        "Month":1,
+        "Big Category":"Education",
+        "amount":51289.59
+    },
+    {
+        "Year":2022,
+        "Month":2,
+        "Big Category":"Business",
+        "amount":4405859.5
+    },
+    {
+        "Year":2022,
+        "Month":2,
+        "Big Category":"Non Workforce",
+        "amount":1223494.77
+    },
+    {
+        "Year":2022,
+        "Month":2,
+        "Big Category":"Legal",
+        "amount":684273.95
+    },
+    {
+        "Year":2022,
+        "Month":2,
+        "Big Category":"Sales and Consulting",
+        "amount":253080.69
+    },
+    {
+        "Year":2022,
+        "Month":2,
+        "Big Category":"Healthcare",
+        "amount":151605.48
+    },
+    {
+        "Year":2022,
+        "Month":2,
+        "Big Category":"Trades and Services",
+        "amount":100814.95
+    },
+    {
+        "Year":2022,
+        "Month":2,
+        "Big Category":"Tech and Engineering",
+        "amount":93951.08
+    },
+    {
+        "Year":2022,
+        "Month":2,
+        "Big Category":"Education",
+        "amount":79887.49
+    },
+    {
+        "Year":2022,
+        "Month":2,
+        "Big Category":"Government",
+        "amount":74148.85
+    },
+    {
+        "Year":2022,
+        "Month":2,
+        "Big Category":"Finance",
+        "amount":61278.19
+    },
+    {
+        "Year":2022,
+        "Month":3,
+        "Big Category":"Business",
+        "amount":5472584.2800000003
+    },
+    {
+        "Year":2022,
+        "Month":3,
+        "Big Category":"Non Workforce",
+        "amount":2351426.54
+    },
+    {
+        "Year":2022,
+        "Month":3,
+        "Big Category":"Healthcare",
+        "amount":568865.3
+    },
+    {
+        "Year":2022,
+        "Month":3,
+        "Big Category":"Legal",
+        "amount":506708.08
+    },
+    {
+        "Year":2022,
+        "Month":3,
+        "Big Category":"Trades and Services",
+        "amount":461446.7
+    },
+    {
+        "Year":2022,
+        "Month":3,
+        "Big Category":"Sales and Consulting",
+        "amount":387831.99
+    },
+    {
+        "Year":2022,
+        "Month":3,
+        "Big Category":"Government",
+        "amount":254072.0
+    },
+    {
+        "Year":2022,
+        "Month":3,
+        "Big Category":"Finance",
+        "amount":125722.04
+    },
+    {
+        "Year":2022,
+        "Month":3,
+        "Big Category":"Tech and Engineering",
+        "amount":103527.56
+    },
+    {
+        "Year":2022,
+        "Month":3,
+        "Big Category":"Education",
+        "amount":99769.13
+    },
+    {
+        "Year":2022,
+        "Month":4,
+        "Big Category":"Business",
+        "amount":3932422.7400000002
+    },
+    {
+        "Year":2022,
+        "Month":4,
+        "Big Category":"Non Workforce",
+        "amount":1676625.6799999999
+    },
+    {
+        "Year":2022,
+        "Month":4,
+        "Big Category":"Legal",
+        "amount":694346.98
+    },
+    {
+        "Year":2022,
+        "Month":4,
+        "Big Category":"Sales and Consulting",
+        "amount":514386.47
+    },
+    {
+        "Year":2022,
+        "Month":4,
+        "Big Category":"Healthcare",
+        "amount":494542.02
+    },
+    {
+        "Year":2022,
+        "Month":4,
+        "Big Category":"Government",
+        "amount":245144.07
+    },
+    {
+        "Year":2022,
+        "Month":4,
+        "Big Category":"Education",
+        "amount":221408.59
+    },
+    {
+        "Year":2022,
+        "Month":4,
+        "Big Category":"Finance",
+        "amount":166976.91
+    },
+    {
+        "Year":2022,
+        "Month":4,
+        "Big Category":"Trades and Services",
+        "amount":157772.21
+    },
+    {
+        "Year":2022,
+        "Month":4,
+        "Big Category":"Tech and Engineering",
+        "amount":154537.71
+    },
+    {
+        "Year":2022,
+        "Month":5,
+        "Big Category":"Business",
+        "amount":6234711.3600000003
+    },
+    {
+        "Year":2022,
+        "Month":5,
+        "Big Category":"Non Workforce",
+        "amount":2437431.25
+    },
+    {
+        "Year":2022,
+        "Month":5,
+        "Big Category":"Legal",
+        "amount":691977.5600000001
+    },
+    {
+        "Year":2022,
+        "Month":5,
+        "Big Category":"Government",
+        "amount":519979.37
+    },
+    {
+        "Year":2022,
+        "Month":5,
+        "Big Category":"Healthcare",
+        "amount":431178.78
+    },
+    {
+        "Year":2022,
+        "Month":5,
+        "Big Category":"Sales and Consulting",
+        "amount":333286.39
+    },
+    {
+        "Year":2022,
+        "Month":5,
+        "Big Category":"Tech and Engineering",
+        "amount":327235.26
+    },
+    {
+        "Year":2022,
+        "Month":5,
+        "Big Category":"Finance",
+        "amount":243272.06
+    },
+    {
+        "Year":2022,
+        "Month":5,
+        "Big Category":"Trades and Services",
+        "amount":131193.22
+    },
+    {
+        "Year":2022,
+        "Month":5,
+        "Big Category":"Education",
+        "amount":109882.49
+    },
+    {
+        "Year":2022,
+        "Month":6,
+        "Big Category":"Business",
+        "amount":6251496.29
+    },
+    {
+        "Year":2022,
+        "Month":6,
+        "Big Category":"Non Workforce",
+        "amount":2850445.2999999998
+    },
+    {
+        "Year":2022,
+        "Month":6,
+        "Big Category":"Legal",
+        "amount":712482.49
+    },
+    {
+        "Year":2022,
+        "Month":6,
+        "Big Category":"Sales and Consulting",
+        "amount":466611.89
+    },
+    {
+        "Year":2022,
+        "Month":6,
+        "Big Category":"Finance",
+        "amount":463432.01
+    },
+    {
+        "Year":2022,
+        "Month":6,
+        "Big Category":"Government",
+        "amount":376608.69
+    },
+    {
+        "Year":2022,
+        "Month":6,
+        "Big Category":"Healthcare",
+        "amount":318308.56
+    },
+    {
+        "Year":2022,
+        "Month":6,
+        "Big Category":"Trades and Services",
+        "amount":291980.46
+    },
+    {
+        "Year":2022,
+        "Month":6,
+        "Big Category":"Tech and Engineering",
+        "amount":168050.93
+    },
+    {
+        "Year":2022,
+        "Month":6,
+        "Big Category":"Education",
+        "amount":130102.81
+    },
+    {
+        "Year":2022,
+        "Month":7,
+        "Big Category":"Business",
+        "amount":6382790.5999999996
+    },
+    {
+        "Year":2022,
+        "Month":7,
+        "Big Category":"Non Workforce",
+        "amount":2755530.8999999999
+    },
+    {
+        "Year":2022,
+        "Month":7,
+        "Big Category":"Legal",
+        "amount":848085.5600000001
+    },
+    {
+        "Year":2022,
+        "Month":7,
+        "Big Category":"Healthcare",
+        "amount":635557.22
+    },
+    {
+        "Year":2022,
+        "Month":7,
+        "Big Category":"Government",
+        "amount":527329.38
+    },
+    {
+        "Year":2022,
+        "Month":7,
+        "Big Category":"Sales and Consulting",
+        "amount":422404.86
+    },
+    {
+        "Year":2022,
+        "Month":7,
+        "Big Category":"Finance",
+        "amount":280127.3
+    },
+    {
+        "Year":2022,
+        "Month":7,
+        "Big Category":"Tech and Engineering",
+        "amount":242783.98
+    },
+    {
+        "Year":2022,
+        "Month":7,
+        "Big Category":"Trades and Services",
+        "amount":199371.35
+    },
+    {
+        "Year":2022,
+        "Month":7,
+        "Big Category":"Education",
+        "amount":143860.53
+    },
+    {
+        "Year":2022,
+        "Month":8,
+        "Big Category":"Business",
+        "amount":5650335.2800000003
+    },
+    {
+        "Year":2022,
+        "Month":8,
+        "Big Category":"Non Workforce",
+        "amount":3300693.5899999999
+    },
+    {
+        "Year":2022,
+        "Month":8,
+        "Big Category":"Tech and Engineering",
+        "amount":2288482.9900000002
+    },
+    {
+        "Year":2022,
+        "Month":8,
+        "Big Category":"Healthcare",
+        "amount":1612696.1699999999
+    },
+    {
+        "Year":2022,
+        "Month":8,
+        "Big Category":"Legal",
+        "amount":662340.72
+    },
+    {
+        "Year":2022,
+        "Month":8,
+        "Big Category":"Sales and Consulting",
+        "amount":444354.33
+    },
+    {
+        "Year":2022,
+        "Month":8,
+        "Big Category":"Government",
+        "amount":374467.81
+    },
+    {
+        "Year":2022,
+        "Month":8,
+        "Big Category":"Trades and Services",
+        "amount":330662.17
+    },
+    {
+        "Year":2022,
+        "Month":8,
+        "Big Category":"Finance",
+        "amount":266521.49
+    },
+    {
+        "Year":2022,
+        "Month":8,
+        "Big Category":"Education",
+        "amount":184812.35
+    },
+    {
+        "Year":2022,
+        "Month":9,
+        "Big Category":"Business",
+        "amount":7169068.8300000001
+    },
+    {
+        "Year":2022,
+        "Month":9,
+        "Big Category":"Non Workforce",
+        "amount":4939446.8099999996
+    },
+    {
+        "Year":2022,
+        "Month":9,
+        "Big Category":"Tech and Engineering",
+        "amount":2437259.1400000001
+    },
+    {
+        "Year":2022,
+        "Month":9,
+        "Big Category":"Legal",
+        "amount":1685480.8200000001
+    },
+    {
+        "Year":2022,
+        "Month":9,
+        "Big Category":"Finance",
+        "amount":1320899.1699999999
+    },
+    {
+        "Year":2022,
+        "Month":9,
+        "Big Category":"Trades and Services",
+        "amount":599450.08
+    },
+    {
+        "Year":2022,
+        "Month":9,
+        "Big Category":"Sales and Consulting",
+        "amount":443505.52
+    },
+    {
+        "Year":2022,
+        "Month":9,
+        "Big Category":"Healthcare",
+        "amount":295794.62
+    },
+    {
+        "Year":2022,
+        "Month":9,
+        "Big Category":"Government",
+        "amount":281615.38
+    },
+    {
+        "Year":2022,
+        "Month":9,
+        "Big Category":"Education",
+        "amount":276467.2
+    },
+    {
+        "Year":2022,
+        "Month":10,
+        "Big Category":"Business",
+        "amount":13946776.3599999994
+    },
+    {
+        "Year":2022,
+        "Month":10,
+        "Big Category":"Non Workforce",
+        "amount":5320981.7999999998
+    },
+    {
+        "Year":2022,
+        "Month":10,
+        "Big Category":"Legal",
+        "amount":1133816.1100000001
+    },
+    {
+        "Year":2022,
+        "Month":10,
+        "Big Category":"Finance",
+        "amount":793142.1899999999
+    },
+    {
+        "Year":2022,
+        "Month":10,
+        "Big Category":"Sales and Consulting",
+        "amount":559256.6899999999
+    },
+    {
+        "Year":2022,
+        "Month":10,
+        "Big Category":"Healthcare",
+        "amount":532961.48
+    },
+    {
+        "Year":2022,
+        "Month":10,
+        "Big Category":"Tech and Engineering",
+        "amount":524998.1899999999
+    },
+    {
+        "Year":2022,
+        "Month":10,
+        "Big Category":"Government",
+        "amount":334695.66
+    },
+    {
+        "Year":2022,
+        "Month":10,
+        "Big Category":"Trades and Services",
+        "amount":325999.71
+    },
+    {
+        "Year":2022,
+        "Month":10,
+        "Big Category":"Education",
+        "amount":189281.45
+    },
+    {
+        "Year":2022,
+        "Month":11,
+        "Big Category":"Business",
+        "amount":1267137.47
+    },
+    {
+        "Year":2022,
+        "Month":11,
+        "Big Category":"Non Workforce",
+        "amount":660824.91
+    },
+    {
+        "Year":2022,
+        "Month":11,
+        "Big Category":"Legal",
+        "amount":254058.84
+    },
+    {
+        "Year":2022,
+        "Month":11,
+        "Big Category":"Sales and Consulting",
+        "amount":183237.59
+    },
+    {
+        "Year":2022,
+        "Month":11,
+        "Big Category":"Healthcare",
+        "amount":111553.97
+    },
+    {
+        "Year":2022,
+        "Month":11,
+        "Big Category":"Trades and Services",
+        "amount":82669.66
+    },
+    {
+        "Year":2022,
+        "Month":11,
+        "Big Category":"Government",
+        "amount":74615.59
+    },
+    {
+        "Year":2022,
+        "Month":11,
+        "Big Category":"Tech and Engineering",
+        "amount":62587.97
+    },
+    {
+        "Year":2022,
+        "Month":11,
+        "Big Category":"Finance",
+        "amount":55335.77
+    },
+    {
+        "Year":2022,
+        "Month":11,
+        "Big Category":"Education",
+        "amount":34430.59
+    },
+    {
+        "Year":2022,
+        "Month":12,
+        "Big Category":"Business",
+        "amount":435975.91
+    },
+    {
+        "Year":2022,
+        "Month":12,
+        "Big Category":"Healthcare",
+        "amount":88575.42
+    },
+    {
+        "Year":2022,
+        "Month":12,
+        "Big Category":"Non Workforce",
+        "amount":85432.14
+    },
+    {
+        "Year":2022,
+        "Month":12,
+        "Big Category":"Sales and Consulting",
+        "amount":67662.21
+    },
+    {
+        "Year":2022,
+        "Month":12,
+        "Big Category":"Tech and Engineering",
+        "amount":37565.63
+    },
+    {
+        "Year":2022,
+        "Month":12,
+        "Big Category":"Legal",
+        "amount":36839.95
+    },
+    {
+        "Year":2022,
+        "Month":12,
+        "Big Category":"Finance",
+        "amount":34611.34
+    },
+    {
+        "Year":2022,
+        "Month":12,
+        "Big Category":"Government",
+        "amount":33891.67
+    },
+    {
+        "Year":2022,
+        "Month":12,
+        "Big Category":"Trades and Services",
+        "amount":21539.75
+    },
+    {
+        "Year":2022,
+        "Month":12,
+        "Big Category":"Education",
+        "amount":14565.2
+    },
+    {
+        "Year":2023,
+        "Month":1,
+        "Big Category":"Business",
+        "amount":360421.36
+    },
+    {
+        "Year":2023,
+        "Month":1,
+        "Big Category":"Non Workforce",
+        "amount":146627.69
+    },
+    {
+        "Year":2023,
+        "Month":1,
+        "Big Category":"Government",
+        "amount":99613.86
+    },
+    {
+        "Year":2023,
+        "Month":1,
+        "Big Category":"Sales and Consulting",
+        "amount":66008.78
+    },
+    {
+        "Year":2023,
+        "Month":1,
+        "Big Category":"Legal",
+        "amount":58747.73
+    },
+    {
+        "Year":2023,
+        "Month":1,
+        "Big Category":"Healthcare",
+        "amount":42399.14
+    },
+    {
+        "Year":2023,
+        "Month":1,
+        "Big Category":"Trades and Services",
+        "amount":33788.26
+    },
+    {
+        "Year":2023,
+        "Month":1,
+        "Big Category":"Finance",
+        "amount":18234.5
+    },
+    {
+        "Year":2023,
+        "Month":1,
+        "Big Category":"Tech and Engineering",
+        "amount":16978.77
+    },
+    {
+        "Year":2023,
+        "Month":1,
+        "Big Category":"Education",
+        "amount":13183.27
+    },
+    {
+        "Year":2023,
+        "Month":2,
+        "Big Category":"Business",
+        "amount":387907.67
+    },
+    {
+        "Year":2023,
+        "Month":2,
+        "Big Category":"Non Workforce",
+        "amount":160252.87
+    },
+    {
+        "Year":2023,
+        "Month":2,
+        "Big Category":"Sales and Consulting",
+        "amount":87302.3
+    },
+    {
+        "Year":2023,
+        "Month":2,
+        "Big Category":"Government",
+        "amount":70769.28
+    },
+    {
+        "Year":2023,
+        "Month":2,
+        "Big Category":"Healthcare",
+        "amount":58805.68
+    },
+    {
+        "Year":2023,
+        "Month":2,
+        "Big Category":"Legal",
+        "amount":37661.74
+    },
+    {
+        "Year":2023,
+        "Month":2,
+        "Big Category":"Tech and Engineering",
+        "amount":24126.2
+    },
+    {
+        "Year":2023,
+        "Month":2,
+        "Big Category":"Trades and Services",
+        "amount":23900.91
+    },
+    {
+        "Year":2023,
+        "Month":2,
+        "Big Category":"Finance",
+        "amount":19472.63
+    },
+    {
+        "Year":2023,
+        "Month":2,
+        "Big Category":"Education",
+        "amount":9449.86
+    },
+    {
+        "Year":2023,
+        "Month":3,
+        "Big Category":"Business",
+        "amount":1121846.3600000001
+    },
+    {
+        "Year":2023,
+        "Month":3,
+        "Big Category":"Trades and Services",
+        "amount":393081.9
+    },
+    {
+        "Year":2023,
+        "Month":3,
+        "Big Category":"Non Workforce",
+        "amount":267352.51
+    },
+    {
+        "Year":2023,
+        "Month":3,
+        "Big Category":"Sales and Consulting",
+        "amount":154390.05
+    },
+    {
+        "Year":2023,
+        "Month":3,
+        "Big Category":"Government",
+        "amount":125867.3
+    },
+    {
+        "Year":2023,
+        "Month":3,
+        "Big Category":"Finance",
+        "amount":95038.25
+    },
+    {
+        "Year":2023,
+        "Month":3,
+        "Big Category":"Legal",
+        "amount":69438.79
+    },
+    {
+        "Year":2023,
+        "Month":3,
+        "Big Category":"Healthcare",
+        "amount":67983.07
+    },
+    {
+        "Year":2023,
+        "Month":3,
+        "Big Category":"Tech and Engineering",
+        "amount":55797.52
+    },
+    {
+        "Year":2023,
+        "Month":3,
+        "Big Category":"Education",
+        "amount":20813.82
+    },
+    {
+        "Year":2023,
+        "Month":4,
+        "Big Category":"Business",
+        "amount":1946880.72
+    },
+    {
+        "Year":2023,
+        "Month":4,
+        "Big Category":"Non Workforce",
+        "amount":573092.66
+    },
+    {
+        "Year":2023,
+        "Month":4,
+        "Big Category":"Sales and Consulting",
+        "amount":255492.68
+    },
+    {
+        "Year":2023,
+        "Month":4,
+        "Big Category":"Government",
+        "amount":125328.46
+    },
+    {
+        "Year":2023,
+        "Month":4,
+        "Big Category":"Healthcare",
+        "amount":93273.68
+    },
+    {
+        "Year":2023,
+        "Month":4,
+        "Big Category":"Legal",
+        "amount":72617.9
+    },
+    {
+        "Year":2023,
+        "Month":4,
+        "Big Category":"Education",
+        "amount":67064.37
+    },
+    {
+        "Year":2023,
+        "Month":4,
+        "Big Category":"Tech and Engineering",
+        "amount":54173.15
+    },
+    {
+        "Year":2023,
+        "Month":4,
+        "Big Category":"Finance",
+        "amount":27098.64
+    },
+    {
+        "Year":2023,
+        "Month":4,
+        "Big Category":"Trades and Services",
+        "amount":26066.3
+    },
+    {
+        "Year":2023,
+        "Month":5,
+        "Big Category":"Business",
+        "amount":1123953.8600000001
+    },
+    {
+        "Year":2023,
+        "Month":5,
+        "Big Category":"Non Workforce",
+        "amount":310259.86
+    },
+    {
+        "Year":2023,
+        "Month":5,
+        "Big Category":"Sales and Consulting",
+        "amount":180246.91
+    },
+    {
+        "Year":2023,
+        "Month":5,
+        "Big Category":"Government",
+        "amount":137674.87
+    },
+    {
+        "Year":2023,
+        "Month":5,
+        "Big Category":"Education",
+        "amount":118777.55
+    },
+    {
+        "Year":2023,
+        "Month":5,
+        "Big Category":"Healthcare",
+        "amount":105429.12
+    },
+    {
+        "Year":2023,
+        "Month":5,
+        "Big Category":"Legal",
+        "amount":96202.19
+    },
+    {
+        "Year":2023,
+        "Month":5,
+        "Big Category":"Tech and Engineering",
+        "amount":51270.21
+    },
+    {
+        "Year":2023,
+        "Month":5,
+        "Big Category":"Trades and Services",
+        "amount":39623.81
+    },
+    {
+        "Year":2023,
+        "Month":5,
+        "Big Category":"Finance",
+        "amount":32840.99
+    },
+    {
+        "Year":2023,
+        "Month":6,
+        "Big Category":"Business",
+        "amount":1225037.03
+    },
+    {
+        "Year":2023,
+        "Month":6,
+        "Big Category":"Non Workforce",
+        "amount":457515.85
+    },
+    {
+        "Year":2023,
+        "Month":6,
+        "Big Category":"Sales and Consulting",
+        "amount":252391.75
+    },
+    {
+        "Year":2023,
+        "Month":6,
+        "Big Category":"Healthcare",
+        "amount":149309.18
+    },
+    {
+        "Year":2023,
+        "Month":6,
+        "Big Category":"Government",
+        "amount":128737.12
+    },
+    {
+        "Year":2023,
+        "Month":6,
+        "Big Category":"Legal",
+        "amount":85642.64
+    },
+    {
+        "Year":2023,
+        "Month":6,
+        "Big Category":"Finance",
+        "amount":53740.75
+    },
+    {
+        "Year":2023,
+        "Month":6,
+        "Big Category":"Trades and Services",
+        "amount":50742.28
+    },
+    {
+        "Year":2023,
+        "Month":6,
+        "Big Category":"Tech and Engineering",
+        "amount":31475.15
+    },
+    {
+        "Year":2023,
+        "Month":6,
+        "Big Category":"Education",
+        "amount":23206.74
+    },
+    {
+        "Year":2023,
+        "Month":7,
+        "Big Category":"Business",
+        "amount":1325405.3799999999
+    },
+    {
+        "Year":2023,
+        "Month":7,
+        "Big Category":"Non Workforce",
+        "amount":498405.58
+    },
+    {
+        "Year":2023,
+        "Month":7,
+        "Big Category":"Trades and Services",
+        "amount":255355.94
+    },
+    {
+        "Year":2023,
+        "Month":7,
+        "Big Category":"Sales and Consulting",
+        "amount":189311.95
+    },
+    {
+        "Year":2023,
+        "Month":7,
+        "Big Category":"Legal",
+        "amount":137659.84
+    },
+    {
+        "Year":2023,
+        "Month":7,
+        "Big Category":"Government",
+        "amount":99504.17
+    },
+    {
+        "Year":2023,
+        "Month":7,
+        "Big Category":"Healthcare",
+        "amount":75349.34
+    },
+    {
+        "Year":2023,
+        "Month":7,
+        "Big Category":"Tech and Engineering",
+        "amount":57025.81
+    },
+    {
+        "Year":2023,
+        "Month":7,
+        "Big Category":"Finance",
+        "amount":34102.03
+    },
+    {
+        "Year":2023,
+        "Month":7,
+        "Big Category":"Education",
+        "amount":30380.41
+    },
+    {
+        "Year":2023,
+        "Month":8,
+        "Big Category":"Business",
+        "amount":953855.29
+    },
+    {
+        "Year":2023,
+        "Month":8,
+        "Big Category":"Non Workforce",
+        "amount":536992.21
+    },
+    {
+        "Year":2023,
+        "Month":8,
+        "Big Category":"Healthcare",
+        "amount":366832.37
+    },
+    {
+        "Year":2023,
+        "Month":8,
+        "Big Category":"Sales and Consulting",
+        "amount":195055.01
+    },
+    {
+        "Year":2023,
+        "Month":8,
+        "Big Category":"Legal",
+        "amount":151695.0
+    },
+    {
+        "Year":2023,
+        "Month":8,
+        "Big Category":"Government",
+        "amount":84734.47
+    },
+    {
+        "Year":2023,
+        "Month":8,
+        "Big Category":"Finance",
+        "amount":65064.6
+    },
+    {
+        "Year":2023,
+        "Month":8,
+        "Big Category":"Trades and Services",
+        "amount":57776.76
+    },
+    {
+        "Year":2023,
+        "Month":8,
+        "Big Category":"Tech and Engineering",
+        "amount":47525.85
+    },
+    {
+        "Year":2023,
+        "Month":8,
+        "Big Category":"Education",
+        "amount":25159.47
+    },
+    {
+        "Year":2023,
+        "Month":9,
+        "Big Category":"Business",
+        "amount":1128529.6399999999
+    },
+    {
+        "Year":2023,
+        "Month":9,
+        "Big Category":"Legal",
+        "amount":371578.56
+    },
+    {
+        "Year":2023,
+        "Month":9,
+        "Big Category":"Non Workforce",
+        "amount":288479.2
+    },
+    {
+        "Year":2023,
+        "Month":9,
+        "Big Category":"Government",
+        "amount":180421.18
+    },
+    {
+        "Year":2023,
+        "Month":9,
+        "Big Category":"Sales and Consulting",
+        "amount":148626.29
+    },
+    {
+        "Year":2023,
+        "Month":9,
+        "Big Category":"Healthcare",
+        "amount":99429.5
+    },
+    {
+        "Year":2023,
+        "Month":9,
+        "Big Category":"Tech and Engineering",
+        "amount":67687.92
+    },
+    {
+        "Year":2023,
+        "Month":9,
+        "Big Category":"Trades and Services",
+        "amount":61993.71
+    },
+    {
+        "Year":2023,
+        "Month":9,
+        "Big Category":"Finance",
+        "amount":53075.35
+    },
+    {
+        "Year":2023,
+        "Month":9,
+        "Big Category":"Education",
+        "amount":30703.0
+    },
+    {
+        "Year":2023,
+        "Month":10,
+        "Big Category":"Business",
+        "amount":2006533.3700000001
+    },
+    {
+        "Year":2023,
+        "Month":10,
+        "Big Category":"Non Workforce",
+        "amount":481423.32
+    },
+    {
+        "Year":2023,
+        "Month":10,
+        "Big Category":"Tech and Engineering",
+        "amount":314978.54
+    },
+    {
+        "Year":2023,
+        "Month":10,
+        "Big Category":"Sales and Consulting",
+        "amount":211284.52
+    },
+    {
+        "Year":2023,
+        "Month":10,
+        "Big Category":"Legal",
+        "amount":171626.82
+    },
+    {
+        "Year":2023,
+        "Month":10,
+        "Big Category":"Healthcare",
+        "amount":161604.71
+    },
+    {
+        "Year":2023,
+        "Month":10,
+        "Big Category":"Government",
+        "amount":107386.76
+    },
+    {
+        "Year":2023,
+        "Month":10,
+        "Big Category":"Education",
+        "amount":55369.85
+    },
+    {
+        "Year":2023,
+        "Month":10,
+        "Big Category":"Finance",
+        "amount":43266.63
+    },
+    {
+        "Year":2023,
+        "Month":10,
+        "Big Category":"Trades and Services",
+        "amount":42363.81
+    },
+    {
+        "Year":2023,
+        "Month":11,
+        "Big Category":"Business",
+        "amount":597878.08
+    },
+    {
+        "Year":2023,
+        "Month":11,
+        "Big Category":"Non Workforce",
+        "amount":378364.21
+    },
+    {
+        "Year":2023,
+        "Month":11,
+        "Big Category":"Finance",
+        "amount":132750.53
+    },
+    {
+        "Year":2023,
+        "Month":11,
+        "Big Category":"Sales and Consulting",
+        "amount":110458.55
+    },
+    {
+        "Year":2023,
+        "Month":11,
+        "Big Category":"Healthcare",
+        "amount":106705.87
+    },
+    {
+        "Year":2023,
+        "Month":11,
+        "Big Category":"Trades and Services",
+        "amount":63751.44
+    },
+    {
+        "Year":2023,
+        "Month":11,
+        "Big Category":"Tech and Engineering",
+        "amount":56746.09
+    },
+    {
+        "Year":2023,
+        "Month":11,
+        "Big Category":"Legal",
+        "amount":55968.48
+    },
+    {
+        "Year":2023,
+        "Month":11,
+        "Big Category":"Government",
+        "amount":45148.81
+    },
+    {
+        "Year":2023,
+        "Month":11,
+        "Big Category":"Education",
+        "amount":29971.95
+    },
+    {
+        "Year":2023,
+        "Month":12,
+        "Big Category":"Business",
+        "amount":1577103.74
+    },
+    {
+        "Year":2023,
+        "Month":12,
+        "Big Category":"Non Workforce",
+        "amount":1149721.74
+    },
+    {
+        "Year":2023,
+        "Month":12,
+        "Big Category":"Legal",
+        "amount":377237.37
+    },
+    {
+        "Year":2023,
+        "Month":12,
+        "Big Category":"Sales and Consulting",
+        "amount":165449.79
+    },
+    {
+        "Year":2023,
+        "Month":12,
+        "Big Category":"Government",
+        "amount":132106.07
+    },
+    {
+        "Year":2023,
+        "Month":12,
+        "Big Category":"Tech and Engineering",
+        "amount":115641.41
+    },
+    {
+        "Year":2023,
+        "Month":12,
+        "Big Category":"Healthcare",
+        "amount":104448.25
+    },
+    {
+        "Year":2023,
+        "Month":12,
+        "Big Category":"Education",
+        "amount":103527.63
+    },
+    {
+        "Year":2023,
+        "Month":12,
+        "Big Category":"Trades and Services",
+        "amount":53111.29
+    },
+    {
+        "Year":2023,
+        "Month":12,
+        "Big Category":"Finance",
+        "amount":52273.41
+    },
+    {
+        "Year":2024,
+        "Month":1,
+        "Big Category":"Business",
+        "amount":521962.94
+    },
+    {
+        "Year":2024,
+        "Month":1,
+        "Big Category":"Non Workforce",
+        "amount":310688.01
+    },
+    {
+        "Year":2024,
+        "Month":1,
+        "Big Category":"Government",
+        "amount":134512.52
+    },
+    {
+        "Year":2024,
+        "Month":1,
+        "Big Category":"Legal",
+        "amount":82091.77
+    },
+    {
+        "Year":2024,
+        "Month":1,
+        "Big Category":"Sales and Consulting",
+        "amount":72742.21
+    },
+    {
+        "Year":2024,
+        "Month":1,
+        "Big Category":"Education",
+        "amount":66195.94
+    },
+    {
+        "Year":2024,
+        "Month":1,
+        "Big Category":"Healthcare",
+        "amount":45690.74
+    },
+    {
+        "Year":2024,
+        "Month":1,
+        "Big Category":"Finance",
+        "amount":45582.78
+    },
+    {
+        "Year":2024,
+        "Month":1,
+        "Big Category":"Trades and Services",
+        "amount":29800.82
+    },
+    {
+        "Year":2024,
+        "Month":1,
+        "Big Category":"Tech and Engineering",
+        "amount":29691.08
+    },
+    {
+        "Year":2024,
+        "Month":2,
+        "Big Category":"Business",
+        "amount":784596.12
+    },
+    {
+        "Year":2024,
+        "Month":2,
+        "Big Category":"Trades and Services",
+        "amount":414785.22
+    },
+    {
+        "Year":2024,
+        "Month":2,
+        "Big Category":"Non Workforce",
+        "amount":354534.62
+    },
+    {
+        "Year":2024,
+        "Month":2,
+        "Big Category":"Legal",
+        "amount":288491.53
+    },
+    {
+        "Year":2024,
+        "Month":2,
+        "Big Category":"Healthcare",
+        "amount":144078.34
+    },
+    {
+        "Year":2024,
+        "Month":2,
+        "Big Category":"Sales and Consulting",
+        "amount":138299.56
+    },
+    {
+        "Year":2024,
+        "Month":2,
+        "Big Category":"Government",
+        "amount":88490.17
+    },
+    {
+        "Year":2024,
+        "Month":2,
+        "Big Category":"Finance",
+        "amount":55126.18
+    },
+    {
+        "Year":2024,
+        "Month":2,
+        "Big Category":"Tech and Engineering",
+        "amount":45231.64
+    },
+    {
+        "Year":2024,
+        "Month":2,
+        "Big Category":"Education",
+        "amount":33822.93
+    },
+    {
+        "Year":2024,
+        "Month":3,
+        "Big Category":"Business",
+        "amount":2210887.1699999999
+    },
+    {
+        "Year":2024,
+        "Month":3,
+        "Big Category":"Healthcare",
+        "amount":598272.96
+    },
+    {
+        "Year":2024,
+        "Month":3,
+        "Big Category":"Non Workforce",
+        "amount":556739.9300000001
+    },
+    {
+        "Year":2024,
+        "Month":3,
+        "Big Category":"Legal",
+        "amount":501367.1
+    },
+    {
+        "Year":2024,
+        "Month":3,
+        "Big Category":"Sales and Consulting",
+        "amount":195294.33
+    },
+    {
+        "Year":2024,
+        "Month":3,
+        "Big Category":"Government",
+        "amount":138632.48
+    },
+    {
+        "Year":2024,
+        "Month":3,
+        "Big Category":"Tech and Engineering",
+        "amount":87104.42
+    },
+    {
+        "Year":2024,
+        "Month":3,
+        "Big Category":"Trades and Services",
+        "amount":60686.75
+    },
+    {
+        "Year":2024,
+        "Month":3,
+        "Big Category":"Education",
+        "amount":53371.07
+    },
+    {
+        "Year":2024,
+        "Month":3,
+        "Big Category":"Finance",
+        "amount":51596.73
+    },
+    {
+        "Year":2024,
+        "Month":4,
+        "Big Category":"Business",
+        "amount":2074042.8300000001
+    },
+    {
+        "Year":2024,
+        "Month":4,
+        "Big Category":"Non Workforce",
+        "amount":1745208.8600000001
+    },
+    {
+        "Year":2024,
+        "Month":4,
+        "Big Category":"Legal",
+        "amount":725159.85
+    },
+    {
+        "Year":2024,
+        "Month":4,
+        "Big Category":"Tech and Engineering",
+        "amount":319604.95
+    },
+    {
+        "Year":2024,
+        "Month":4,
+        "Big Category":"Government",
+        "amount":274028.5
+    },
+    {
+        "Year":2024,
+        "Month":4,
+        "Big Category":"Sales and Consulting",
+        "amount":243191.9
+    },
+    {
+        "Year":2024,
+        "Month":4,
+        "Big Category":"Healthcare",
+        "amount":230552.32
+    },
+    {
+        "Year":2024,
+        "Month":4,
+        "Big Category":"Trades and Services",
+        "amount":108200.09
+    },
+    {
+        "Year":2024,
+        "Month":4,
+        "Big Category":"Education",
+        "amount":74481.53
+    },
+    {
+        "Year":2024,
+        "Month":4,
+        "Big Category":"Finance",
+        "amount":57002.33
+    },
+    {
+        "Year":2024,
+        "Month":5,
+        "Big Category":"Business",
+        "amount":2051654.6499999999
+    },
+    {
+        "Year":2024,
+        "Month":5,
+        "Big Category":"Non Workforce",
+        "amount":1308700.8799999999
+    },
+    {
+        "Year":2024,
+        "Month":5,
+        "Big Category":"Legal",
+        "amount":723021.28
+    },
+    {
+        "Year":2024,
+        "Month":5,
+        "Big Category":"Sales and Consulting",
+        "amount":273005.03
+    },
+    {
+        "Year":2024,
+        "Month":5,
+        "Big Category":"Government",
+        "amount":217476.34
+    },
+    {
+        "Year":2024,
+        "Month":5,
+        "Big Category":"Finance",
+        "amount":215060.76
+    },
+    {
+        "Year":2024,
+        "Month":5,
+        "Big Category":"Healthcare",
+        "amount":199017.12
+    },
+    {
+        "Year":2024,
+        "Month":5,
+        "Big Category":"Tech and Engineering",
+        "amount":118627.0
+    },
+    {
+        "Year":2024,
+        "Month":5,
+        "Big Category":"Trades and Services",
+        "amount":86487.63
+    },
+    {
+        "Year":2024,
+        "Month":5,
+        "Big Category":"Education",
+        "amount":61374.1
+    },
+    {
+        "Year":2024,
+        "Month":6,
+        "Big Category":"Business",
+        "amount":2689025.3500000001
+    },
+    {
+        "Year":2024,
+        "Month":6,
+        "Big Category":"Non Workforce",
+        "amount":1169746.52
+    },
+    {
+        "Year":2024,
+        "Month":6,
+        "Big Category":"Legal",
+        "amount":900566.85
+    },
+    {
+        "Year":2024,
+        "Month":6,
+        "Big Category":"Sales and Consulting",
+        "amount":278529.56
+    },
+    {
+        "Year":2024,
+        "Month":6,
+        "Big Category":"Government",
+        "amount":143965.05
+    },
+    {
+        "Year":2024,
+        "Month":6,
+        "Big Category":"Healthcare",
+        "amount":137719.23
+    },
+    {
+        "Year":2024,
+        "Month":6,
+        "Big Category":"Trades and Services",
+        "amount":136452.02
+    },
+    {
+        "Year":2024,
+        "Month":6,
+        "Big Category":"Tech and Engineering",
+        "amount":126249.08
+    },
+    {
+        "Year":2024,
+        "Month":6,
+        "Big Category":"Finance",
+        "amount":120079.65
+    },
+    {
+        "Year":2024,
+        "Month":6,
+        "Big Category":"Education",
+        "amount":112246.97
+    },
+    {
+        "Year":2024,
+        "Month":7,
+        "Big Category":"Business",
+        "amount":2053798.46
+    },
+    {
+        "Year":2024,
+        "Month":7,
+        "Big Category":"Non Workforce",
+        "amount":1745052.3799999999
+    },
+    {
+        "Year":2024,
+        "Month":7,
+        "Big Category":"Legal",
+        "amount":539453.73
+    },
+    {
+        "Year":2024,
+        "Month":7,
+        "Big Category":"Sales and Consulting",
+        "amount":334444.79
+    },
+    {
+        "Year":2024,
+        "Month":7,
+        "Big Category":"Government",
+        "amount":277640.18
+    },
+    {
+        "Year":2024,
+        "Month":7,
+        "Big Category":"Healthcare",
+        "amount":216599.66
+    },
+    {
+        "Year":2024,
+        "Month":7,
+        "Big Category":"Trades and Services",
+        "amount":211690.38
+    },
+    {
+        "Year":2024,
+        "Month":7,
+        "Big Category":"Tech and Engineering",
+        "amount":162608.83
+    },
+    {
+        "Year":2024,
+        "Month":7,
+        "Big Category":"Education",
+        "amount":118061.93
+    },
+    {
+        "Year":2024,
+        "Month":7,
+        "Big Category":"Finance",
+        "amount":83435.45
+    },
+    {
+        "Year":2024,
+        "Month":8,
+        "Big Category":"Non Workforce",
+        "amount":1660288.8600000001
+    },
+    {
+        "Year":2024,
+        "Month":8,
+        "Big Category":"Business",
+        "amount":1319172.03
+    },
+    {
+        "Year":2024,
+        "Month":8,
+        "Big Category":"Legal",
+        "amount":503846.32
+    },
+    {
+        "Year":2024,
+        "Month":8,
+        "Big Category":"Healthcare",
+        "amount":501379.4
+    },
+    {
+        "Year":2024,
+        "Month":8,
+        "Big Category":"Sales and Consulting",
+        "amount":248638.47
+    },
+    {
+        "Year":2024,
+        "Month":8,
+        "Big Category":"Trades and Services",
+        "amount":244459.43
+    },
+    {
+        "Year":2024,
+        "Month":8,
+        "Big Category":"Tech and Engineering",
+        "amount":205453.74
+    },
+    {
+        "Year":2024,
+        "Month":8,
+        "Big Category":"Finance",
+        "amount":120507.32
+    },
+    {
+        "Year":2024,
+        "Month":8,
+        "Big Category":"Government",
+        "amount":97301.33
+    },
+    {
+        "Year":2024,
+        "Month":8,
+        "Big Category":"Education",
+        "amount":75463.95
+    },
+    {
+        "Year":2024,
+        "Month":9,
+        "Big Category":"Business",
+        "amount":3645110.0
+    },
+    {
+        "Year":2024,
+        "Month":9,
+        "Big Category":"Non Workforce",
+        "amount":1773194.4399999999
+    },
+    {
+        "Year":2024,
+        "Month":9,
+        "Big Category":"Healthcare",
+        "amount":1311121.8999999999
+    },
+    {
+        "Year":2024,
+        "Month":9,
+        "Big Category":"Legal",
+        "amount":1017165.9
+    },
+    {
+        "Year":2024,
+        "Month":9,
+        "Big Category":"Government",
+        "amount":849502.53
+    },
+    {
+        "Year":2024,
+        "Month":9,
+        "Big Category":"Tech and Engineering",
+        "amount":264893.3
+    },
+    {
+        "Year":2024,
+        "Month":9,
+        "Big Category":"Sales and Consulting",
+        "amount":262642.12
+    },
+    {
+        "Year":2024,
+        "Month":9,
+        "Big Category":"Trades and Services",
+        "amount":204421.59
+    },
+    {
+        "Year":2024,
+        "Month":9,
+        "Big Category":"Finance",
+        "amount":140801.93
+    },
+    {
+        "Year":2024,
+        "Month":9,
+        "Big Category":"Education",
+        "amount":108696.79
+    },
+    {
+        "Year":2024,
+        "Month":10,
+        "Big Category":"Business",
+        "amount":2311767.8500000001
+    },
+    {
+        "Year":2024,
+        "Month":10,
+        "Big Category":"Non Workforce",
+        "amount":1492881.74
+    },
+    {
+        "Year":2024,
+        "Month":10,
+        "Big Category":"Legal",
+        "amount":898180.3100000001
+    },
+    {
+        "Year":2024,
+        "Month":10,
+        "Big Category":"Sales and Consulting",
+        "amount":270663.36
+    },
+    {
+        "Year":2024,
+        "Month":10,
+        "Big Category":"Government",
+        "amount":199357.16
+    },
+    {
+        "Year":2024,
+        "Month":10,
+        "Big Category":"Tech and Engineering",
+        "amount":172257.48
+    },
+    {
+        "Year":2024,
+        "Month":10,
+        "Big Category":"Healthcare",
+        "amount":141173.35
+    },
+    {
+        "Year":2024,
+        "Month":10,
+        "Big Category":"Education",
+        "amount":136094.26
+    },
+    {
+        "Year":2024,
+        "Month":10,
+        "Big Category":"Trades and Services",
+        "amount":124540.29
+    },
+    {
+        "Year":2024,
+        "Month":10,
+        "Big Category":"Finance",
+        "amount":96800.61
+    },
+    {
+        "Year":2024,
+        "Month":11,
+        "Big Category":"Non Workforce",
+        "amount":94044.86
+    },
+    {
+        "Year":2024,
+        "Month":11,
+        "Big Category":"Legal",
+        "amount":82641.9
+    },
+    {
+        "Year":2024,
+        "Month":11,
+        "Big Category":"Business",
+        "amount":61279.43
+    },
+    {
+        "Year":2024,
+        "Month":11,
+        "Big Category":"Government",
+        "amount":30424.92
+    },
+    {
+        "Year":2024,
+        "Month":11,
+        "Big Category":"Trades and Services",
+        "amount":18387.89
+    },
+    {
+        "Year":2024,
+        "Month":11,
+        "Big Category":"Finance",
+        "amount":11449.31
+    },
+    {
+        "Year":2024,
+        "Month":11,
+        "Big Category":"Sales and Consulting",
+        "amount":10641.1
+    },
+    {
+        "Year":2024,
+        "Month":11,
+        "Big Category":"Healthcare",
+        "amount":6863.06
+    },
+    {
+        "Year":2024,
+        "Month":11,
+        "Big Category":"Tech and Engineering",
+        "amount":5017.3
+    },
+    {
+        "Year":2024,
+        "Month":11,
+        "Big Category":"Education",
+        "amount":2577.07
+    },
+    {
+        "Year":2024,
+        "Month":12,
+        "Big Category":"Business",
+        "amount":4250.0
+    },
+    {
+        "Year":2024,
+        "Month":12,
+        "Big Category":"Sales and Consulting",
+        "amount":500.0
+    },
+    {
+        "Year":2024,
+        "Month":12,
+        "Big Category":"Non Workforce",
+        "amount":122.91
+    },
+    {
+        "Year":2024,
+        "Month":12,
+        "Big Category":"Education",
+        "amount":25.0
+    }
+]
