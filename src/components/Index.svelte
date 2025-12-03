@@ -82,10 +82,10 @@
 	}
 </script>
 
-<svelte:window
-	bind:scrollY
-	bind:innerHeight
-	onmousemove={handleMouseMove}
+<svelte:window 
+	bind:scrollY 
+	bind:innerHeight 
+	onmousemove={handleMouseMove} 
 	ondblclick={handleDoubleClick}
 />
 
@@ -165,6 +165,7 @@
 		<!-- A. The Sticky Stage -->
 		<div class="sticky-stage">
 			<!-- FlowMap Wrapper (The Previous Chart) -->
+			<!-- CHANGE: Added inline style:transition to make opacity fade 0.4s (faster) -->
 			<div
 				class="viz-wrapper"
 				style:opacity={mapStep <= 6 ? 1 : 0}
@@ -292,7 +293,7 @@
 				<!-- Step 6: Content -->
 				<div class="step left-align">
 					<div class="card glass" class:active={currentStep === 6}>
-						<span class="chapter-tag">Chapter II: Michigan's Capital Flow</span>
+            <span class="chapter-tag">Chapter II: Michigan's Capital Flow</span>
 						<h2>Urban Concentration</h2>
 						<p>
 							Aggregating data by county reveals significant disparities in
@@ -454,16 +455,16 @@
 						<p>
 							We have mapped the money across every county in Michigan. We know
 							exactly where the cash is raised and where it is spent.
-						</p>
+						</p >
 						<p>
 							But a map cannot tell us everything. We also need to know who is
 							writing the checks.
-						</p>
+						</p >
 						<p>
 							The next step is to look at the industries behind the donations.
 							We will see exactly which business sectors are leading the
 							spending in this election.
-						</p>
+						</p >
 					</div>
 				</div>
 
@@ -476,14 +477,11 @@
 						<span class="chapter-tag">Time & Trends</span>
 						<h2>2020: The Starting Point</h2>
 						<p>
-							We begin with the 2020 election. This gives us a clear picture of
-							a standard election year.
-						</p>
+							We begin with the 2020 election. This gives us a clear picture of a standard election year.
+						</p >
 						<p>
-							<strong>Business</strong> ($15M) and <strong>Legal</strong> groups
-							are the biggest donors. Look at the large blue circles. Corporate executives
-							are already the main source of cash.
-						</p>
+							<strong>Business</strong> ($15M) and <strong>Legal</strong> groups are the biggest donors. Look at the large blue circles. Corporate executives are already the main source of cash.
+						</p >
 					</div>
 				</div>
 
@@ -496,14 +494,11 @@
 						<span class="chapter-tag">Time & Trends</span>
 						<h2>2021: The Quiet Growth</h2>
 						<p>
-							Usually, donations drop after an election ends. But 2021 was
-							different.
-						</p>
+							Usually, donations drop after an election ends. But 2021 was different.
+						</p >
 						<p>
-							While other groups spent less, <strong>Business</strong> donations
-							actually went up to <strong>$17M</strong>. Even in a quiet year,
-							corporate leaders kept writing checks to prepare for the future.
-						</p>
+							While other groups spent less, <strong>Business</strong> donations actually went up to <strong>$17M</strong>. Even in a quiet year, corporate leaders kept writing checks to prepare for the future.
+						</p >
 					</div>
 				</div>
 
@@ -515,13 +510,12 @@
 					<div class="card glass" class:active={currentStep === 20}>
 						<span class="chapter-tag">Time & Trends</span>
 						<h2>2022: The Explosion</h2>
-						<p>Then came the 2022 midterms. The chart explodes.</p>
 						<p>
-							Money flooded the system. Business spending tripled to nearly <strong
-								>$62M</strong
-							>. The blue bubbles take over most of the chart. This was a
-							massive financial fight for control of the state government.
-						</p>
+							Then came the 2022 midterms. The chart explodes.
+						</p >
+						<p>
+							Money flooded the system. Business spending tripled to nearly <strong>$62M</strong>. The blue bubbles take over most of the chart. This was a massive financial fight for control of the state government.
+						</p >
 					</div>
 				</div>
 
@@ -534,13 +528,11 @@
 						<span class="chapter-tag">Time & Trends</span>
 						<h2>2023: The Reset</h2>
 						<p>
-							After the record-breaking spending of 2022, the system finally
-							took a break.
-						</p>
+							After the record-breaking spending of 2022, the system finally took a break.
+						</p >
 						<p>
-							Total donations dropped sharply. We returned to normal levels as
-							donors started saving their money for the next big cycle.
-						</p>
+							Total donations dropped sharply. We returned to normal levels as donors started saving their money for the next big cycle.
+						</p >
 					</div>
 				</div>
 
@@ -553,14 +545,11 @@
 						<span class="chapter-tag">Time & Trends</span>
 						<h2>2024: Heating Up Again</h2>
 						<p>
-							We are now in the current election cycle. The money is flowing
-							back in.
-						</p>
+							We are now in the current election cycle. The money is flowing back in.
+						</p >
 						<p>
-							Early numbers show <strong>Business</strong> ($20M) is already spending
-							more than it did back in 2020. The pattern is repeating, but the price
-							of the election is getting higher.
-						</p>
+							Early numbers show <strong>Business</strong> ($20M) is already spending more than it did back in 2020. The pattern is repeating, but the price of the election is getting higher.
+						</p >
 					</div>
 				</div>
 
@@ -594,8 +583,10 @@
 		height: 100%;
 		z-index: 1;
 		pointer-events: none;
-		background-image:
-			linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+		background-image: linear-gradient(
+				rgba(255, 255, 255, 0.1) 1px,
+				transparent 1px
+			),
 			linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
 		background-size: 40px 40px;
 		-webkit-mask-image: radial-gradient(
@@ -603,9 +594,9 @@
 			black 40%,
 			transparent 80%
 		);
-		mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
+    mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
 	}
-
+  
 	.cover-section,
 	.article-section {
 		position: relative;
@@ -799,7 +790,7 @@
 	}
 	.subtitle {
 		font-size: 1.3rem;
-		color: #d7d7d7;
+		color: #aaa;
 		margin-bottom: 2rem;
 		font-weight: 300;
 		font-family: "Playfair Display", serif;
@@ -940,22 +931,16 @@
 	.stream-section {
 		position: relative;
 		z-index: 20;
-		background: #040404;
+		background: #0a0b0c;
 		min-height: 100vh;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		/* REMOVED: border-top: 1px solid rgba(255, 255, 255, 0.1); */
-		/* Added shadow for smoother transition instead of hard line */
-		box-shadow: 0 -20px 50px rgba(0, 0, 0, 0.8);
+		border-top: 1px solid rgba(255, 255, 255, 0.1);
+		padding: 4rem 0;
 	}
 	.stream-wrapper {
 		width: 100%;
 		max-width: 1400px;
-	}
-
-	p::selection, h1::selection, h2::selection, span::selection, strong::selection, div::selection {
-		background-color: rgb(129, 80, 202); /* 段落选中背景颜色 */
-		color: black; /* 段落选中文字颜色 */
 	}
 </style>

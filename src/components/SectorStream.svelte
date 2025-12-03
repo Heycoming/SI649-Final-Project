@@ -313,32 +313,29 @@
 				politics, one must first follow the money.
 			</p>
 		</div>
-	</section>
-</div>
 
-<footer class="footer-note">
-		<div class="footer-divider"></div>
-		<div class="footer-content">
-			<p class="credits">
-				Created by <span class="names">Lubing Han</span> & <span class="names">Rui Wang</span>
+		<!-- Updated Footer -->
+		<div class="footer-note">
+			<p>
+				&copy; {new Date().getFullYear()} Michigan Money Trail Investigation.
+				<br />
+				Created by <strong>Lubing Han</strong> & <strong>Rui Wang</strong>. All
+				rights reserved.
 			</p>
-			<p class="copyright">
-				&copy; {new Date().getFullYear()} Michigan Money Trail Investigation. All rights reserved.
-			</p>
-			<p class="meta-info">
-				Data provided by the A2 Dive Activity
-				<span class="separator">•</span>
+			<p>Data provided by the A2 Dive Activity.</p>
+			<p>
 				<a
 					href="https://github.com/Heycoming/SI649-Final-Project"
 					target="_blank"
 					rel="noopener noreferrer"
 					class="github-link"
 				>
-					View Source on GitHub ↗
+					View Project on GitHub ↗
 				</a>
 			</p>
 		</div>
-	</footer>
+	</section>
+</div>
 
 <style>
 	/* Wrapper to center everything */
@@ -493,7 +490,6 @@
 		color: #fff;
 		background: linear-gradient(90deg, #fff, #aaa);
 		-webkit-background-clip: text;
-		background-clip: text;
 		-webkit-text-fill-color: transparent;
 	}
 
@@ -560,94 +556,37 @@
 	}
 
 	.footer-note {
-    		margin-top: 6rem;
-    		padding-bottom: 4rem;
-    		display: flex;
-    		flex-direction: column;
-    		align-items: center;
-    		text-align: center;
-    		font-family: "Inter", sans-serif;
-    	}
-
-    	.footer-divider {
-    		width: 1000px;
-    		height: 2px;
-    		background: linear-gradient(
-    			90deg,
-    			transparent,
-    			rgba(255, 215, 0, 0.6), /* Subtle Gold Fade */
-    			transparent
-    		);
-    		margin-bottom: 2rem;
-    	}
-
-    	.footer-content {
-    		display: flex;
-    		flex-direction: column;
-    		gap: 0.8rem;
-    		color: #cacaca;
-    	}
-
-    	.credits {
-    		font-size: 1rem;
-    		color: #cacaca;
-    		margin: 0;
-    	}
-
-    	.names {
-    		color: #fff;
-    		font-weight: 600;
-    		letter-spacing: 0.02em;
-    	}
-
-    	.copyright {
-    		font-size: 0.9rem;
-    		opacity: 0.9;
-    		margin: 0;
-				color: #cacaca;
-    	}
-
-    	.meta-info {
-    		font-family: "JetBrains Mono", monospace;
-    		font-size: 0.9rem;
-    		color: #cacaca;
-    		margin-top: 0.5rem;
-    		display: flex;
-    		align-items: center;
-    		justify-content: center;
-    		gap: 0.8rem;
-    	}
-
-    	.separator {
-    		color: #cacaca;
-    	}
-
-    	.github-link {
-    		color: #cacaca;
-    		text-decoration: none;
-    		transition: all 0.3s ease;
-    		border-bottom: 1px dashed transparent;
-    	}
-
-    	.github-link:hover {
-    		color: #ffd700; /* Theme Gold */
-    		border-bottom-color: #ffd700;
-    		text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
-    	}
-
-			p::selection, span::selection, strong::selection, div::selection {
-		background-color: rgb(129, 80, 202);
-		color: black; 
+		margin-top: 4rem;
+		padding-top: 2rem;
+		border-top: 1px solid rgba(255, 255, 255, 0.05);
+		font-family: "JetBrains Mono", monospace;
+		font-size: 0.75rem;
+		color: #aaa; /* Modified: Changed from #666 to #aaa for better contrast */
 	}
 
-    	@keyframes fadeIn {
-    		from {
-    			opacity: 0;
-    			transform: translateY(20px);
-    		}
-    		to {
-    			opacity: 1;
-    			transform: translateY(0);
-    		}
-    	}
-    </style>
+	/* Added styles for the GitHub link */
+	.github-link {
+		color: #58a6ff; /* GitHub Dark Mode Blue */
+		text-decoration: none;
+		font-weight: bold;
+		display: inline-block;
+		margin-top: 0.5rem;
+		transition: color 0.2s ease;
+	}
+
+	.github-link:hover {
+		color: #fff;
+		text-decoration: underline;
+	}
+
+	@keyframes fadeIn {
+		from {
+			opacity: 0;
+			transform: translateY(20px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+</style>
