@@ -39,7 +39,7 @@
 		</code>
 	</details>
 	<p>
-		<button use:copy={source} on:svelte-copy={onCopy}>
+		<button use:copy={source} onsvelte-copy={onCopy}>
 			Copy CSS to Clipboard
 		</button>
 		<span>{copied}</span>
