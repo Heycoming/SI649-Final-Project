@@ -621,9 +621,6 @@
 						style="transform: translate(-{200 / currentScale}px, 0);"
 					>
 						{#each miFeatures as f}
-							<!-- 
-								FIXED: Added mouse events for Left Map (Funding) 
-							-->
 							<path
 								d={pathGenerator(f)}
 								stroke={getStrokeColor(f)}
@@ -651,9 +648,6 @@
 						style="transform: translate({200 / currentScale}px, 0);"
 					>
 						{#each miFeatures as f}
-							<!-- 
-								FIXED: Added mouse events for Right Map (Expenditure) 
-							-->
 							<path
 								d={pathGenerator(f)}
 								stroke={getStrokeColor(f)}
