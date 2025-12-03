@@ -120,7 +120,7 @@
 			<div class="title-card">
 				<h1>The Michigan Money Trail</h1>
 				<p class="subtitle">
-					An analysis of campaign finance flows in the 2024 State Election.
+					An analysis of campaign finance flows in the 2020 - 2024 State Election.
 				</p>
 				<button
 					class="start-btn"
