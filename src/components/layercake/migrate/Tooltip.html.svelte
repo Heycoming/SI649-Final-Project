@@ -7,8 +7,6 @@
 	} = $props();
 
 	let position = $derived.by(() => {
-		// 修复：直接检查 detail 中是否有 x, y 坐标
-		// 即使 evt.detail 重新生成，只要 x/y 是数字，就不会出错
 		if (evt?.detail?.x !== undefined && evt?.detail?.y !== undefined) {
 			return {
 				top: `${evt.detail.y + offset}px`,
@@ -47,8 +45,6 @@
 		font-size: 12px;
 		line-height: 1.4;
 		min-width: 140px;
-		
-		/* 移除 top/left 的 transition，让跟随鼠标更跟手，避免延迟感 */
 		transition: opacity 0.1s;
 	}
 </style>

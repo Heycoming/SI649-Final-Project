@@ -269,7 +269,6 @@
 				how much money poured in during the Midterm Elections, when control of
 				Congress was at stake.
 			</p>
-			<!-- Modification 1: Unified the term Corporations to Business related -->
 			<p>
 				<strong>Why is "Business related" the biggest?</strong> The blue layer
 				represents <strong>business related</strong> interests, and it is always
@@ -326,7 +325,7 @@
 				&copy; {new Date().getFullYear()} Michigan Money Trail Investigation. All rights reserved.
 			</p>
 			<p class="meta-info">
-				Data provided by the A2 Dive Activity
+				Data provided by the Michigan Transparency Network (MiTN)
 				<span class="separator">•</span>
 				<a
 					href="https://github.com/Heycoming/SI649-Final-Project"
@@ -341,7 +340,6 @@
 	</footer>
 
 <style>
-	/* Wrapper to center everything */
 	.wrapper {
 		width: 100%;
 		max-width: 1200px;
@@ -575,7 +573,7 @@
     		background: linear-gradient(
     			90deg,
     			transparent,
-    			rgba(255, 215, 0, 0.6), /* Subtle Gold Fade */
+    			rgba(255, 215, 0, 0.6),
     			transparent
     		);
     		margin-bottom: 2rem;
@@ -630,7 +628,7 @@
     	}
 
     	.github-link:hover {
-    		color: #ffd700; /* Theme Gold */
+    		color: #ffd700;
     		border-bottom-color: #ffd700;
     		text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
     	}

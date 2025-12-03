@@ -53,7 +53,7 @@
 	let mapStep = $derived.by(() => {
 		const s = adjustedStep;
 		if (s <= 4) return s + 1;
-		if (s === 5) return 5; // Hold visual state at 5
+		if (s === 5) return 5;
 		return s;
 	});
 
@@ -95,20 +95,17 @@
 		rel="stylesheet"
 	/>
 	<style>
-		/* Removed overflow-x: hidden from here to fix sticky positioning */
 		body {
 			margin: 0;
 			padding: 0;
 			background-color: #0a0b0c;
 			color: #e0e0e0;
-			/* Ensure body doesn't force width wider than viewport */
 			max-width: 100%;
 		}
 	</style>
 </svelte:head>
 
 <main class="story-container">
-	<!-- ... (Intro Sequence remains unchanged) ... -->
 	<section class="intro-sequence">
 		<div
 			class="spotlight-overlay"
@@ -167,7 +164,7 @@
 	<section class="viz-sequence">
 		<!-- A. The Sticky Stage -->
 		<div class="sticky-stage">
-			<!-- FlowMap Wrapper (The Previous Chart) -->
+			<!-- FlowMap Wrapper -->
 			<div
 				class="viz-wrapper"
 				style:opacity={mapStep <= 6 ? 1 : 0}
@@ -573,7 +570,6 @@
 		</div>
 	</section>
 
-	<!-- ... (Sector Stream remains unchanged) ... -->
 	<section class="stream-section">
 		<div class="stream-wrapper">
 			<SectorStream rawData={data.sectorData} />
@@ -582,7 +578,6 @@
 </main>
 
 <style>
-	/* ... (Styles remain the same as previous, ensuring .step.spacer exists) ... */
 	.intro-sequence {
 		position: relative;
 		z-index: 20;
@@ -633,7 +628,6 @@
 		position: -webkit-sticky;
 		position: sticky;
 		top: 0;
-		/* FIX: Changed from 100vw to 100% to prevent horizontal overflow */
 		width: 100%;
 		height: 100vh;
 		z-index: 1;
@@ -648,7 +642,6 @@
 		left: 0;
 		width: 100%;
 		height: 100%;
-		/* Default transition for other wrappers (like Treemap) */
 		transition:
 			opacity 1s ease-in-out,
 			transform 1s ease-in-out;
@@ -667,7 +660,6 @@
 		position: fixed;
 		top: 0;
 		left: 0;
-		/* FIX: Changed from 100vw to 100% to prevent horizontal overflow */
 		width: 100%;
 		height: 100vh;
 		z-index: 999;
@@ -950,8 +942,6 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		/* REMOVED: border-top: 1px solid rgba(255, 255, 255, 0.1); */
-		/* Added shadow for smoother transition instead of hard line */
 		box-shadow: 0 -20px 50px rgba(0, 0, 0, 0.8);
 	}
 	.stream-wrapper {
@@ -965,7 +955,7 @@
 	span::selection,
 	strong::selection,
 	div::selection {
-		background-color: rgb(129, 80, 202); /* Selection background color */
-		color: black; /* Selection text color */
+		background-color: rgb(129, 80, 202);
+		color: black;
 	}
 </style>

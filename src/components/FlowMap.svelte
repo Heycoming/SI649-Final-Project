@@ -53,15 +53,11 @@
 	const centerLeft = { x: 300, y: 320 },
 		centerRight = { x: 700, y: 320 };
 
-	// === FIX: Force Tooltip Clear on Interaction ===
-	
-	// 1. Reset when step changes
 	$effect(() => {
 		const s = step; 
 		hoveredNode = null;
 	});
 
-	// 2. Reset when user scrolls (Crucial for Scrollytelling)
 	function handleGlobalScroll() {
 		if (hoveredNode) hoveredNode = null;
 	}
@@ -523,10 +519,7 @@
 		}
 	}
 
-	// === UPDATED: Support Split Maps (Step >= 4) ===
 	function handleMapHover(e, feature, type) {
-		// FIX: Only allow map interaction in Step 4 (Single) and Step 5 (Split)
-		// Prevents invisible map interaction in Step 6 (Alluvial)
 		if (step === 4 || step === 5) {
 			let name = feature.properties.name;
 			let val =
@@ -645,9 +638,6 @@
 						style="transform: translate(-{200 / currentScale}px, 0);"
 					>
 						{#each miFeatures as f}
-							<!-- 
-								FIXED: Added mouse events for Left Map (Funding) 
-							-->
 							<path
 								d={pathGenerator(f)}
 								stroke={getStrokeColor(f)}
@@ -675,9 +665,6 @@
 						style="transform: translate({200 / currentScale}px, 0);"
 					>
 						{#each miFeatures as f}
-							<!-- 
-								FIXED: Added mouse events for Right Map (Expenditure) 
-							-->
 							<path
 								d={pathGenerator(f)}
 								stroke={getStrokeColor(f)}

@@ -78,7 +78,6 @@
 		};
 	}
 
-	// 径向标签计算
 	function getRadialInfo(s) {
 		const cx = width / 2;
 		const cy = height / 2;

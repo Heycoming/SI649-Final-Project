@@ -112,7 +112,6 @@
 		(b.data.data.grandTotal || 0) - (a.data.data.grandTotal || 0);
 
 	function handleHover(detail) {
-		// 修复：增加空值检查，防止报错
 		if (detail && detail.data) {
 			tooltipEvent = { detail };
 		} else {
@@ -211,7 +210,6 @@
 		flex-shrink: 0;
 		display: flex;
 		flex-direction: column;
-		/* Legend 层级保持高，但因为没有负 margin，不再遮挡 Chart */
 		z-index: 50;
 	}
 
