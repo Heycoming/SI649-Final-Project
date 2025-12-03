@@ -277,7 +277,7 @@
 	.text-group {
 		transform: translate(-50%, -50%);
 		text-align: center;
-		pointer-events: none; /* 关键：文字不阻挡鼠标事件 */
+		pointer-events: none; 
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -293,7 +293,7 @@
 		font-size: 12px;
 		font-weight: 700;
 		margin-bottom: 2px;
-		white-space: normal; /* 允许换行 */
+		white-space: normal; 
 		word-wrap: break-word;
 		line-height: 1.1;
 		display: -webkit-box;
@@ -321,7 +321,7 @@
 
 	.radial-container {
 		position: absolute;
-		pointer-events: none; /* 关键：径向标签不阻挡鼠标 */
+		pointer-events: none; 
 		width: 0;
 		height: 0;
 		display: flex;
