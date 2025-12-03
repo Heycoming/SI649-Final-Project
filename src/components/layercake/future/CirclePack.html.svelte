@@ -1,4 +1,3 @@
-<!-- src/components/layercake/future/CirclePack.html.svelte -->
 <script>
 	import { stratify, pack, hierarchy } from "d3-hierarchy";
 	import { format } from "d3-format";
@@ -22,7 +21,7 @@
 	} = $props();
 
 	let parent = $state({});
-	let hoverTimeout = undefined; // 防抖定时器
+	let hoverTimeout = undefined;
 
 	let dataset = $derived.by(() => {
 		if (parentKey === undefined) {
@@ -63,7 +62,6 @@
 	let packed = $derived(packer(root));
 	let descendants = $derived(packed.descendants());
 
-	// 优化：单词首字母大写
 	const titleCase = (d) =>
 		d.toLowerCase().replace(/(?:^|\s)\w/g, (w) => w.toUpperCase());
 	const commas = format(",");
@@ -95,10 +93,7 @@
 		return { deg, lineLength };
 	}
 
-	// --- 鼠标交互逻辑 (含防抖) ---
-
 	function handleMouseEnter(e, d) {
-		// 进入新圆圈，立即清除“隐藏”定时器
 		if (hoverTimeout) {
 			clearTimeout(hoverTimeout);
 			hoverTimeout = undefined;
@@ -115,7 +110,6 @@
 	}
 
 	function handleMouseMove(e, d) {
-		// 移动中也要清除定时器，保持显示
 		if (hoverTimeout) {
 			clearTimeout(hoverTimeout);
 			hoverTimeout = undefined;
@@ -132,8 +126,6 @@
 	}
 
 	function handleMouseLeave() {
-		// 离开时，延迟 100ms 再隐藏
-		// 如果在这 100ms 内进入了另一个圆圈，handleMouseEnter 会取消这个操作
 		if (onHover) {
 			hoverTimeout = setTimeout(() => {
 				onHover(null);
@@ -149,7 +141,6 @@
 		{@const isSmallCircleVisible =
 			d.depth === 2 && labelVisibilityThreshold(s.r)}
 		{@const isBigCircle = d.depth === 1}
-		<!-- 大圆圈且半径小于 130 时使用外部标签 -->
 		{@const isBigCircleSmall = isBigCircle && s.r < 130}
 		{@const currentColor = getTextColor ? getTextColor(d) : "#333"}
 
@@ -245,7 +236,7 @@
 		position: relative;
 		width: 100%;
 		height: 100%;
-		user-select: none; /* 防止点击时选中文本 */
+		user-select: none; 
 	}
 	.circle-group {
 		position: absolute;
@@ -262,7 +253,7 @@
 		transform: translate(-50%, -50%);
 		border-radius: 50%;
 		box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
-		pointer-events: auto; /* 确保圆圈可以响应鼠标 */
+		pointer-events: auto; 
 	}
 	.circle.big-circle {
 		box-shadow: none;
@@ -277,7 +268,7 @@
 	.text-group {
 		transform: translate(-50%, -50%);
 		text-align: center;
-		pointer-events: none; 
+		pointer-events: none;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -293,12 +284,12 @@
 		font-size: 12px;
 		font-weight: 700;
 		margin-bottom: 2px;
-		white-space: normal; 
+		white-space: normal;
 		word-wrap: break-word;
 		line-height: 1.1;
 		display: -webkit-box;
 		-webkit-line-clamp: 2;
-    line-clamp: 2;
+		line-clamp: 2;
 		-webkit-box-orient: vertical;
 		overflow: hidden;
 	}
@@ -321,7 +312,7 @@
 
 	.radial-container {
 		position: absolute;
-		pointer-events: none; 
+		pointer-events: none;
 		width: 0;
 		height: 0;
 		display: flex;
