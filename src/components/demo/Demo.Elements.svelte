@@ -336,7 +336,7 @@
 						rows="8"
 						cols="48"
 						placeholder="Enter your message here"
-					/>
+					></textarea>
 				</p>
 			</fieldset>
 
