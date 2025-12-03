@@ -947,4 +947,9 @@
 	.toggle-btn:hover {
 		background: #444;
 	}
+
+	span::selection, strong::selection, div::selection, text::selection {
+		background-color: rgb(129, 80, 202);
+		color: black;
+	}
 </style>
