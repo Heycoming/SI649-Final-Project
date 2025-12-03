@@ -15,6 +15,9 @@
 		baseHeight = 600;
 	let containerWidth = $state(960),
 		containerHeight = $state(600);
+	
+	// === 新增：绑定容器 DOM 元素 ===
+	let containerDom = $state(null);
 
 	// === Scales ===
 	let rScale = d3.scaleSqrt().range([4, 50]);
@@ -475,12 +478,36 @@
 		return 0.5;
 	}
 
+	// === 辅助函数：计算相对坐标 ===
+	function updateTooltipPos(e) {
+		if (!containerDom) return;
+		
+		// 1. 获取容器在屏幕上的位置
+		const rect = containerDom.getBoundingClientRect();
+		
+		// 2. 计算鼠标相对于容器左上角的坐标 (Relative X/Y)
+		// 这样即使父容器被 transform 平移了，坐标也是准确的
+		const relX = e.clientX - rect.left;
+		const relY = e.clientY - rect.top;
+
+		const tooltipWidth = 220; // 预估宽度
+		let targetX = relX + 15;
+		
+		// 3. 边界检查：使用容器宽度 containerWidth，而不是 window.innerWidth
+		if (targetX + tooltipWidth > containerWidth) {
+			targetX = relX - tooltipWidth - 15;
+		}
+		
+		tooltipPos = { x: targetX, y: relY + 15 };
+	}
+
+	// === UPDATED: Tooltip Positioning Logic ===
 	function handleHover(e, n) {
 		if (!n) return;
 		if (getNodeOpacity(n, step) < 0.1) return;
 		if (step !== 2 && step !== 5) {
 			hoveredNode = n;
-			tooltipPos = { x: e.clientX + 15, y: e.clientY + 15 };
+			updateTooltipPos(e);
 		}
 	}
 
@@ -496,7 +523,7 @@
 				formattedAmount: d3.format("$,.0f")(val || 0),
 				type: type === "funding" ? "In-State Funding" : "Expenditure"
 			};
-			tooltipPos = { x: e.clientX + 15, y: e.clientY + 15 };
+			updateTooltipPos(e);
 		}
 	}
 
@@ -507,12 +534,13 @@
 			type: type,
 			extra: getNetStatusLabel(data.county)
 		};
-		tooltipPos = { x: e.clientX + 15, y: e.clientY + 15 };
+		updateTooltipPos(e);
 	}
 </script>
 
 <div
 	class="map-container"
+	bind:this={containerDom}
 	bind:clientWidth={containerWidth}
 	bind:clientHeight={containerHeight}
 >
@@ -555,9 +583,13 @@
 						: 0}; pointer-events: {step === 4 ? 'auto' : 'none'};"
 				>
 					{#each miFeatures as f}
+						<!-- 
+							FIXED: Changed fill from "none" to "transparent" 
+							so the mouse events work on the entire county area.
+						-->
 						<path
 							d={pathGenerator(f)}
-							fill="none"
+							fill="transparent"
 							stroke="#666"
 							stroke-width="0.5"
 							vector-effect="non-scaling-stroke"
@@ -870,6 +902,10 @@
 	</svg>
 
 	{#if hoveredNode}
+		<!-- 
+			FIXED: Position is now absolute relative to map-container, 
+			solving the offset issue caused by parent transforms.
+		-->
 		<div class="tooltip" style="top: {tooltipPos.y}px; left: {tooltipPos.x}px;">
 			<strong
 				>{hoveredNode.type === "out-state"
@@ -917,7 +953,11 @@
 	}
 
 	.tooltip {
-		position: fixed;
+		/* 
+		   FIXED: Change to absolute so it is positioned relative to .map-container
+		   instead of the viewport. This fixes the offset when parent has transform.
+		*/
+		position: absolute; 
 		background: rgba(30, 30, 30, 0.95);
 		padding: 8px 12px;
 		border: 1px solid #444;
@@ -927,7 +967,6 @@
 		font-size: 13px;
 		color: #eee;
 		z-index: 100;
-		transform: translate(0, -100%);
 	}
 
 	.toggle-btn {
