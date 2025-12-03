@@ -95,11 +95,14 @@
 		rel="stylesheet"
 	/>
 	<style>
+		/* Removed overflow-x: hidden from here to fix sticky positioning */
 		body {
 			margin: 0;
 			padding: 0;
 			background-color: #0a0b0c;
 			color: #e0e0e0;
+			/* Ensure body doesn't force width wider than viewport */
+			max-width: 100%;
 		}
 	</style>
 </svelte:head>
@@ -630,7 +633,8 @@
 		position: -webkit-sticky;
 		position: sticky;
 		top: 0;
-		width: 100vw;
+		/* FIX: Changed from 100vw to 100% to prevent horizontal overflow */
+		width: 100%; 
 		height: 100vh;
 		z-index: 1;
 		background-color: #0a0b0c;
@@ -663,7 +667,8 @@
 		position: fixed;
 		top: 0;
 		left: 0;
-		width: 100vw;
+		/* FIX: Changed from 100vw to 100% to prevent horizontal overflow */
+		width: 100%;
 		height: 100vh;
 		z-index: 999;
 		pointer-events: none;
@@ -955,7 +960,7 @@
 	}
 
 	p::selection, h1::selection, h2::selection, span::selection, strong::selection, div::selection {
-		background-color: rgb(129, 80, 202); /* 段落选中背景颜色 */
-		color: black; /* 段落选中文字颜色 */
+		background-color: rgb(129, 80, 202); /* Selection background color */
+		color: black; /* Selection text color */
 	}
 </style>
