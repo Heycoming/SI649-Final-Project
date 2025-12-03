@@ -16,7 +16,7 @@
 	let containerWidth = $state(960),
 		containerHeight = $state(600);
 	
-	// === 新增：绑定容器 DOM 元素 ===
+	// === 绑定容器 DOM 元素 ===
 	let containerDom = $state(null);
 
 	// === Scales ===
@@ -485,15 +485,14 @@
 		// 1. 获取容器在屏幕上的位置
 		const rect = containerDom.getBoundingClientRect();
 		
-		// 2. 计算鼠标相对于容器左上角的坐标 (Relative X/Y)
-		// 这样即使父容器被 transform 平移了，坐标也是准确的
+		// 2. 计算鼠标相对于容器左上角的坐标
 		const relX = e.clientX - rect.left;
 		const relY = e.clientY - rect.top;
 
 		const tooltipWidth = 220; // 预估宽度
 		let targetX = relX + 15;
 		
-		// 3. 边界检查：使用容器宽度 containerWidth，而不是 window.innerWidth
+		// 3. 边界检查
 		if (targetX + tooltipWidth > containerWidth) {
 			targetX = relX - tooltipWidth - 15;
 		}
@@ -501,7 +500,7 @@
 		tooltipPos = { x: targetX, y: relY + 15 };
 	}
 
-	// === UPDATED: Tooltip Positioning Logic ===
+	// === Tooltip Logic ===
 	function handleHover(e, n) {
 		if (!n) return;
 		if (getNodeOpacity(n, step) < 0.1) return;
@@ -511,8 +510,10 @@
 		}
 	}
 
+	// === UPDATED: Support Split Maps (Step >= 4) ===
 	function handleMapHover(e, feature, type) {
-		if (step === 4) {
+		// 允许 Step 4 (单图) 和 Step 5+ (双图)
+		if (step >= 4) {
 			let name = feature.properties.name;
 			let val =
 				type === "funding"
@@ -583,10 +584,6 @@
 						: 0}; pointer-events: {step === 4 ? 'auto' : 'none'};"
 				>
 					{#each miFeatures as f}
-						<!-- 
-							FIXED: Changed fill from "none" to "transparent" 
-							so the mouse events work on the entire county area.
-						-->
 						<path
 							d={pathGenerator(f)}
 							fill="transparent"
@@ -624,13 +621,19 @@
 						style="transform: translate(-{200 / currentScale}px, 0);"
 					>
 						{#each miFeatures as f}
+							<!-- 
+								FIXED: Added mouse events for Left Map (Funding) 
+							-->
 							<path
 								d={pathGenerator(f)}
 								stroke={getStrokeColor(f)}
 								stroke-width={getStrokeWidth(f)}
 								vector-effect="non-scaling-stroke"
 								fill={getCountyFill(f, "funding")}
-								style="transition: fill 1s, stroke 0.3s;"
+								style="transition: fill 1s, stroke 0.3s; cursor: pointer;"
+								onmouseenter={(e) => handleMapHover(e, f, "funding")}
+								onmousemove={(e) => updateTooltipPos(e)}
+								onmouseleave={() => (hoveredNode = null)}
 							/>
 						{/each}
 						<text
@@ -647,13 +650,19 @@
 						style="transform: translate({200 / currentScale}px, 0);"
 					>
 						{#each miFeatures as f}
+							<!-- 
+								FIXED: Added mouse events for Right Map (Expenditure) 
+							-->
 							<path
 								d={pathGenerator(f)}
 								stroke={getStrokeColor(f)}
 								stroke-width={getStrokeWidth(f)}
 								vector-effect="non-scaling-stroke"
 								fill={getCountyFill(f, "expenditure")}
-								style="transition: fill 1s, stroke 0.3s;"
+								style="transition: fill 1s, stroke 0.3s; cursor: pointer;"
+								onmouseenter={(e) => handleMapHover(e, f, "expenditure")}
+								onmousemove={(e) => updateTooltipPos(e)}
+								onmouseleave={() => (hoveredNode = null)}
 							/>
 						{/each}
 						<text
@@ -902,10 +911,6 @@
 	</svg>
 
 	{#if hoveredNode}
-		<!-- 
-			FIXED: Position is now absolute relative to map-container, 
-			solving the offset issue caused by parent transforms.
-		-->
 		<div class="tooltip" style="top: {tooltipPos.y}px; left: {tooltipPos.x}px;">
 			<strong
 				>{hoveredNode.type === "out-state"
@@ -953,10 +958,6 @@
 	}
 
 	.tooltip {
-		/* 
-		   FIXED: Change to absolute so it is positioned relative to .map-container
-		   instead of the viewport. This fixes the offset when parent has transform.
-		*/
 		position: absolute; 
 		background: rgba(30, 30, 30, 0.95);
 		padding: 8px 12px;
