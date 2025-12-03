@@ -83,7 +83,7 @@
 	function calculateNodeColor(node) {
 		if (node.depth === 1) {
 			const baseColor = d3.color(categoryColorScale(node.data.id));
-			baseColor.opacity = 0.25;
+			baseColor.opacity = 0.25; 
 			return baseColor.formatRgb();
 		}
 		if (node.depth === 2) {
@@ -112,7 +112,7 @@
 		(b.data.data.grandTotal || 0) - (a.data.data.grandTotal || 0);
 
 	function handleHover(detail) {
-		// Fix: Added null check to prevent errors
+		// 修复：增加空值检查，防止报错
 		if (detail && detail.data) {
 			tooltipEvent = { detail };
 		} else {
@@ -188,7 +188,7 @@
 		width: 100%;
 		height: 100%;
 		display: flex;
-		padding-right: 150px;
+		padding-right: 150px; 
 		box-sizing: border-box;
 		align-items: center;
 		padding-top: 40px;
@@ -302,4 +302,6 @@
 		color: #ffd700;
 		font-family: monospace;
 	}
+
+
 </style>

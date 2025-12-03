@@ -634,7 +634,7 @@
 		position: sticky;
 		top: 0;
 		/* FIX: Changed from 100vw to 100% to prevent horizontal overflow */
-		width: 100%;
+		width: 100%; 
 		height: 100vh;
 		z-index: 1;
 		background-color: #0a0b0c;
@@ -959,12 +959,7 @@
 		max-width: 1400px;
 	}
 
-	p::selection,
-	h1::selection,
-	h2::selection,
-	span::selection,
-	strong::selection,
-	div::selection {
+	p::selection, h1::selection, h2::selection, span::selection, strong::selection, div::selection {
 		background-color: rgb(129, 80, 202); /* Selection background color */
 		color: black; /* Selection text color */
 	}
