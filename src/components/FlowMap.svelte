@@ -525,8 +525,9 @@
 
 	// === UPDATED: Support Split Maps (Step >= 4) ===
 	function handleMapHover(e, feature, type) {
-		// Allow Step 4 (Single Map) and Step 5+ (Split Maps)
-		if (step >= 4) {
+		// FIX: Only allow map interaction in Step 4 (Single) and Step 5 (Split)
+		// Prevents invisible map interaction in Step 6 (Alluvial)
+		if (step === 4 || step === 5) {
 			let name = feature.properties.name;
 			let val =
 				type === "funding"
@@ -635,9 +636,9 @@
 				</g>
 				<g
 					class="split-maps"
-					style="transition: opacity 1s; opacity: {step >= 5
+					style="transition: opacity 1s; opacity: {step === 5
 						? 1
-						: 0}; pointer-events: {step >= 5 ? 'auto' : 'none'};"
+						: 0}; pointer-events: {step === 5 ? 'auto' : 'none'};"
 				>
 					<g
 						class="mi-left"
