@@ -16,7 +16,7 @@
 	let containerWidth = $state(960),
 		containerHeight = $state(600);
 
-	// === 绑定容器 DOM 元素 ===
+	// === Bind Container DOM ===
 	let containerDom = $state(null);
 
 	// === Scales ===
@@ -52,6 +52,19 @@
 
 	const centerLeft = { x: 300, y: 320 },
 		centerRight = { x: 700, y: 320 };
+
+	// === FIX: Force Tooltip Clear on Interaction ===
+	
+	// 1. Reset when step changes
+	$effect(() => {
+		const s = step; 
+		hoveredNode = null;
+	});
+
+	// 2. Reset when user scrolls (Crucial for Scrollytelling)
+	function handleGlobalScroll() {
+		if (hoveredNode) hoveredNode = null;
+	}
 
 	// === React to Highlights ===
 	$effect(() => {
@@ -478,21 +491,21 @@
 		return 0.5;
 	}
 
-	// === 辅助函数：计算相对坐标 ===
+	// === Helper: Calculate Relative Coordinates ===
 	function updateTooltipPos(e) {
 		if (!containerDom) return;
 
-		// 1. 获取容器在屏幕上的位置
+		// 1. Get container position
 		const rect = containerDom.getBoundingClientRect();
 
-		// 2. 计算鼠标相对于容器左上角的坐标
+		// 2. Calculate mouse relative to container
 		const relX = e.clientX - rect.left;
 		const relY = e.clientY - rect.top;
 
-		const tooltipWidth = 220; // 预估宽度
+		const tooltipWidth = 220; // Estimated width
 		let targetX = relX + 15;
 
-		// 3. 边界检查
+		// 3. Boundary check
 		if (targetX + tooltipWidth > containerWidth) {
 			targetX = relX - tooltipWidth - 15;
 		}
@@ -512,7 +525,7 @@
 
 	// === UPDATED: Support Split Maps (Step >= 4) ===
 	function handleMapHover(e, feature, type) {
-		// 允许 Step 4 (单图) 和 Step 5+ (双图)
+		// Allow Step 4 (Single Map) and Step 5+ (Split Maps)
 		if (step >= 4) {
 			let name = feature.properties.name;
 			let val =
@@ -539,11 +552,16 @@
 	}
 </script>
 
+<svelte:window onscroll={handleGlobalScroll} />
+
 <div
 	class="map-container"
 	bind:this={containerDom}
 	bind:clientWidth={containerWidth}
 	bind:clientHeight={containerHeight}
+	onmouseleave={() => (hoveredNode = null)}
+	role="region"
+	aria-label="Interactive Map"
 >
 	{#if step === 6}
 		<button class="toggle-btn" onclick={() => (showAll = !showAll)}>
@@ -562,7 +580,10 @@
 				class="map-layer"
 				style="opacity: {step === 6 || step === 0
 					? 0
-					: 1}; transition: opacity 0.5s;"
+					: 1}; transition: opacity 0.5s; pointer-events: {step === 6 ||
+				step === 0
+					? 'none'
+					: 'auto'};"
 			>
 				{#if step < 4}
 					{#each usFeatures as f}
@@ -614,7 +635,9 @@
 				</g>
 				<g
 					class="split-maps"
-					style="transition: opacity 1s; opacity: {step >= 5 ? 1 : 0};"
+					style="transition: opacity 1s; opacity: {step >= 5
+						? 1
+						: 0}; pointer-events: {step >= 5 ? 'auto' : 'none'};"
 				>
 					<g
 						class="mi-left"
