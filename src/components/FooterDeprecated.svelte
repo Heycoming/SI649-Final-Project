@@ -1,3 +1,6 @@
+<!-- usage
+<Footer --footer-bg="#fff" topics={true} recent={true}> 
+-->
 <script>
 	import { onMount } from "svelte";
 	import { shuffle } from "d3";
