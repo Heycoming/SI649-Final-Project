@@ -664,6 +664,7 @@
 								onmouseenter={(e) => handleMapHover(e, f, "expenditure")}
 								onmousemove={(e) => updateTooltipPos(e)}
 								onmouseleave={() => (hoveredNode = null)}
+								role="graphics-symbol"
 							/>
 						{/each}
 						<text
