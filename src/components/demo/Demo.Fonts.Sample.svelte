@@ -38,12 +38,12 @@
 			{source}
 		</code>
 	</details>
-	<!-- TODO -->
-	<!-- <p>
-    <button use:copy={source} on:svelte-copy={onCopy}>
-      Copy CSS to Clipboard</button
-    ><span>{copied}</span>
-  </p> -->
+	<p>
+		<button use:copy={source} on:svelte-copy={onCopy}>
+			Copy CSS to Clipboard
+		</button>
+		<span>{copied}</span>
+	</p>
 </div>
 
 <style>
