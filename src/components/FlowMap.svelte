@@ -15,7 +15,7 @@
 		baseHeight = 600;
 	let containerWidth = $state(960),
 		containerHeight = $state(600);
-	
+
 	// === 绑定容器 DOM 元素 ===
 	let containerDom = $state(null);
 
@@ -481,22 +481,22 @@
 	// === 辅助函数：计算相对坐标 ===
 	function updateTooltipPos(e) {
 		if (!containerDom) return;
-		
+
 		// 1. 获取容器在屏幕上的位置
 		const rect = containerDom.getBoundingClientRect();
-		
+
 		// 2. 计算鼠标相对于容器左上角的坐标
 		const relX = e.clientX - rect.left;
 		const relY = e.clientY - rect.top;
 
 		const tooltipWidth = 220; // 预估宽度
 		let targetX = relX + 15;
-		
+
 		// 3. 边界检查
 		if (targetX + tooltipWidth > containerWidth) {
 			targetX = relX - tooltipWidth - 15;
 		}
-		
+
 		tooltipPos = { x: targetX, y: relY + 15 };
 	}
 
@@ -634,6 +634,7 @@
 								onmouseenter={(e) => handleMapHover(e, f, "funding")}
 								onmousemove={(e) => updateTooltipPos(e)}
 								onmouseleave={() => (hoveredNode = null)}
+								role="graphics-symbol"
 							/>
 						{/each}
 						<text
@@ -958,7 +959,7 @@
 	}
 
 	.tooltip {
-		position: absolute; 
+		position: absolute;
 		background: rgba(30, 30, 30, 0.95);
 		padding: 8px 12px;
 		border: 1px solid #444;
@@ -988,7 +989,10 @@
 		background: #444;
 	}
 
-	span::selection, strong::selection, div::selection, text::selection {
+	span::selection,
+	strong::selection,
+	div::selection,
+	text::selection {
 		background-color: rgb(129, 80, 202);
 		color: black;
 	}
